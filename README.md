@@ -6,11 +6,27 @@ A local-first task manager for capturing, prioritizing, and completing work from
 
 ## ⚡ 30-Second Cold-Start Quick Reference
 
-- **Runtime Prerequisites**: <FILL: each runtime this project needs and its minimum version>
+- **Runtime Prerequisites**: Python 3.10+; standard library only.
 - **Canonical Regression Shield Gate**:
   ```bash
-  <FILL: the command that runs the whole test suite from this project root>
+  python -m unittest discover -s tests -p "test_*.py"
   ```
+
+### Usage
+
+Run these commands from this directory:
+
+```bash
+python pocket_planner.py add "Write project brief" --priority 1
+python pocket_planner.py add "Review pull request" --priority 2 --due 2026-11-02 --tag work --tag review
+python pocket_planner.py list
+python pocket_planner.py list --tag work
+python pocket_planner.py list --overdue
+python pocket_planner.py done 1
+python pocket_planner.py list --all
+```
+
+Tasks are stored in `.pocket-planner.json` in the current directory. Use `--file path/to/tasks.json` to select another store. Tasks support priorities, ISO due dates, and repeatable tags. Writes use a temporary file, `fsync`, and atomic replacement so an interrupted write does not leave a partial database.
 
 ### 🛠️ AIKit Commands (run from the AIKit folder)
 | Role | Command |
@@ -30,6 +46,9 @@ pocket-planner/
 ├── LICENSES/                 <- REUSE license texts
 ├── REUSE.toml                <- Machine-readable SPDX metadata
 ├── README.md
+├── pocket_planner.py         <- task store and CLI
+├── tests/
+    └── test_pocket_planner.py
 └── .aikit/                   <- this project's memory: record, ledger, decisions
 ```
 

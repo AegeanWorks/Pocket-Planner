@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "name": "pocket-planner",
+  "repo": "Pocket-Planner",
+  "has_ui": false,
+  "ui_kind": "library",
+  "palette": [
+    "#120907",
+    "#302612",
+    "#f58c66",
+    "#ccf58e"
+  ],
+  "motif": "lens",
+  "layout": "grid",
+  "assets": {
+    "logo": {
+      "path": "assets/logo.svg",
+      "status": "pending_review",
+      "commit": "",
+      "generated_at": "2026-10-31T15:33:23",
+      "review": null
+    },
+    "social_preview": {
+      "path": "assets/social-preview.svg",
+      "status": "pending_review",
+      "commit": "",
+      "generated_at": "2026-10-31T15:33:23",
+      "review": null
+    }
+  },
+  "screenshots": []
+}
