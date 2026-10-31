@@ -46,6 +46,9 @@ pocket-planner/
 ├── LICENSES/                 <- REUSE license texts
 ├── REUSE.toml                <- Machine-readable SPDX metadata
 ├── README.md
+├── assets/                   <- project logo and social preview
+│   ├── logo.svg
+│   └── social-preview.svg
 ├── pocket_planner.py         <- task store and CLI
 ├── tests/
     └── test_pocket_planner.py
