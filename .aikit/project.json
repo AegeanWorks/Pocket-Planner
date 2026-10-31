@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "name": "pocket-planner",
+  "test_command": null,
+  "topics": [
+    "aikit",
+    "aikit-integrated",
+    "source-available",
+    "aegean-license",
+    "commercial-license",
+    "productivity",
+    "cli",
+    "local-first"
+  ],
+  "gates": {},
+  "ui_required": false,
+  "mechanics_required": false,
+  "created": "2026-10-31"
+}
