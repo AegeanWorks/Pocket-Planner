@@ -3,42 +3,42 @@
   "name": "pocket-planner",
   "repo": "Pocket-Planner",
   "has_ui": false,
-  "ui_kind": "library",
+  "ui_kind": "cli",
   "palette": [
-    "#120907",
-    "#302612",
-    "#f58c66",
-    "#ccf58e"
+    "#0c1307",
+    "#123013",
+    "#8af35e",
+    "#90f4e3"
   ],
-  "motif": "lens",
-  "layout": "grid",
+  "motif": "notes",
+  "layout": "left",
   "assets": {
     "logo": {
       "path": "assets/logo.svg",
       "status": "approved",
       "commit": "",
-      "generated_at": "2026-10-31T15:33:23",
+      "generated_at": "2026-11-02T00:55:09",
       "review": {
         "status": "approved",
-        "reviewer": "agent:copilot",
+        "reviewer": "agent:kilo",
         "method": "structural",
-        "notes": "Reviewed generated SVG structure: valid vector logo, readable Pocket Planner identity, no external dependencies or unsafe content.",
-        "score": 90,
-        "reviewed_at": "2026-10-31T15:36:42"
+        "notes": "Reseed notes identity: linked note-card constellation fits the planner, PP monogram, valid SVG.",
+        "score": 88,
+        "reviewed_at": "2026-11-02T00:56:36"
       }
     },
     "social_preview": {
       "path": "assets/social-preview.svg",
       "status": "approved",
       "commit": "",
-      "generated_at": "2026-10-31T15:33:23",
+      "generated_at": "2026-11-02T00:55:09",
       "review": {
         "status": "approved",
-        "reviewer": "agent:copilot",
+        "reviewer": "agent:kilo",
         "method": "structural",
-        "notes": "Reviewed generated SVG structure: valid 1280x640 preview, readable product identity and description, no external dependencies or unsafe content.",
-        "score": 90,
-        "reviewed_at": "2026-10-31T15:36:42"
+        "notes": "Left card: Pocket Planner title, CLI TOOL kicker, tagline and chips legible, correct URL.",
+        "score": 88,
+        "reviewed_at": "2026-11-02T00:56:37"
       }
     }
   },
