@@ -27,6 +27,8 @@ python pocket_planner.py list
 python pocket_planner.py list --tag work
 python pocket_planner.py list --overdue
 python pocket_planner.py done 1
+python pocket_planner.py reopen 1
+python pocket_planner.py rm 1
 python pocket_planner.py list --all
 ```
 

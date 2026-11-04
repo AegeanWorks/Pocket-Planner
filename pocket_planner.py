@@ -127,6 +127,29 @@ def complete_task(store: TaskStore, task_id: int) -> Task:
     raise ValueError(f"task {task_id} was not found")
 
 
+def reopen_task(store: TaskStore, task_id: int) -> Task:
+    tasks = store.load()
+    for task in tasks:
+        if task.id == task_id:
+            if not task.done:
+                raise ValueError(f"task {task_id} is not complete")
+            task.done = False
+            task.completed_at = None
+            store.save(tasks)
+            return task
+    raise ValueError(f"task {task_id} was not found")
+
+
+def delete_task(store: TaskStore, task_id: int) -> Task:
+    tasks = store.load()
+    for task in tasks:
+        if task.id == task_id:
+            remaining = [item for item in tasks if item.id != task_id]
+            store.save(remaining)
+            return task
+    raise ValueError(f"task {task_id} was not found")
+
+
 def list_tasks(
     store: TaskStore,
     include_done: bool = False,
@@ -140,7 +163,11 @@ def list_tasks(
         visible = [task for task in visible if tag in (task.tags or [])]
     if overdue:
         today = date.today().isoformat()
-        visible = [task for task in visible if task.due and task.due < today]
+        visible = [
+            task
+            for task in visible
+            if task.due and task.due < today and not task.done
+        ]
     return sorted(visible, key=lambda task: (task.done, task.due or "9999-12-31", task.priority, task.id))
 
 
@@ -161,6 +188,10 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("--overdue", action="store_true", help="only show overdue tasks")
     done = commands.add_parser("done", help="complete a task")
     done.add_argument("id", type=int)
+    reopen = commands.add_parser("reopen", help="reopen a completed task")
+    reopen.add_argument("id", type=int)
+    remove = commands.add_parser("rm", aliases=("delete",), help="delete a task")
+    remove.add_argument("id", type=int)
     return parser
 
 
@@ -174,6 +205,12 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "done":
             task = complete_task(store, args.id)
             print(f"Completed #{task.id}: {task.title}")
+        elif args.command == "reopen":
+            task = reopen_task(store, args.id)
+            print(f"Reopened #{task.id}: {task.title}")
+        elif args.command in ("rm", "delete"):
+            task = delete_task(store, args.id)
+            print(f"Deleted #{task.id}: {task.title}")
         else:
             tasks = list_tasks(store, args.include_done, args.tag, args.overdue)
             if not tasks:

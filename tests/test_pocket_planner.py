@@ -3,7 +3,14 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from pocket_planner import TaskStore, add_task, complete_task, list_tasks
+from pocket_planner import (
+    TaskStore,
+    add_task,
+    complete_task,
+    delete_task,
+    list_tasks,
+    reopen_task,
+)
 
 
 class PocketPlannerTests(unittest.TestCase):
@@ -66,6 +73,66 @@ class PocketPlannerTests(unittest.TestCase):
     def test_invalid_due_date_is_rejected(self):
         with self.assertRaises(ValueError):
             add_task(self.store, "bad date", 2, "tomorrow")
+
+    def test_empty_title_and_bad_priority_are_rejected(self):
+        with self.assertRaises(ValueError):
+            add_task(self.store, "   ", 2)
+        with self.assertRaises(ValueError):
+            add_task(self.store, "real task", 5)
+
+    def test_complete_missing_or_already_done_raises(self):
+        with self.assertRaises(ValueError):
+            complete_task(self.store, 999)
+        task = add_task(self.store, "once", 2)
+        complete_task(self.store, task.id)
+        with self.assertRaises(ValueError):
+            complete_task(self.store, task.id)
+
+    def test_overdue_excludes_completed_tasks(self):
+        task = add_task(self.store, "old bill", 2, "2000-01-01", None)
+        complete_task(self.store, task.id)
+
+        self.assertEqual(list_tasks(self.store, overdue=True), [])
+        self.assertEqual(list_tasks(self.store, include_done=True, overdue=True), [])
+
+    def test_overdue_lists_only_open_past_due_tasks(self):
+        add_task(self.store, "past", 2, "2000-01-01", None)
+        add_task(self.store, "future", 2, "2999-01-01", None)
+        add_task(self.store, "no due", 2)
+
+        self.assertEqual(
+            [task.title for task in list_tasks(self.store, overdue=True)], ["past"]
+        )
+
+    def test_delete_removes_only_the_target(self):
+        first = add_task(self.store, "keep me", 2)
+        second = add_task(self.store, "drop me", 2)
+
+        removed = delete_task(self.store, second.id)
+
+        self.assertEqual(removed.title, "drop me")
+        self.assertEqual([task.id for task in self.store.load()], [first.id])
+
+    def test_delete_missing_id_raises(self):
+        with self.assertRaises(ValueError):
+            delete_task(self.store, 999)
+
+    def test_reopen_restores_completed_task(self):
+        task = add_task(self.store, "mis-tapped", 2)
+        complete_task(self.store, task.id)
+
+        reopened = reopen_task(self.store, task.id)
+
+        self.assertFalse(reopened.done)
+        self.assertIsNone(reopened.completed_at)
+        self.assertEqual([item.title for item in list_tasks(self.store)], ["mis-tapped"])
+
+    def test_reopen_open_or_missing_task_raises(self):
+        task = add_task(self.store, "still open", 2)
+        with self.assertRaises(ValueError):
+            reopen_task(self.store, task.id)
+        with self.assertRaises(ValueError):
+            reopen_task(self.store, 999)
 
 
 if __name__ == "__main__":
