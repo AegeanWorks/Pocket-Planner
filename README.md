@@ -32,6 +32,8 @@ python pocket_planner.py rm 1
 python pocket_planner.py list --all
 ```
 
+`rm` also accepts the alias `delete`: `python pocket_planner.py delete 1`.
+
 Tasks are stored in `.pocket-planner.json` in the current directory. Use `--file path/to/tasks.json` to select another store. Tasks support priorities, ISO due dates, and repeatable tags. Writes use a temporary file, `fsync`, and atomic replacement so an interrupted write does not leave a partial database.
 
 ### 🛠️ AIKit Commands (run from the AIKit folder)

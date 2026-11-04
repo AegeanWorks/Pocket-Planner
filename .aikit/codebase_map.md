@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `3`
 - **Total Top-Level Functions**: `10`
-- **Total Class Methods**: `20`
-- **Total Source Lines**: `373`
+- **Total Class Methods**: `22`
+- **Total Source Lines**: `383`
 
 ---
 
@@ -43,7 +43,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `139` lines (`4900` bytes)
+**Size**: `149` lines (`5311` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -64,5 +64,7 @@
   - Method `.test_delete_missing_id_raises()`
   - Method `.test_reopen_restores_completed_task()`
   - Method `.test_reopen_open_or_missing_task_raises()`
+  - Method `.test_corrupt_store_raises_runtime_error()`
+  - Method `.test_store_missing_tasks_key_raises_runtime_error()`
 
 ---

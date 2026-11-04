@@ -134,6 +134,16 @@ class PocketPlannerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             reopen_task(self.store, 999)
 
+    def test_corrupt_store_raises_runtime_error(self):
+        self.store.path.write_text("not json{{{", encoding="utf-8")
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_store_missing_tasks_key_raises_runtime_error(self):
+        self.store.path.write_text('{"nope": []}', encoding="utf-8")
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
 
 if __name__ == "__main__":
     unittest.main()
