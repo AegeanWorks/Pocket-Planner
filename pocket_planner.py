@@ -34,11 +34,36 @@ class TaskStore:
             return []
         try:
             data = json.loads(self.path.read_text(encoding="utf-8"))
+            if not isinstance(data, dict):
+                raise ValueError("store root must be an object with a 'tasks' list")
+            raw_tasks = data["tasks"]
+            if not isinstance(raw_tasks, list):
+                raise ValueError("'tasks' must be a list")
             tasks = []
-            for item in data["tasks"]:
-                record = dict(item)
+            known = {"id", "title", "priority", "done", "created_at", "completed_at", "due", "tags"}
+            for item in raw_tasks:
+                if not isinstance(item, dict):
+                    raise ValueError("each task must be an object")
+                record = {key: value for key, value in item.items() if key in known}
                 record.setdefault("due", None)
                 record.setdefault("tags", [])
+                if record["due"] == "":
+                    record["due"] = None
+                if record["due"] is not None:
+                    if not isinstance(record["due"], str):
+                        raise ValueError("due must be a YYYY-MM-DD string or null")
+                    record["due"] = validate_due(record["due"].strip())
+                    if record["due"] == "":
+                        record["due"] = None
+                tags = record.get("tags")
+                if tags is None:
+                    record["tags"] = []
+                elif isinstance(tags, list):
+                    if any(not isinstance(entry, str) for entry in tags):
+                        raise ValueError("tags must be a list of strings")
+                    record["tags"] = normalize_tags(tags)
+                else:
+                    raise ValueError("tags must be a list of strings or null")
                 tasks.append(Task(**record))
             return tasks
         except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as error:
@@ -71,6 +96,9 @@ def now() -> str:
 
 def validate_due(value: str | None) -> str | None:
     if value is None:
+        return None
+    value = value.strip()
+    if not value:
         return None
     try:
         date.fromisoformat(value)
@@ -150,17 +178,64 @@ def delete_task(store: TaskStore, task_id: int) -> Task:
     raise ValueError(f"task {task_id} was not found")
 
 
+def edit_task(
+    store: TaskStore,
+    task_id: int,
+    title: str | None = None,
+    priority: int | None = None,
+    due: str | None = None,
+    clear_due: bool = False,
+    tags: list[str] | None = None,
+    clear_tags: bool = False,
+) -> Task:
+    if title is None and priority is None and due is None and not clear_due and tags is None and not clear_tags:
+        raise ValueError("nothing to edit: pass --title, --priority, --due/--clear-due, or --tag/--clear-tags")
+    if due is not None and clear_due:
+        raise ValueError("pass either --due or --clear-due, not both")
+    if tags is not None and clear_tags:
+        raise ValueError("pass either --tag or --clear-tags, not both")
+    tasks = store.load()
+    for task in tasks:
+        if task.id == task_id:
+            if title is not None:
+                cleaned = " ".join(title.split())
+                if not cleaned:
+                    raise ValueError("task title cannot be empty")
+                task.title = cleaned
+            if priority is not None:
+                if priority not in (1, 2, 3):
+                    raise ValueError("priority must be 1, 2, or 3")
+                task.priority = priority
+            if clear_due:
+                task.due = None
+            elif due is not None:
+                task.due = validate_due(due)
+            if clear_tags:
+                task.tags = []
+            elif tags is not None:
+                task.tags = normalize_tags(tags)
+            store.save(tasks)
+            return task
+    raise ValueError(f"task {task_id} was not found")
+
+
 def list_tasks(
     store: TaskStore,
     include_done: bool = False,
     tag: str | None = None,
     overdue: bool = False,
+    priority: int | None = None,
 ) -> list[Task]:
     tasks = store.load()
     visible = [task for task in tasks if include_done or not task.done]
     if tag:
-        tag = tag.strip().lower()
-        visible = [task for task in visible if tag in (task.tags or [])]
+        cleaned = tag.strip().lower()
+        if cleaned:
+            visible = [task for task in visible if cleaned in (task.tags or [])]
+    if priority is not None:
+        if priority not in (1, 2, 3):
+            raise ValueError("priority must be 1, 2, or 3")
+        visible = [task for task in visible if task.priority == priority]
     if overdue:
         today = date.today().isoformat()
         visible = [
@@ -186,12 +261,21 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("--all", action="store_true", dest="include_done")
     show.add_argument("--tag", help="only show tasks with this tag")
     show.add_argument("--overdue", action="store_true", help="only show overdue tasks")
+    show.add_argument("--priority", type=int, choices=(1, 2, 3), help="only show this priority")
     done = commands.add_parser("done", help="complete a task")
     done.add_argument("id", type=int)
     reopen = commands.add_parser("reopen", help="reopen a completed task")
     reopen.add_argument("id", type=int)
     remove = commands.add_parser("rm", aliases=("delete",), help="delete a task")
     remove.add_argument("id", type=int)
+    edit = commands.add_parser("edit", help="edit task title, priority, due date, or tags")
+    edit.add_argument("id", type=int)
+    edit.add_argument("--title", nargs="+", default=None, help="new title")
+    edit.add_argument("--priority", type=int, choices=(1, 2, 3), default=None)
+    edit.add_argument("--due", default=None, help="new due date in YYYY-MM-DD format")
+    edit.add_argument("--clear-due", action="store_true", help="remove the due date")
+    edit.add_argument("--tag", action="append", default=None, dest="tags", help="replacement tag (repeatable)")
+    edit.add_argument("--clear-tags", action="store_true", help="remove all tags")
     return parser
 
 
@@ -211,8 +295,21 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command in ("rm", "delete"):
             task = delete_task(store, args.id)
             print(f"Deleted #{task.id}: {task.title}")
-        else:
-            tasks = list_tasks(store, args.include_done, args.tag, args.overdue)
+        elif args.command == "edit":
+            title = " ".join(args.title) if args.title is not None else None
+            task = edit_task(
+                store,
+                args.id,
+                title=title,
+                priority=args.priority,
+                due=args.due,
+                clear_due=args.clear_due,
+                tags=args.tags,
+                clear_tags=args.clear_tags,
+            )
+            print(f"Edited #{task.id}: {task.title}")
+        elif args.command == "list":
+            tasks = list_tasks(store, args.include_done, args.tag, args.overdue, args.priority)
             if not tasks:
                 print("No tasks.")
             for task in tasks:
@@ -224,6 +321,8 @@ def main(argv: list[str] | None = None) -> int:
                     details.append(" ".join(f"#{tag}" for tag in task.tags))
                 suffix = f" ({', '.join(details)})" if details else ""
                 print(f"[{marker}] #{task.id} P{task.priority} {task.title}{suffix}")
+        else:
+            raise ValueError(f"unknown command {args.command!r}")
         return 0
     except (RuntimeError, ValueError) as error:
         print(f"Error: {error}", file=sys.stderr)

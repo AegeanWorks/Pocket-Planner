@@ -26,13 +26,17 @@ python pocket_planner.py add "Review pull request" --priority 2 --due 2026-11-02
 python pocket_planner.py list
 python pocket_planner.py list --tag work
 python pocket_planner.py list --overdue
+python pocket_planner.py list --priority 1
 python pocket_planner.py done 1
 python pocket_planner.py reopen 1
+python pocket_planner.py edit 1 --title "New title" --priority 1 --due 2026-12-01 --tag work
 python pocket_planner.py rm 1
 python pocket_planner.py list --all
 ```
 
 `rm` also accepts the alias `delete`: `python pocket_planner.py delete 1`.
+
+`edit` updates title, priority, due date, or tags in place. Pass `--clear-due` to remove the due date or `--clear-tags` to remove all tags. `--tag` may be repeated and replaces the tag set.
 
 Tasks are stored in `.pocket-planner.json` in the current directory. Use `--file path/to/tasks.json` to select another store. Tasks support priorities, ISO due dates, and repeatable tags. Writes use a temporary file, `fsync`, and atomic replacement so an interrupted write does not leave a partial database.
 

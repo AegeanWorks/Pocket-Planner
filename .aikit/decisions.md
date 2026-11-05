@@ -25,3 +25,10 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
 - **Context**: A mis-tapped `done` was irreversible via the CLI and junk tasks could only be removed by hand-editing the JSON store.
 - **Decision**: Added `reopen <id>` (clears done and completed_at, errors when the task is still open or missing) and `rm <id>` (alias `delete`; removes only the target, errors on a missing id).
 - **Consequences**: Full task lifecycle via CLI; `rm` is destructive by design and has no undo short of restoring the file.
+
+### ADR-003: In-place edit plus hardened store loading
+- **Date**: 2026-11-06
+- **Status**: Accepted
+- **Context**: Fixing a title, priority, due date, or tag required delete plus re-add, losing the id and created_at. Loading also crashed on unknown future fields and accepted malformed due/tags shapes that later broke filtering.
+- **Decision**: Added `edit <id>` with `--title/--priority/--due/--clear-due/--tag/--clear-tags` (no-op and conflicting flags error) and `list --priority`; hardened `TaskStore.load` to ignore unknown fields, coerce `""` due to null, validate due/tags shapes, and normalize tags; `validate_due` strips whitespace and blank means null; blank `--tag` filter is ignored.
+- **Consequences**: Tasks can be corrected without id churn; older clients tolerate newer stores, while genuinely corrupt due/tags still fail loud as RuntimeError.

@@ -8,6 +8,7 @@ from pocket_planner import (
     add_task,
     complete_task,
     delete_task,
+    edit_task,
     list_tasks,
     reopen_task,
 )
@@ -143,6 +144,97 @@ class PocketPlannerTests(unittest.TestCase):
         self.store.path.write_text('{"nope": []}', encoding="utf-8")
         with self.assertRaises(RuntimeError):
             self.store.load()
+
+    def test_unknown_fields_are_ignored_for_forward_compat(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "future", "priority": 2, '
+            '"done": false, "created_at": "2026-01-01T00:00:00+00:00", '
+            '"extra_future": 123}]}',
+            encoding="utf-8",
+        )
+
+        self.assertEqual(self.store.load()[0].title, "future")
+
+    def test_empty_due_string_loads_as_none(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "nodue", "priority": 2, '
+            '"done": false, "created_at": "2026-01-01T00:00:00+00:00", "due": ""}]}',
+            encoding="utf-8",
+        )
+
+        self.assertIsNone(self.store.load()[0].due)
+
+    def test_invalid_due_on_load_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "bad", "priority": 2, '
+            '"done": false, "created_at": "2026-01-01T00:00:00+00:00", "due": "tomorrow"}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_non_list_tags_on_load_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "bad", "priority": 2, '
+            '"done": false, "created_at": "2026-01-01T00:00:00+00:00", "tags": "work"}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_due_whitespace_is_stripped(self):
+        task = add_task(self.store, "dated", 2, "  2026-11-02  ")
+
+        self.assertEqual(task.due, "2026-11-02")
+
+    def test_blank_tag_filter_returns_unfiltered_list(self):
+        add_task(self.store, "a", 2, None, ["work"])
+
+        self.assertEqual(len(list_tasks(self.store, tag="   ")), 1)
+
+    def test_priority_filter_selects_only_matching(self):
+        add_task(self.store, "urgent", 1)
+        add_task(self.store, "normal", 2)
+
+        self.assertEqual(
+            [task.title for task in list_tasks(self.store, priority=1)], ["urgent"]
+        )
+
+    def test_edit_updates_title_priority_due_and_tags(self):
+        task = add_task(self.store, "old", 2)
+
+        edited = edit_task(
+            self.store, task.id, title="  new name ", priority=1,
+            due="2026-12-01", tags=[" Work ", "home"],
+        )
+
+        self.assertEqual(edited.title, "new name")
+        self.assertEqual(edited.priority, 1)
+        self.assertEqual(edited.due, "2026-12-01")
+        self.assertEqual(edited.tags, ["work", "home"])
+
+    def test_edit_clear_due_and_tags(self):
+        task = add_task(self.store, "t", 2, "2026-12-01", ["work"])
+
+        edited = edit_task(self.store, task.id, clear_due=True, clear_tags=True)
+
+        self.assertIsNone(edited.due)
+        self.assertEqual(edited.tags, [])
+
+    def test_edit_noop_and_conflicts_raise(self):
+        task = add_task(self.store, "t", 2)
+        with self.assertRaises(ValueError):
+            edit_task(self.store, task.id)
+        with self.assertRaises(ValueError):
+            edit_task(self.store, task.id, due="2026-12-01", clear_due=True)
+        with self.assertRaises(ValueError):
+            edit_task(self.store, task.id, tags=["a"], clear_tags=True)
+        with self.assertRaises(ValueError):
+            edit_task(self.store, 999, title="x")
+        with self.assertRaises(ValueError):
+            edit_task(self.store, task.id, title="   ")
+        with self.assertRaises(ValueError):
+            edit_task(self.store, task.id, priority=9)
 
 
 if __name__ == "__main__":
