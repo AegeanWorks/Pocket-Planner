@@ -1,7 +1,7 @@
 # Codebase Map & Symbol Catalog 🗺️
 
 > **AUTO-GENERATED & VERIFIED BY `scripts/update_knowledge_base.py`**
-> This document provides an automated, up-to-date registry of all modules, classes, and exported functions across this repository.
+> This document catalogues Python modules, classes, and exported functions. See Map Coverage for any stack it does not index.
 
 ---
 
@@ -9,8 +9,12 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `3`
 - **Total Top-Level Functions**: `11`
-- **Total Class Methods**: `32`
-- **Total Source Lines**: `574`
+- **Total Class Methods**: `45`
+- **Total Source Lines**: `710`
+
+## 🧭 Map Coverage
+- **Indexed**: python (`2` module(s))
+- **Not indexed by this map**: none (no non-Python source files were found)
 
 ---
 
@@ -19,13 +23,14 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `333` lines (`12733` bytes)
+**Size**: `368` lines (`14716` bytes)
 
 **Classes:**
 - `class Task`
 - `class TaskStore`
   - Method `.__init__(path)`
   - Method `.load()`
+  - Method `.next_task_id(tasks)` - *The next id this store issues; never an id a deleted task already used.*
   - Method `.save(tasks)`
 
 **Functions:**
@@ -44,7 +49,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `241` lines (`8871` bytes)
+**Size**: `342` lines (`12804` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -67,11 +72,23 @@
   - Method `.test_reopen_open_or_missing_task_raises()`
   - Method `.test_corrupt_store_raises_runtime_error()`
   - Method `.test_store_missing_tasks_key_raises_runtime_error()`
+  - Method `.test_non_object_store_root_raises_runtime_error()`
+  - Method `.test_non_object_task_raises_runtime_error()`
   - Method `.test_unknown_fields_are_ignored_for_forward_compat()`
+  - Method `.test_unknown_task_fields_survive_an_unrelated_write()`
   - Method `.test_empty_due_string_loads_as_none()`
   - Method `.test_invalid_due_on_load_raises_runtime_error()`
   - Method `.test_non_list_tags_on_load_raises_runtime_error()`
+  - Method `.test_non_integer_id_raises_runtime_error()`
+  - Method `.test_out_of_range_priority_raises_runtime_error()`
+  - Method `.test_non_boolean_done_raises_runtime_error()`
+  - Method `.test_non_string_title_raises_runtime_error()`
+  - Method `.test_non_string_created_at_raises_runtime_error()`
+  - Method `.test_non_string_completed_at_raises_runtime_error()`
   - Method `.test_due_whitespace_is_stripped()`
+  - Method `.test_deleted_task_id_is_not_reused()`
+  - Method `.test_legacy_store_without_next_id_still_assigns_fresh_ids()`
+  - Method `.test_edit_blank_due_requires_clear_due()`
   - Method `.test_blank_tag_filter_returns_unfiltered_list()`
   - Method `.test_priority_filter_selects_only_matching()`
   - Method `.test_edit_updates_title_priority_due_and_tags()`

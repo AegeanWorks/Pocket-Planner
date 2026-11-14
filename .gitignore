@@ -8,3 +8,5 @@ __pycache__/
 node_modules/
 # AIKit transient state
 .aikit/*.log
+# Reforge review packets are reproducible stage artifacts (reforge.json is tracked)
+.aikit/reforge.reviews/

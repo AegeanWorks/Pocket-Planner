@@ -28,8 +28,12 @@ class Task:
 class TaskStore:
     def __init__(self, path: Path) -> None:
         self.path = path
+        self._extras: dict[int, dict[str, object]] = {}
+        self._next_id: int | None = None
 
     def load(self) -> list[Task]:
+        self._extras = {}
+        self._next_id = None
         if not self.path.exists():
             return []
         try:
@@ -39,22 +43,40 @@ class TaskStore:
             raw_tasks = data["tasks"]
             if not isinstance(raw_tasks, list):
                 raise ValueError("'tasks' must be a list")
+            stored_next = data.get("next_id")
+            if stored_next is not None:
+                if isinstance(stored_next, bool) or not isinstance(stored_next, int):
+                    raise ValueError("next_id must be an integer")
+                self._next_id = stored_next
             tasks = []
             known = {"id", "title", "priority", "done", "created_at", "completed_at", "due", "tags"}
             for item in raw_tasks:
                 if not isinstance(item, dict):
                     raise ValueError("each task must be an object")
                 record = {key: value for key, value in item.items() if key in known}
+                extras = {key: value for key, value in item.items() if key not in known}
+                if extras and "id" in record:
+                    self._extras[record["id"]] = extras
                 record.setdefault("due", None)
                 record.setdefault("tags", [])
+                if isinstance(record.get("id"), bool) or not isinstance(record.get("id"), int):
+                    raise ValueError("id must be an integer")
+                if not isinstance(record.get("title"), str):
+                    raise ValueError("title must be a string")
+                if record.get("priority") not in (1, 2, 3):
+                    raise ValueError("priority must be 1, 2, or 3")
+                if not isinstance(record.get("done"), bool):
+                    raise ValueError("done must be true or false")
+                if not isinstance(record.get("created_at"), str):
+                    raise ValueError("created_at must be a string")
+                if record.get("completed_at") is not None and not isinstance(record.get("completed_at"), str):
+                    raise ValueError("completed_at must be a string or null")
                 if record["due"] == "":
                     record["due"] = None
                 if record["due"] is not None:
                     if not isinstance(record["due"], str):
                         raise ValueError("due must be a YYYY-MM-DD string or null")
                     record["due"] = validate_due(record["due"].strip())
-                    if record["due"] == "":
-                        record["due"] = None
                 tags = record.get("tags")
                 if tags is None:
                     record["tags"] = []
@@ -69,9 +91,20 @@ class TaskStore:
         except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as error:
             raise RuntimeError(f"cannot read {self.path}: {error}") from error
 
+    def next_task_id(self, tasks: list[Task]) -> int:
+        """The next id this store issues; never an id a deleted task already used."""
+        return max([self._next_id or 1] + [task.id + 1 for task in tasks])
+
     def save(self, tasks: list[Task]) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        payload = json.dumps({"tasks": [asdict(task) for task in tasks]}, indent=2) + "\n"
+        records = []
+        for task in tasks:
+            record = asdict(task)
+            record.update(self._extras.get(task.id, {}))
+            records.append(record)
+        next_id = max([self._next_id or 0] + [task.id + 1 for task in tasks])
+        self._next_id = next_id
+        payload = json.dumps({"next_id": next_id, "tasks": records}, indent=2) + "\n"
         handle, temporary = tempfile.mkstemp(prefix=f".{self.path.name}.", dir=self.path.parent)
         try:
             with os.fdopen(handle, "w", encoding="utf-8") as file:
@@ -131,7 +164,7 @@ def add_task(
     due = validate_due(due)
     tasks = store.load()
     task = Task(
-        id=max((item.id for item in tasks), default=0) + 1,
+        id=store.next_task_id(tasks),
         title=title,
         priority=priority,
         created_at=now(),
@@ -192,6 +225,8 @@ def edit_task(
         raise ValueError("nothing to edit: pass --title, --priority, --due/--clear-due, or --tag/--clear-tags")
     if due is not None and clear_due:
         raise ValueError("pass either --due or --clear-due, not both")
+    if due is not None and not due.strip():
+        raise ValueError("pass --clear-due to remove the due date")
     if tags is not None and clear_tags:
         raise ValueError("pass either --tag or --clear-tags, not both")
     tasks = store.load()

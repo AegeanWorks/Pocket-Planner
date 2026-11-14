@@ -145,6 +145,16 @@ class PocketPlannerTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             self.store.load()
 
+    def test_non_object_store_root_raises_runtime_error(self):
+        self.store.path.write_text("[]", encoding="utf-8")
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_non_object_task_raises_runtime_error(self):
+        self.store.path.write_text('{"tasks": [1]}', encoding="utf-8")
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
     def test_unknown_fields_are_ignored_for_forward_compat(self):
         self.store.path.write_text(
             '{"tasks": [{"id": 1, "title": "future", "priority": 2, '
@@ -154,6 +164,20 @@ class PocketPlannerTests(unittest.TestCase):
         )
 
         self.assertEqual(self.store.load()[0].title, "future")
+
+    def test_unknown_task_fields_survive_an_unrelated_write(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "future", "priority": 2, '
+            '"done": false, "created_at": "2026-01-01T00:00:00+00:00", '
+            '"extra_future": {"keep": 123}}]}',
+            encoding="utf-8",
+        )
+
+        add_task(self.store, "new task", 2)
+
+        payload = json.loads(self.store.path.read_text(encoding="utf-8"))
+        future = next(item for item in payload["tasks"] if item["id"] == 1)
+        self.assertEqual(future["extra_future"], {"keep": 123})
 
     def test_empty_due_string_loads_as_none(self):
         self.store.path.write_text(
@@ -182,10 +206,87 @@ class PocketPlannerTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             self.store.load()
 
+    def test_non_integer_id_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": "one", "title": "t", "priority": 2, "done": false, "created_at": "x"}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_out_of_range_priority_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "t", "priority": 9, "done": false, "created_at": "x"}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_non_boolean_done_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "t", "priority": 2, "done": "yes", "created_at": "x"}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_non_string_title_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": 7, "priority": 2, "done": false, "created_at": "x"}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_non_string_created_at_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "t", "priority": 2, "done": false, "created_at": 5}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_non_string_completed_at_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "t", "priority": 2, "done": true, "created_at": "x", "completed_at": 5}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
     def test_due_whitespace_is_stripped(self):
         task = add_task(self.store, "dated", 2, "  2026-11-02  ")
 
         self.assertEqual(task.due, "2026-11-02")
+
+    def test_deleted_task_id_is_not_reused(self):
+        first = add_task(self.store, "one", 2)
+        second = add_task(self.store, "two", 2)
+        third = add_task(self.store, "three", 2)
+
+        delete_task(self.store, third.id)
+        fourth = add_task(self.store, "four", 2)
+
+        self.assertEqual([first.id, second.id, third.id], [1, 2, 3])
+        self.assertEqual(fourth.id, 4)
+
+    def test_legacy_store_without_next_id_still_assigns_fresh_ids(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 7, "title": "legacy", "priority": 2, '
+            '"done": false, "created_at": "x"}]}',
+            encoding="utf-8",
+        )
+
+        task = add_task(self.store, "new", 2)
+
+        self.assertEqual(task.id, 8)
+
+    def test_edit_blank_due_requires_clear_due(self):
+        task = add_task(self.store, "t", 2, "2026-12-01")
+
+        with self.assertRaises(ValueError):
+            edit_task(self.store, task.id, due="   ")
+        self.assertEqual(self.store.load()[0].due, "2026-12-01")
 
     def test_blank_tag_filter_returns_unfiltered_list(self):
         add_task(self.store, "a", 2, None, ["work"])
