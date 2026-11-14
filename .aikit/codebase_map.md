@@ -7,10 +7,10 @@
 
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `2`
-- **Total Classes**: `4`
+- **Total Classes**: `5`
 - **Total Top-Level Functions**: `15`
-- **Total Class Methods**: `65`
-- **Total Source Lines**: `1048`
+- **Total Class Methods**: `73`
+- **Total Source Lines**: `1106`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `517` lines (`20105` bytes)
+**Size**: `516` lines (`20093` bytes)
 
 **Classes:**
 - `class Task`
@@ -56,7 +56,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `531` lines (`20329` bytes)
+**Size**: `590` lines (`22765` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -119,5 +119,14 @@
   - Method `.test_edit_updates_title_priority_due_and_tags()`
   - Method `.test_edit_clear_due_and_tags()`
   - Method `.test_edit_noop_and_conflicts_raise()`
+- `class MainTests`
+  - Method `.setUp()`
+  - Method `.tearDown()`
+  - Method `.run_main(*argv)`
+  - Method `.test_main_search_matches_title_and_tags_case_insensitively()`
+  - Method `.test_main_sort_priority_orders_and_bad_sort_is_argparse_rejected()`
+  - Method `.test_main_stats_prints_summary_and_priorities()`
+  - Method `.test_main_bad_priority_is_argparse_rejected_with_usage_error()`
+  - Method `.test_main_added_task_is_persisted()`
 
 ---
