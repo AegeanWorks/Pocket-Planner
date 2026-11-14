@@ -1,62 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-lock-hygiene-tag",
+    "task_id": "pp-lock-map-refresh",
     "last_phase": "in_progress",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794677152.1445532,
+    "updated_at": 1794677415.8645287,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794677152.5262737
+    "completed_at": 1794677416.3346493
   },
   "checkpoints": [
-    {
-      "task_id": "priority-guard-helper",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'priority-guard-helper' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794672346.023566,
-      "timestamp_str": "2026-11-14 19:05:46",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "pp-help-and-cli-tests",
-      "phase": "in_progress",
-      "phase_num": 2,
-      "description": "[1/2] Plan: commit 1 = fix stale --due help (add+edit to mention YYYYMMDD) and inline dead priority local in TaskStore.load; commit 2 = add main()-level CLI tests for --search, --sort and stats wiring",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794672687.5730352,
-      "timestamp_str": "2026-11-14 19:11:27",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "post-push audit found stale help text, dead local binding, and CLI wiring only covered by manual smoke",
-        "benefits": "accurate UX help; leaner load path; regression net on argument wiring and exit codes",
-        "risks": "contract: none (doc string + inline); dependency: none; concurrency: none; state: none",
-        "mitigation": "slice reads before edit; run full unittest suite and aikit check --strict before each commit; validate commit subjects"
-      },
-      "plan_digest": "a8d1b2589bebdf0bd438243f9bfd876cd57c4a92c68ba19d498b31ab48c644d4"
-    },
-    {
-      "task_id": "pp-help-and-cli-tests",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[1/2] Implemented: --due help mentions YYYYMMDD on add and edit; validated priority inline in TaskStore.load. unittest 57/57 passed, aikit check --strict 4/4 gates passed. checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794672833.2983503,
-      "timestamp_str": "2026-11-14 19:13:53",
-      "agent": "vibe:1"
-    },
     {
       "task_id": "pp-help-and-cli-tests",
       "phase": "in_progress",
@@ -301,6 +256,51 @@
       "status": "completed",
       "timestamp": 1794677152.5262756,
       "timestamp_str": "2026-11-14 20:25:52",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-lock-map-refresh",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/1] Plan: bookkeeping only - codebase map refresh 4a4a305 (statement-only map diff) postdates the completed pp-lock-hygiene-tag; open a covering task so the strict ledger assertion re-anchors",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677415.557633,
+      "timestamp_str": "2026-11-14 20:30:15",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "ADR-419 requires the completed task to be the last non-bookkeeping commit",
+        "benefits": "strict gate exits clean",
+        "risks": "contract: none; dependency: none; concurrency: none; state: none",
+        "mitigation": "no code changes; verify strict exits 0 after completion"
+      },
+      "plan_digest": "573fc13834af9f9060c8f6ba5459cb843de3b707b97dc82e4c7c91b25e84e25d"
+    },
+    {
+      "task_id": "pp-lock-map-refresh",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[1/1] Verified: map content already matches committed code (update_knowledge_base --check passed); no tree changes. checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677415.8645287,
+      "timestamp_str": "2026-11-14 20:30:15",
+      "agent": "vibe:1"
+    },
+    {
+      "task_id": "pp-lock-map-refresh",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-lock-map-refresh' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794677416.3346534,
+      "timestamp_str": "2026-11-14 20:30:16",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
