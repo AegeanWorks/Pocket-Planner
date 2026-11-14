@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `3`
 - **Total Top-Level Functions**: `11`
-- **Total Class Methods**: `46`
-- **Total Source Lines**: `719`
+- **Total Class Methods**: `47`
+- **Total Source Lines**: `728`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `369` lines (`14815` bytes)
+**Size**: `369` lines (`15004` bytes)
 
 **Classes:**
 - `class Task`
@@ -49,7 +49,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `350` lines (`13119` bytes)
+**Size**: `359` lines (`13507` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -92,6 +92,7 @@
   - Method `.test_edit_blank_due_requires_clear_due()`
   - Method `.test_blank_tag_filter_returns_unfiltered_list()`
   - Method `.test_priority_filter_selects_only_matching()`
+  - Method `.test_api_boolean_priority_is_rejected()`
   - Method `.test_edit_updates_title_priority_due_and_tags()`
   - Method `.test_edit_clear_due_and_tags()`
   - Method `.test_edit_noop_and_conflicts_raise()`

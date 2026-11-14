@@ -160,7 +160,7 @@ def add_task(
     title = " ".join(title.split())
     if not title:
         raise ValueError("task title cannot be empty")
-    if priority not in (1, 2, 3):
+    if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
         raise ValueError("priority must be 1, 2, or 3")
     due = validate_due(due)
     tasks = store.load()
@@ -239,7 +239,7 @@ def edit_task(
                     raise ValueError("task title cannot be empty")
                 task.title = cleaned
             if priority is not None:
-                if priority not in (1, 2, 3):
+                if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
                     raise ValueError("priority must be 1, 2, or 3")
                 task.priority = priority
             if clear_due:
@@ -269,7 +269,7 @@ def list_tasks(
         if cleaned:
             visible = [task for task in visible if cleaned in (task.tags or [])]
     if priority is not None:
-        if priority not in (1, 2, 3):
+        if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
             raise ValueError("priority must be 1, 2, or 3")
         visible = [task for task in visible if task.priority == priority]
     if overdue:

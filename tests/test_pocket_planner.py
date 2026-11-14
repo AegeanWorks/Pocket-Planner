@@ -309,6 +309,15 @@ class PocketPlannerTests(unittest.TestCase):
             [task.title for task in list_tasks(self.store, priority=1)], ["urgent"]
         )
 
+    def test_api_boolean_priority_is_rejected(self):
+        with self.assertRaises(ValueError):
+            add_task(self.store, "bool", True)
+        task = add_task(self.store, "keep", 2)
+        with self.assertRaises(ValueError):
+            edit_task(self.store, task.id, priority=True)
+        with self.assertRaises(ValueError):
+            list_tasks(self.store, priority=True)
+
     def test_edit_updates_title_priority_due_and_tags(self):
         task = add_task(self.store, "old", 2)
 

@@ -1,11 +1,11 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "priority-bool-guard",
+    "task_id": "api-priority-bool-guards",
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794667859.708621,
+    "updated_at": 1794667993.9686964,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
@@ -16,46 +16,13 @@
       }
     ],
     "impact_assessment": {
-      "why": "Reforge run-2 reviewed 8e80ef1 and found the new priority guard accepts booleans because True == 1, so a malformed store loads instead of raising the documented RuntimeError.",
-      "benefits": "Store field-type validation is now consistent: id was bool-guarded, priority matches; regression test pins the case.",
-      "risks": "contract: load rejects one more malformed shape (bool priority) loudly, per the documented RuntimeError contract; dependency: none; concurrency: single-writer; state: store files only",
-      "mitigation": "None-shape change; failing unpinned behavior is deleted because bool priority was never a documented acceptance; full gate suite before commit; explicit staging"
+      "why": "Reforge run-2 stage-2 review found the programmatic API guards count True as priority 1, so imported callers could write store files the hardened loader now rejects.",
+      "benefits": "Rejected shapes are consistent across store and API layers; regression test pins bool through add_task, edit_task and list_tasks.",
+      "risks": "contract: API rejects one more malformed value with the same documented ValueError; dependency: none; concurrency: single-writer; state: none",
+      "mitigation": "CLI already coerces to int via argparse, so no user-facing change; full gate suite before commit; explicit staging"
     }
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: window 6, 3 commit(s), 5 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794644632.1763117,
-      "timestamp_str": "2026-11-14 11:23:52",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: stage 2 host review reviewed; run active; coverage 7/7",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794644766.2843423,
-      "timestamp_str": "2026-11-14 11:26:06",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-1",
-      "phase": "reforge stage 3",
-      "phase_num": 3,
-      "description": "Reforge stage 3: window 9, 3 commit(s), 15 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794644811.981018,
-      "timestamp_str": "2026-11-14 11:26:51",
-      "agent": "unidentified"
-    },
     {
       "task_id": "reforge:run-1",
       "phase": "reforge stage 3",
@@ -347,6 +314,57 @@
         "benefits": "Store field-type validation is now consistent: id was bool-guarded, priority matches; regression test pins the case.",
         "risks": "contract: load rejects one more malformed shape (bool priority) loudly, per the documented RuntimeError contract; dependency: none; concurrency: single-writer; state: store files only",
         "mitigation": "None-shape change; failing unpinned behavior is deleted because bool priority was never a documented acceptance; full gate suite before commit; explicit staging"
+      },
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "priority-bool-guard",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'priority-bool-guard' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794667866.8313057,
+      "timestamp_str": "2026-11-14 17:51:06",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "reforge:run-2",
+      "phase": "reforge stage 2",
+      "phase_num": 3,
+      "description": "Reforge stage 2: stage 2 host review reviewed; run active; coverage 35/35",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794667959.9155402,
+      "timestamp_str": "2026-11-14 17:52:39",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "api-priority-bool-guards",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "Reject boolean priority in add_task, edit_task and list_tasks per reforge run-2 stage-2 review finding",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794667993.9686964,
+      "timestamp_str": "2026-11-14 17:53:13",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "Reforge run-2 stage-2 review found the programmatic API guards count True as priority 1, so imported callers could write store files the hardened loader now rejects.",
+        "benefits": "Rejected shapes are consistent across store and API layers; regression test pins bool through add_task, edit_task and list_tasks.",
+        "risks": "contract: API rejects one more malformed value with the same documented ValueError; dependency: none; concurrency: single-writer; state: none",
+        "mitigation": "CLI already coerces to int via argparse, so no user-facing change; full gate suite before commit; explicit staging"
       },
       "checklists": "passed",
       "workspaces": [
