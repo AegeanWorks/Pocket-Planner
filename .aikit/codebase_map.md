@@ -8,9 +8,9 @@
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `2`
 - **Total Classes**: `4`
-- **Total Top-Level Functions**: `14`
+- **Total Top-Level Functions**: `15`
 - **Total Class Methods**: `65`
-- **Total Source Lines**: `1047`
+- **Total Source Lines**: `1048`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `516` lines (`20426` bytes)
+**Size**: `517` lines (`20105` bytes)
 
 **Classes:**
 - `class Task`
@@ -38,6 +38,7 @@
 
 **Functions:**
 - `def now()`
+- `def validate_priority(value)`
 - `def canonical_due(value)`
 - `def validate_due(value)`
 - `def normalize_tags(tags)`

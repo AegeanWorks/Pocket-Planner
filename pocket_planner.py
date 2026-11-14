@@ -98,8 +98,7 @@ class TaskStore:
                 if not isinstance(record.get("title"), str):
                     raise ValueError("title must be a string")
                 priority = record.get("priority")
-                if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
-                    raise ValueError("priority must be 1, 2, or 3")
+                validate_priority(priority)
                 if not isinstance(record.get("done"), bool):
                     raise ValueError("done must be true or false")
                 if not isinstance(record.get("created_at"), str):
@@ -192,6 +191,12 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def validate_priority(value: int) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value not in (1, 2, 3):
+        raise ValueError("priority must be 1, 2, or 3")
+    return value
+
+
 def canonical_due(value: str) -> str:
     compact = value.strip()
     if len(compact) == 8 and compact.isdigit():
@@ -233,8 +238,7 @@ def add_task(
     title = " ".join(title.split())
     if not title:
         raise ValueError("task title cannot be empty")
-    if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
-        raise ValueError("priority must be 1, 2, or 3")
+    priority = validate_priority(priority)
     due = validate_due(due)
     tasks = store.load()
     task = Task(
@@ -312,9 +316,7 @@ def edit_task(
                     raise ValueError("task title cannot be empty")
                 task.title = cleaned
             if priority is not None:
-                if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
-                    raise ValueError("priority must be 1, 2, or 3")
-                task.priority = priority
+                task.priority = validate_priority(priority)
             if clear_due:
                 task.due = None
             elif due is not None:
@@ -359,8 +361,7 @@ def list_tasks(
         if cleaned:
             visible = [task for task in visible if cleaned in (task.tags or [])]
     if priority is not None:
-        if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
-            raise ValueError("priority must be 1, 2, or 3")
+        validate_priority(priority)
         visible = [task for task in visible if task.priority == priority]
     if query:
         needle = query.strip().lower()

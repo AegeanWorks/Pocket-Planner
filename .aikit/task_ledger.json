@@ -1,11 +1,11 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "schema-version",
+    "task_id": "priority-guard-helper",
     "last_phase": "in_progress",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1794671561.5721483,
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1794672322.9404912,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
@@ -14,366 +14,9 @@
         "name": "pocket-planner",
         "path": "projects/pocket-planner"
       }
-    ],
-    "completed_at": 1794671564.968431
+    ]
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 4",
-      "phase_num": 3,
-      "description": "Reforge stage 4: stage 4 host review reviewed; run active; coverage 4/4",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794668111.774587,
-      "timestamp_str": "2026-11-14 17:55:11",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 5",
-      "phase_num": 3,
-      "description": "Reforge stage 5: window 14, 2 commit(s), 15 file(s) reviewed (partial), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794668116.5440488,
-      "timestamp_str": "2026-11-14 17:55:16",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 5",
-      "phase_num": 3,
-      "description": "Reforge stage 5: stage 5 host review reviewed; run completed; coverage 19/19",
-      "files_affected": [],
-      "status": "completed",
-      "timestamp": 1794668228.0164375,
-      "timestamp_str": "2026-11-14 17:57:08",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge-run-2-bookkeeping",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "Commit reforge run-2 stage-review ledger state (11b9a27) after run-2 completed with 14 commits audited and 0 pending findings",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794668252.5416236,
-      "timestamp_str": "2026-11-14 17:57:32",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "Run-2 completed its five-stage review of the full history and wrote its final stage/delivery state to the project ledger and reforge.json, which are tracked project memory.",
-        "benefits": "Ledger records all five reviewed stages and both resolved review findings; delivery check sees a consistent committed tree.",
-        "risks": "contract: bookkeeping only, no code, test or doc text; dependency: none; concurrency: single-writer; state: tracked .aikit files only",
-        "mitigation": "Explicit staging of the three .aikit files; strict delivery check after task completion"
-      },
-      "checklists": "passed",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "reforge-run-2-bookkeeping",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'reforge-run-2-bookkeeping' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794668253.0864947,
-      "timestamp_str": "2026-11-14 17:57:33",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "store-root-hardening",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/4] Plan harden TaskStore root level: reject duplicate task ids, require next_id >= 1, preserve unknown root keys; M2 guards+tests, M3 root-extras round-trip+test, M4 ADR-006+map+gates+commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794668674.3915422,
-      "timestamp_str": "2026-11-14 18:04:34",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "Probe analysis of the last two pushes found three gaps in the store contract proven by runtime probes: duplicate ids load silently and break stable-reference behaviour, nonsense next_id values are laundered instead of failing loud, and unknown root keys are deleted on the first write - an asymmetry with the per-task unknown-field preservation ADR-004 established.",
-        "benefits": "Malformed or hostile stores fail as the documented RuntimeError before mutation; future store versions keep root-level metadata across writes, matching the round-trip promise already made for task fields.",
-        "risks": "contract: two more store shapes now fail loud (duplicate ids, next_id < 1) and one write shape changes (unknown root keys round-trip); a store a future client wrote could carry root keys this client must not drop; dependency: standard library only; concurrency: single-writer unchanged, no locking in scope; state: store files only, no rename of existing keys; members of seen-set ordering matter for the extras map",
-        "mitigation": "Three tiny isolated guards plus mirroring the existing per-task extras mechanism for the root; one failure-mode test per guard; ADR-006 records the contract change; full gate suite and strict check before delivery; explicit staging"
-      },
-      "plan_digest": "c0b72ea8fbbe4e42076c53ec700f70bf609dd8492ed3a45c2bf988c4e4e9ca59",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "store-root-hardening",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[2/4]-[4/4] Implemented and verified: load rejects duplicate ids and next_id < 1, unknown root keys round-trip via _root_extras, 44 tests pass (3 new), ADR-006 recorded; aikit check 4/4 gates and checklists passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794668990.3300698,
-      "timestamp_str": "2026-11-14 18:09:50",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "Delivery-verification probes found three store-contract gaps; each now fails loud or round-trips per the documented contract",
-        "benefits": "Ambiguous duplicate-id stores are rejected; root metadata survives this client's writes; counter cannot be nonsense",
-        "risks": "contract: two new loud failures and one write-shape change, all recorded in ADR-006; dependency: none; concurrency: unchanged single-writer; state: store files and decisions.md only",
-        "mitigation": "Per-guard regression tests including subTest for 0 and -7; full gate suite; explicit staging of the five changed files"
-      },
-      "checklists": "passed",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "store-root-hardening",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'store-root-hardening' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794669007.2986455,
-      "timestamp_str": "2026-11-14 18:10:07",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "store-durability-bak",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/4] Plan store durability: save keeps a .bak of the previous store (pre-replace), retries os.replace up to 5 times with injectable delay, best-effort directory fsync; load falls back to .bak when the main file is missing; M2 implement, M3 tests+README+ADR-007 (advisory locking recorded as deferred with single-writer rationale), M4 gates+commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794669341.984128,
-      "timestamp_str": "2026-11-14 18:15:41",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "PRINCIPLE-013 calls for temp+fsync+replace with retries, dir fsync and a .bak for state files; probing confirmed save has none of the three, so a crash mid-save or a rename lost to a stale Windows handle loses the store head, and today the failure leaves no recovery copy.",
-        "benefits": "Every save leaves the previous store recoverable as .bak; transient replace failures self-heal; the rename reaches the directory entry unless the platform forbids opening it.",
-        "risks": "contract: new .bak files appear next to the store and load() reads .bak when the main file is missing (recovery semantics must be documented); dependency: time and os only, standard library; concurrency: no advisory locking yet, deliberate ADR deferral - a lost-update window between load and save remains; state: save failure paths change, temp-file cleanup preserved; if the backup move crashes before the replace lands the main file is absent until the next save, so the fallback load is part of the contract",
-        "mitigation": "Recovery semantics and the locking deferral both land in ADR-007; injectable retry delay keeps unit tests under the 20ms budget; per-behaviour regression tests including a mocked transient replace failure; full gates and strict check before delivery; explicit staging"
-      },
-      "plan_digest": "692fdd664edfa70ca8fa9e14b2562fb22dfb310647baa219293682111eed30eb",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "store-durability-bak",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[2/4]-[4/4] Implemented and verified: save keeps .bak of previous store, retries replace (5 tries, injectable flat delay), POSIX dir fsync skipped on Windows with hygiene: allow marker; load falls back to .bak; 47 tests pass (3 new); ADR-007 records the locking deferral; README documents recovery; checklists passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794669818.7621608,
-      "timestamp_str": "2026-11-14 18:23:38",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "PRINCIPLE-013 durability pattern was absent from the store; a mid-save crash or blocked rename could lose the store head irrecoverably",
-        "benefits": "Previous store always recoverable as .bak; transient replace failures self-heal; rename reaches the directory entry on POSIX",
-        "risks": "contract: .bak files appear beside the store and missing main files read from .bak; dependency: time module only; concurrency: locking deliberately deferred via ADR-007 single-writer stance; state: save failure paths restructured, temp cleanup preserved",
-        "mitigation": "Three regression tests including mocked transient double-failure; retry delay injectable keeping tests fast; ADR-007 and README document the recovery and Windows skip; full gates plus strict check before delivery"
-      },
-      "checklists": "passed",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "store-durability-bak",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'store-durability-bak' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794669869.3734896,
-      "timestamp_str": "2026-11-14 18:24:29",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "due-canonicalization",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/4] Plan resolve ADR-004 due-format deferral: one canonical acceptance set for due values; compact YYYYMMDD accepted and canonicalized to YYYY-MM-DD at CLI add/edit and store load; week dates and other parseable-but-non-canonical forms fail loud on every supported runtime; M2 implement canonical_due + validate_due/load wiring, M3 tests + ADR-008 + README wording, M4 gates + commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794670967.4752588,
-      "timestamp_str": "2026-11-14 18:42:47",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "ADR-004 deferred strict due parsing because date.fromisoformat accepts non-canonical forms on 3.11+ only, so the same store read differently across the runtimes the README supports; canonicalizing at every entry point converges the accepted set without breaking stores a 3.11 runtime already wrote",
-        "benefits": "Due values are comparable and filterable identically on 3.10 and 3.11+; stores self-heal to canonical form on the next write; the open migration question from ADR-004 closes",
-        "risks": "contract: due acceptance changes (new compact form accepted, week dates now rejected everywhere) and error message set changes; dependency: standard library only; concurrency: single-writer unchanged; state: due values already stored in non-canonical ISO forms are canonicalized on first write - a one-time normalizing write",
-        "mitigation": "canonical_due shared by both entry points (single implementation); per-shape regression tests including week-date rejection and load canonicalization; ADR-008 + README document the acceptance set; full gates and strict check before delivery; explicit staging"
-      },
-      "plan_digest": "50e972623ea12f0284e1e9323df9151ea89b54da3b4f64a01c0d0f1453645b11",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "due-canonicalization",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[4/4] Verify resolve ADR-004 due-format deferral: canonical_due acceptance set shipped (M2), 49/49 tests incl. load canonicalization + week-date rejection + compact add roundtrip (M3), ADR-008 + README wording + knowledge map regenerated (M3), checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794671077.0000687,
-      "timestamp_str": "2026-11-14 18:44:37",
-      "agent": "vibe:1",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "due-canonicalization",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'due-canonicalization' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794671187.3131611,
-      "timestamp_str": "2026-11-14 18:46:27",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "cli-features",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/4] Plan CLI features: list gains --search (case-insensitive substring over title+tags) and --sort {due,priority,id,created} (default order unchanged); new stats command reporting open/done/overdue counts and priority distribution over<=5 lines; M2 implement, M3 tests+README commands, M4 gates+commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794671388.7660744,
-      "timestamp_str": "2026-11-14 18:49:48",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "User asked for stats, search and --sort from the recorded backlog; search reuses the list pipeline instead of a parallel command to avoid duplicate filtering roles",
-        "benefits": "Find tasks without grepping JSON; deterministic alternate orderings for scripting; at-a-glance store summary",
-        "risks": "contract: additive flags and a new command, no existing behavior change (default sort/args untouched); dependency: stdlib only; concurrency: single-writer unchanged; state: none (read-only paths)",
-        "mitigation": "list_tasks gains query/sort params with exact current default preserved; stats as one pure read function; per-feature tests; README updated same commit; full gates before commit"
-      },
-      "plan_digest": "921f6b971220180e07497c3c0f8e4c276798ca002864cff7e4a32d7408237d0a",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "cli-features",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[4/4] Verify CLI features shipped: list --search + --sort with default order preserved, stats command; 53/53 tests; CLI smoke of add/list/search/stats clean; README usage + commands updated; checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794671474.26114,
-      "timestamp_str": "2026-11-14 18:51:14",
-      "agent": "vibe:1",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "cli-features",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'cli-features' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794671477.4826117,
-      "timestamp_str": "2026-11-14 18:51:17",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "schema-version",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/3] Plan store schema_version: save writes root schema_version 2; load accepts missing (legacy), requires positive int, refuses newer with a clear error; key lives next to tasks/next_id and is never merged into root extras; ADR-009 records it as the anchor for future migrations; M2 implement, M3 tests+ADR+README, M4 gates+commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794671487.6261625,
-      "timestamp_str": "2026-11-14 18:51:27",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "Every store contract change so far (next_id, root extras, canonical due) had to argue from absence of a version marker; a schema_version root key is the smallest durable anchor that lets a future reader detect a newer store before misreading its shape",
-        "benefits": "Newer-store protection with an actionable error; explicit format identifier for migration tooling; zero migration needed today",
-        "risks": "contract: new root key appears in every save and unknown-version stores now fail load (new guard, previously they loaded blindly); dependency: stdlib; concurrency: single-writer; state: stores this version wrote stay readable (missing key accepted); root extras exclusion grows by one key",
-        "mitigation": "guard rejects only strictly-greater versions and non-integer/too-low values as corrupt; backward-compat and newer-store tests; ADR-009; README mentions the schema key; full gates"
-      },
-      "plan_digest": "60eebad0b7cae4fc5e1ab211fee2ee04af6ebba9fcffb2eca855e04f1c786ca0",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "schema-version",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[3/3] Verify store schema_version shipped: save writes SCHEMA_VERSION 2, load accepts legacy, rejects newer/corrupt versions, key excluded from root extras; 57/57 tests; ADR-009; README store paragraph updated; fixture for unknown root keys moved to a non-owned key; checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794671561.5721483,
-      "timestamp_str": "2026-11-14 18:52:41",
-      "agent": "vibe:1",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
     {
       "task_id": "schema-version",
       "phase": "completed",
@@ -389,6 +32,234 @@
         ],
         "forced": false
       }
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge run",
+      "phase_num": 3,
+      "description": "run started (start=3, step=3, stop=None)",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671648.2885618,
+      "timestamp_str": "2026-11-14 18:54:08",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 1",
+      "phase_num": 3,
+      "description": "Reforge stage 1: window 3, 3 commit(s), 6 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671657.1955314,
+      "timestamp_str": "2026-11-14 18:54:17",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 1",
+      "phase_num": 3,
+      "description": "Reforge stage 1: stage 1 host review reviewed; run active; coverage 32/32",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671806.623244,
+      "timestamp_str": "2026-11-14 18:56:46",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 2",
+      "phase_num": 3,
+      "description": "Reforge stage 2: window 6, 3 commit(s), 6 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671818.787425,
+      "timestamp_str": "2026-11-14 18:56:58",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 2",
+      "phase_num": 3,
+      "description": "Reforge stage 2: stage 2 host review reviewed; run active; coverage 26/26",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671877.8956015,
+      "timestamp_str": "2026-11-14 18:57:57",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 3",
+      "phase_num": 3,
+      "description": "Reforge stage 3: window 9, 3 commit(s), 5 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671883.5105786,
+      "timestamp_str": "2026-11-14 18:58:03",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 3",
+      "phase_num": 3,
+      "description": "Reforge stage 3: stage 3 host review reviewed; run active; coverage 22/22",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671947.7699587,
+      "timestamp_str": "2026-11-14 18:59:07",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 4",
+      "phase_num": 3,
+      "description": "Reforge stage 4: window 12, 3 commit(s), 7 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671950.0489984,
+      "timestamp_str": "2026-11-14 18:59:10",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 4",
+      "phase_num": 3,
+      "description": "Reforge stage 4: stage 4 host review reviewed; run active; coverage 13/13",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671976.3938146,
+      "timestamp_str": "2026-11-14 18:59:36",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 5",
+      "phase_num": 3,
+      "description": "Reforge stage 5: window 15, 3 commit(s), 8 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671979.4994204,
+      "timestamp_str": "2026-11-14 18:59:39",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 5",
+      "phase_num": 3,
+      "description": "Reforge stage 5: stage 5 host review reviewed; run active; coverage 37/37",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794672027.1445296,
+      "timestamp_str": "2026-11-14 19:00:27",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 6",
+      "phase_num": 3,
+      "description": "Reforge stage 6: window 18, 3 commit(s), 10 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794672030.3047185,
+      "timestamp_str": "2026-11-14 19:00:30",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 6",
+      "phase_num": 3,
+      "description": "Reforge stage 6: stage 6 host review reviewed; run active; coverage 19/19",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794672066.6053267,
+      "timestamp_str": "2026-11-14 19:01:06",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 7",
+      "phase_num": 3,
+      "description": "Reforge stage 7: window 21, 3 commit(s), 8 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794672077.3329232,
+      "timestamp_str": "2026-11-14 19:01:17",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 7",
+      "phase_num": 3,
+      "description": "Reforge stage 7: stage 7 host review reviewed; run active; coverage 14/14",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794672103.5418541,
+      "timestamp_str": "2026-11-14 19:01:43",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 8",
+      "phase_num": 3,
+      "description": "Reforge stage 8: window 22, 1 commit(s), 9 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794672106.6303272,
+      "timestamp_str": "2026-11-14 19:01:46",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge:run-3",
+      "phase": "reforge stage 8",
+      "phase_num": 3,
+      "description": "Reforge stage 8: stage 8 host review reviewed; run completed; coverage 9/9",
+      "files_affected": [],
+      "status": "completed",
+      "timestamp": 1794672172.63405,
+      "timestamp_str": "2026-11-14 19:02:52",
+      "agent": "unidentified"
+    },
+    {
+      "task_id": "priority-guard-helper",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/3] Refactor extract module-level validate_priority returning the value or raising the same ValueError, replacing the four copies of the boolean-aware guard in add_task, edit_task, list_tasks and TaskStore.load; M2 implement, M3 tests+map, M4 gates+commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794672205.9734497,
+      "timestamp_str": "2026-11-14 19:03:25",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "Reforge run-3 stage 3 accepted the finding that the three-part guard is pasted at four call sites, so a future edit to one copy would drift acceptance between the API layer and the store",
+        "benefits": "One acceptance definition for priority across store and API; future priority changes land in one place",
+        "risks": "contract: none, identical acceptance set and messages, pure refactor; dependency: stdlib only; concurrency: single-writer unchanged; state: none",
+        "mitigation": "existing 57 tests must pass unchanged including the bool rejections at every layer; hygiene and strict check gates"
+      },
+      "plan_digest": "5d0e4ef9f0ec977ed74cad1a6a304fe5371280b6182230b6f2bcb2efd9336d15",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "priority-guard-helper",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[3/3] Verify validate_priority extraction: single guard definition now used by add_task, edit_task, list_tasks and load; 57/57 tests pass unchanged including bool rejections at every layer; map regenerated; reforge run-3 stage-3 finding closed; checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794672322.9404912,
+      "timestamp_str": "2026-11-14 19:05:22",
+      "agent": "vibe:1",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
     }
   ]
 }
