@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `5`
 - **Total Top-Level Functions**: `17`
-- **Total Class Methods**: `94`
-- **Total Source Lines**: `1401`
+- **Total Class Methods**: `97`
+- **Total Source Lines**: `1447`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `628` lines (`24366` bytes)
+**Size**: `638` lines (`24961` bytes)
 
 **Classes:**
 - `class Task`
@@ -53,7 +53,7 @@
 - `def delete_task(store, task_id)`
 - `def edit_task(store, task_id, title, priority, due, clear_due, tags, clear_tags)`
 - `def _sort_key(name)`
-- `def list_tasks(store, include_done, tag, overdue, priority, query, sort)`
+- `def list_tasks(store, include_done, tag, overdue, priority, query, sort, limit)`
 - `def next_task(store)`
 - `def task_stats(store)`
 - `def render_task(task)`
@@ -63,7 +63,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `773` lines (`31740` bytes)
+**Size**: `809` lines (`33408` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -133,6 +133,7 @@
   - Method `.test_error_inside_transaction_releases_lock_and_writes_nothing()`
   - Method `.test_second_store_is_locked_out_while_a_transaction_is_open()`
   - Method `.test_second_process_writer_wins_the_lock_after_release()`
+  - Method `.test_list_limit_binds_after_sorting_and_rejects_non_positive()`
   - Method `.test_next_task_returns_top_open_task_in_due_order()`
   - Method `.test_next_task_without_open_tasks_raises()`
   - Method `.test_edit_noop_and_conflicts_raise()`
@@ -149,6 +150,8 @@
   - Method `.test_main_all_overdue_and_tag_filters()`
   - Method `.test_main_done_reopen_round_trip()`
   - Method `.test_main_rm_removes_and_missing_id_fails()`
+  - Method `.test_main_list_json_prints_one_parseable_line_of_records()`
+  - Method `.test_main_list_limit_caps_after_sorting()`
   - Method `.test_main_relative_due_round_trips_through_add_and_edit()`
   - Method `.test_main_added_task_is_persisted()`
 
