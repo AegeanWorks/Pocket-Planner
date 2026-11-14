@@ -17,6 +17,7 @@ from pocket_planner import (
     edit_task,
     list_tasks,
     main,
+    next_task,
     reopen_task,
     task_stats,
 )
@@ -514,6 +515,17 @@ class PocketPlannerTests(unittest.TestCase):
         self.assertIsNone(edited.due)
         self.assertEqual(edited.tags, [])
 
+    def test_next_task_returns_top_open_task_in_due_order(self):
+        first = add_task(self.store, "first", 2, "2026-11-02")
+        add_task(self.store, "laidate", 2, "2026-11-05")
+        complete_task(self.store, first.id)
+        top = add_task(self.store, "top", 2, "2026-11-01")
+        self.assertEqual(next_task(self.store).id, top.id)
+
+    def test_next_task_without_open_tasks_raises(self):
+        with self.assertRaises(ValueError):
+            next_task(self.store)
+
     def test_edit_noop_and_conflicts_raise(self):
         task = add_task(self.store, "t", 2)
         with self.assertRaises(ValueError):
@@ -577,6 +589,30 @@ class MainTests(unittest.TestCase):
         with self.assertRaises(SystemExit) as raised:
             self.run_main("add", "alpha", "-p", "9")
         self.assertEqual(raised.exception.code, 2)
+
+    def test_main_next_prints_top_open_task_and_empty_store_fails_cleanly(self):
+        self.run_main("add", "tomorrow", "-p", "2", "--due", "20261105")
+        self.run_main("add", "urgent", "-p", "2", "--due", "20261101")
+        code, out, _ = self.run_main("next")
+        self.assertEqual(code, 0)
+        self.assertIn("#2 P2 urgent (due 2026-11-01)", out)
+        self.assertNotIn("tomorrow", out)
+        self.run_main("rm", "1")
+        self.run_main("done", "2")
+        code, out, err = self.run_main("next")
+        self.assertEqual(code, 1)
+        self.assertEqual(out, "")
+        self.assertIn("Error: no open tasks", err)
+
+    def test_main_stats_json_prints_parseable_summary(self):
+        self.run_main("add", "alpha", "-p", "1")
+        self.run_main("add", "low", "-p", "3")
+        self.run_main("done", "2")
+        code, out, err = self.run_main("stats", "--json")
+        self.assertEqual(code, 0)
+        self.assertEqual(err, "")
+        payload = json.loads(out)
+        self.assertEqual(payload, {"tasks": 2, "open": 1, "done": 1, "overdue": 0, "by_priority": {"1": 1, "2": 0, "3": 1}})
 
     def test_main_added_task_is_persisted(self):
         code, _, _ = self.run_main("add", "persisted", "-p", "2")

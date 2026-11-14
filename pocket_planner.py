@@ -381,6 +381,13 @@ def list_tasks(
     return sorted(visible, key=_sort_key(sort))
 
 
+def next_task(store: TaskStore) -> Task:
+    open_tasks = list_tasks(store)
+    if not open_tasks:
+        raise ValueError("no open tasks")
+    return open_tasks[0]
+
+
 class Stats(NamedTuple):
     tasks: int
     open: int
@@ -410,6 +417,17 @@ def task_stats(store: TaskStore) -> Stats:
     )
 
 
+def render_task(task: Task) -> str:
+    marker = "x" if task.done else " "
+    details = []
+    if task.due:
+        details.append(f"due {task.due}")
+    if task.tags:
+        details.append(" ".join(f"#{tag}" for tag in task.tags))
+    suffix = f" ({', '.join(details)})" if details else ""
+    return f"[{marker}] #{task.id} P{task.priority} {task.title}{suffix}"
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Manage tasks in a local JSON file.")
     parser.add_argument("--file", type=Path, default=Path(".pocket-planner.json"))
@@ -429,6 +447,8 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("--search", help="only show tasks whose title or tags contain this text")
     show.add_argument("--sort", choices=SORT_KEYS, default="due", help="order by due, priority, id, or created")
     stats = commands.add_parser("stats", help="summarize the store")
+    stats.add_argument("--json", action="store_true", help="print the summary as JSON")
+    next_cmd = commands.add_parser("next", help="show the top open task")
     done = commands.add_parser("done", help="complete a task")
     done.add_argument("id", type=int)
     reopen = commands.add_parser("reopen", help="reopen a completed task")
@@ -488,22 +508,30 @@ def main(argv: list[str] | None = None) -> int:
             if not tasks:
                 print("No tasks.")
             for task in tasks:
-                marker = "x" if task.done else " "
-                details = []
-                if task.due:
-                    details.append(f"due {task.due}")
-                if task.tags:
-                    details.append(" ".join(f"#{tag}" for tag in task.tags))
-                suffix = f" ({', '.join(details)})" if details else ""
-                print(f"[{marker}] #{task.id} P{task.priority} {task.title}{suffix}")
+                print(render_task(task))
+        elif args.command == "next":
+            print(render_task(next_task(store)))
         elif args.command == "stats":
             summary = task_stats(store)
-            priorities = ", ".join(f"P{level} {count}" for level, count in summary.by_priority.items())
-            print(
-                f"Tasks: {summary.tasks} (open {summary.open}, done {summary.done}, "
-                f"overdue {summary.overdue})"
-            )
-            print(f"Priority: {priorities}")
+            if args.json:
+                print(
+                    json.dumps(
+                        {
+                            "tasks": summary.tasks,
+                            "open": summary.open,
+                            "done": summary.done,
+                            "overdue": summary.overdue,
+                            "by_priority": summary.by_priority,
+                        }
+                    )
+                )
+            else:
+                priorities = ", ".join(f"P{level} {count}" for level, count in summary.by_priority.items())
+                print(
+                    f"Tasks: {summary.tasks} (open {summary.open}, done {summary.done}, "
+                    f"overdue {summary.overdue})"
+                )
+                print(f"Priority: {priorities}")
         else:
             raise ValueError(f"unknown command {args.command!r}")
         return 0
