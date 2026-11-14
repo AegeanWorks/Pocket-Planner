@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import contextlib
 import json
+import math
 import os
 import re
 import sys
@@ -586,8 +587,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        if args.wait is not None and args.wait < 0:
-            raise ValueError("--wait must be a non-negative number")
+        if args.wait is not None and (not math.isfinite(args.wait) or args.wait < 0):
+            raise ValueError("--wait must be a finite non-negative number")
         store = TaskStore(args.file, lock_wait=3.0 if args.wait is None else args.wait)
         if args.command == "add":
             task = add_task(store, " ".join(args.title), args.priority, args.due, args.tag)

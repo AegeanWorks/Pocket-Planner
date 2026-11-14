@@ -799,7 +799,7 @@ class MainTests(unittest.TestCase):
         self.assertEqual([t.title for t in store.load()], ["seed"])
         code, out, err = self.run_main("--wait", "-1", "add", "bad")
         self.assertEqual(code, 1)
-        self.assertIn("Error: --wait must be a non-negative number", err)
+        self.assertIn("Error: --wait must be a finite non-negative number", err)
 
     def test_main_export_import_round_trip_and_error_paths(self):
         self.run_main("add", "first", "-p", "1", "--due", "today+4", "--tag", "work")
@@ -843,6 +843,15 @@ class MainTests(unittest.TestCase):
         self.assertIn("unique", err)
         store = TaskStore(Path(self.store_path))
         self.assertEqual(len(store.load()), 2)
+
+    def test_main_wait_rejects_non_finite_values(self):
+        for bad in ("nan", "inf"):
+            code, out, err = self.run_main("--wait", bad, "add", "doomed")
+            self.assertEqual(code, 1)
+            self.assertEqual(out, "")
+            self.assertIn("Error: --wait must be a finite non-negative number", err)
+        store = TaskStore(Path(self.store_path))
+        self.assertEqual(store.load(), [])
 
     def test_main_relative_due_round_trips_through_add_and_edit(self):
         expected = (date.today() + timedelta(days=7)).isoformat()
