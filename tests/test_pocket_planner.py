@@ -553,6 +553,13 @@ class PocketPlannerTests(unittest.TestCase):
         self.assertEqual(store.load(), [])
         lock.unlink()
 
+    def test_unusable_lock_path_fails_with_runtime_error(self):
+        store = TaskStore(Path(self.directory.name) / "blocked.json", lock_wait=0.05, retry_delay=0.001)
+        store.path.with_name(store.path.name + ".lock").mkdir()
+        with self.assertRaises(RuntimeError):
+            add_task(store, "denied", 2)
+        self.assertEqual(store.load(), [])
+
     def test_stale_lock_is_broken_and_mutation_succeeds(self):
         store = TaskStore(Path(self.directory.name) / "stale.json", lock_wait=0.05, retry_delay=0.001)
         lock = store.path.with_name(store.path.name + ".lock")

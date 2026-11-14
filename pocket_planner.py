@@ -83,6 +83,8 @@ class TaskStore:
                     raise RuntimeError(f"store is locked by another process: {lock_path}")
                 time.sleep(self.retry_delay)
                 continue
+            except OSError as error:
+                raise RuntimeError(f"cannot create lock {lock_path}: {error}") from error
             self._lock_held = True
             try:
                 with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
