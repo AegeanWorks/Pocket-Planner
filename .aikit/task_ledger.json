@@ -1,62 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-lock-error-map-cover",
+    "task_id": "pp-cli-wiring-tests",
     "last_phase": "in_progress",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794677705.6873436,
+    "updated_at": 1794677847.6049206,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794677706.0695386
+    "completed_at": 1794677848.4041436
   },
   "checkpoints": [
-    {
-      "task_id": "pp-backup-rotation",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[2/2] Implemented depth-2 backup rotation with atomic os.replace chain; failing-first test added first (confirmed failing), suite 67/67 passed after implementation; README recovery sentence updated. checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794673970.20413,
-      "timestamp_str": "2026-11-14 19:32:50",
-      "agent": "vibe:1"
-    },
-    {
-      "task_id": "pp-backup-rotation",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'pp-backup-rotation' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794673980.8558972,
-      "timestamp_str": "2026-11-14 19:33:00",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "pp-relative-due",
-      "phase": "in_progress",
-      "phase_num": 2,
-      "description": "[1/2] Plan: relative due input in validate_due (today, today+N, today-N, case-insensitive, frozen to absolute ISO at insert via date.today + timedelta); canonical_due/load stays strict disk-format; help text and README updated",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794675961.495144,
-      "timestamp_str": "2026-11-14 20:06:01",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "backlog: computing offsets by hand is friction for the most common planning case",
-        "benefits": "one-word and N-day due entry from CLI and API; stored data stays absolute and canonical",
-        "risks": "contract: additive input grammar, disk format unchanged; dependency: datetime.timedelta only; concurrency: none; state: uses local date.today, same as overdue logic elsewhere",
-        "mitigation": "failing-first tests for +N/-N/today/case-insensitivity and CLI wiring; full suite + strict check; validate commit subject"
-      },
-      "plan_digest": "e6a177bd92c08e06f106ce1825872ad89a1989961a8af8b9039f8afe8da5c299"
-    },
     {
       "task_id": "pp-relative-due",
       "phase": "in_progress",
@@ -301,6 +256,51 @@
       "status": "completed",
       "timestamp": 1794677706.0695405,
       "timestamp_str": "2026-11-14 20:35:06",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-cli-wiring-tests",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/2] Plan: second-wave MainTests - --all, --overdue, --tag filters, rm (including not-found exit 1), done/reopen round trip; tests-only commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677787.3390305,
+      "timestamp_str": "2026-11-14 20:36:27",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "post-push audit gap 1: those CLI flags are wired only at function level",
+        "benefits": "regression net on argument wiring and exit codes for the whole CLI surface",
+        "risks": "contract: none (tests only); dependency: none; concurrency: none; state: none",
+        "mitigation": "run suite before commit; strict check; validate subject"
+      },
+      "plan_digest": "908812a9cf1e82eb71ade746426f59e3a3c28d6732a613ccb82332539bec2d2d"
+    },
+    {
+      "task_id": "pp-cli-wiring-tests",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[2/2] Added 4 MainTests (+3 with an extra month buffer date cover): --tag/--overdue/--all filters, done-reopen round trip, rm/delete with not-found exit 1. Suite 78/78; one test-date bug fixed before commit (a due inside the current month-of-run was already past). checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677847.6049206,
+      "timestamp_str": "2026-11-14 20:37:27",
+      "agent": "vibe:1"
+    },
+    {
+      "task_id": "pp-cli-wiring-tests",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-cli-wiring-tests' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794677848.4041471,
+      "timestamp_str": "2026-11-14 20:37:28",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
