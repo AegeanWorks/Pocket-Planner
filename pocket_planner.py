@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import os
 import re
@@ -31,10 +32,21 @@ class Task:
 
 
 class TaskStore:
-    def __init__(self, path: Path, *, replace_tries: int = 5, retry_delay: float = 0.05) -> None:
+    def __init__(
+        self,
+        path: Path,
+        *,
+        replace_tries: int = 5,
+        retry_delay: float = 0.05,
+        lock_wait: float = 3.0,
+        stale_after: float = 30.0,
+    ) -> None:
         self.path = path
         self.replace_tries = replace_tries
         self.retry_delay = retry_delay
+        self.lock_wait = lock_wait
+        self.stale_after = stale_after
+        self._lock_held = False
         self._extras: dict[int, dict[str, object]] = {}
         self._next_id: int | None = None
         self._root_extras: dict[str, object] = {}
@@ -46,6 +58,65 @@ class TaskStore:
     @property
     def _rotated_backup_path(self) -> Path:
         return self.path.with_name(self.path.name + ".bak.1")
+
+    @property
+    def _lock_path(self) -> Path:
+        return self.path.with_name(self.path.name + ".lock")
+
+    def _acquire_lock(self) -> None:
+        if self._lock_held:
+            return
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        lock_path = self._lock_path
+        deadline = time.monotonic() + self.lock_wait
+        while True:
+            try:
+                descriptor = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            except FileExistsError:
+                try:
+                    if time.time() - lock_path.stat().st_mtime > self.stale_after:
+                        lock_path.unlink()
+                        continue
+                except OSError:
+                    pass
+                if time.monotonic() >= deadline:
+                    raise RuntimeError(f"store is locked by another process: {lock_path}")
+                time.sleep(self.retry_delay)
+                continue
+            self._lock_held = True
+            try:
+                with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+                    handle.write(f"{os.getpid()} {now()}\n")
+                    handle.flush()
+                    os.fsync(handle.fileno())
+            except OSError as error:
+                self._lock_held = False
+                with contextlib.suppress(OSError):
+                    lock_path.unlink()
+                raise RuntimeError(f"cannot create lock {lock_path}: {error}") from error
+            return
+
+    def _release_lock(self) -> None:
+        if not self._lock_held:
+            return
+        self._lock_held = False
+        with contextlib.suppress(OSError):
+            self._lock_path.unlink()
+
+    @contextlib.contextmanager
+    def transaction(self):
+        """Lock, load, yield the task list, save on a clean exit, release always.
+
+        The single lock file assumes one writer per process; nested
+        transaction calls inside one process reuse the held lock.
+        """
+        self._acquire_lock()
+        try:
+            tasks = self.load()
+            yield tasks
+            self.save(tasks)
+        finally:
+            self._release_lock()
 
     def load(self) -> list[Task]:
         self._extras = {}
@@ -254,53 +325,50 @@ def add_task(
         raise ValueError("task title cannot be empty")
     priority = validate_priority(priority)
     due = validate_due(due)
-    tasks = store.load()
-    task = Task(
-        id=store.next_task_id(tasks),
-        title=title,
-        priority=priority,
-        created_at=now(),
-        due=due,
-        tags=normalize_tags(tags),
-    )
-    store.save(tasks + [task])
-    return task
+    with store.transaction() as tasks:
+        task = Task(
+            id=store.next_task_id(tasks),
+            title=title,
+            priority=priority,
+            created_at=now(),
+            due=due,
+            tags=normalize_tags(tags),
+        )
+        tasks.append(task)
+        return task
 
 
 def complete_task(store: TaskStore, task_id: int) -> Task:
-    tasks = store.load()
-    for task in tasks:
-        if task.id == task_id:
-            if task.done:
-                raise ValueError(f"task {task_id} is already complete")
-            task.done = True
-            task.completed_at = now()
-            store.save(tasks)
-            return task
-    raise ValueError(f"task {task_id} was not found")
+    with store.transaction() as tasks:
+        for task in tasks:
+            if task.id == task_id:
+                if task.done:
+                    raise ValueError(f"task {task_id} is already complete")
+                task.done = True
+                task.completed_at = now()
+                return task
+        raise ValueError(f"task {task_id} was not found")
 
 
 def reopen_task(store: TaskStore, task_id: int) -> Task:
-    tasks = store.load()
-    for task in tasks:
-        if task.id == task_id:
-            if not task.done:
-                raise ValueError(f"task {task_id} is not complete")
-            task.done = False
-            task.completed_at = None
-            store.save(tasks)
-            return task
-    raise ValueError(f"task {task_id} was not found")
+    with store.transaction() as tasks:
+        for task in tasks:
+            if task.id == task_id:
+                if not task.done:
+                    raise ValueError(f"task {task_id} is not complete")
+                task.done = False
+                task.completed_at = None
+                return task
+        raise ValueError(f"task {task_id} was not found")
 
 
 def delete_task(store: TaskStore, task_id: int) -> Task:
-    tasks = store.load()
-    for task in tasks:
-        if task.id == task_id:
-            remaining = [item for item in tasks if item.id != task_id]
-            store.save(remaining)
-            return task
-    raise ValueError(f"task {task_id} was not found")
+    with store.transaction() as tasks:
+        for task in tasks:
+            if task.id == task_id:
+                tasks[:] = [item for item in tasks if item.id != task_id]
+                return task
+        raise ValueError(f"task {task_id} was not found")
 
 
 def edit_task(
@@ -321,27 +389,26 @@ def edit_task(
         raise ValueError("pass --clear-due to remove the due date")
     if tags is not None and clear_tags:
         raise ValueError("pass either --tag or --clear-tags, not both")
-    tasks = store.load()
-    for task in tasks:
-        if task.id == task_id:
-            if title is not None:
-                cleaned = " ".join(title.split())
-                if not cleaned:
-                    raise ValueError("task title cannot be empty")
-                task.title = cleaned
-            if priority is not None:
-                task.priority = validate_priority(priority)
-            if clear_due:
-                task.due = None
-            elif due is not None:
-                task.due = validate_due(due)
-            if clear_tags:
-                task.tags = []
-            elif tags is not None:
-                task.tags = normalize_tags(tags)
-            store.save(tasks)
-            return task
-    raise ValueError(f"task {task_id} was not found")
+    with store.transaction() as tasks:
+        for task in tasks:
+            if task.id == task_id:
+                if title is not None:
+                    cleaned = " ".join(title.split())
+                    if not cleaned:
+                        raise ValueError("task title cannot be empty")
+                    task.title = cleaned
+                if priority is not None:
+                    task.priority = validate_priority(priority)
+                if clear_due:
+                    task.due = None
+                elif due is not None:
+                    task.due = validate_due(due)
+                if clear_tags:
+                    task.tags = []
+                elif tags is not None:
+                    task.tags = normalize_tags(tags)
+                return task
+        raise ValueError(f"task {task_id} was not found")
 
 
 SORT_KEYS = ("due", "priority", "id", "created")

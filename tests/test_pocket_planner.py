@@ -2,6 +2,7 @@ import io
 import json
 import os
 import tempfile
+import time
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from datetime import date, timedelta
@@ -11,6 +12,7 @@ from unittest import mock
 from pocket_planner import (
     SCHEMA_VERSION,
     Stats,
+    Task,
     TaskStore,
     add_task,
     complete_task,
@@ -19,6 +21,7 @@ from pocket_planner import (
     list_tasks,
     main,
     next_task,
+    now,
     reopen_task,
     task_stats,
 )
@@ -540,6 +543,58 @@ class PocketPlannerTests(unittest.TestCase):
 
         self.assertIsNone(edited.due)
         self.assertEqual(edited.tags, [])
+
+    def test_locked_store_refuses_mutator_with_runtime_error(self):
+        store = TaskStore(Path(self.directory.name) / "locked.json", lock_wait=0.05, retry_delay=0.001)
+        lock = store.path.with_name(store.path.name + ".lock")
+        lock.write_text("999999 whoever\n", encoding="utf-8")
+        with self.assertRaises(RuntimeError):
+            add_task(store, "blocked", 2)
+        self.assertEqual(store.load(), [])
+        lock.unlink()
+
+    def test_stale_lock_is_broken_and_mutation_succeeds(self):
+        store = TaskStore(Path(self.directory.name) / "stale.json", lock_wait=0.05, retry_delay=0.001)
+        lock = store.path.with_name(store.path.name + ".lock")
+        lock.write_text("999999 abandoned\n", encoding="utf-8")
+        ancient = time.time() - 31.0
+        os.utime(lock, (ancient, ancient))
+        task = add_task(store, "recovered", 2)
+        self.assertFalse(lock.exists())
+        self.assertEqual([item.title for item in store.load()], ["recovered"])
+        self.assertGreaterEqual(task.id, 1)
+
+    def test_error_inside_transaction_releases_lock_and_writes_nothing(self):
+        store = TaskStore(Path(self.directory.name) / "rollback.json", lock_wait=0.05, retry_delay=0.001)
+        add_task(store, "one", 2)
+        with self.assertRaises(ValueError):
+            complete_task(store, 999)
+        lock = store.path.with_name(store.path.name + ".lock")
+        self.assertFalse(lock.exists())
+        add_task(store, "two", 2)
+        self.assertEqual([item.title for item in store.load()], ["one", "two"])
+
+    def test_second_store_is_locked_out_while_a_transaction_is_open(self):
+        path = Path(self.directory.name) / "contended.json"
+        first = TaskStore(path, lock_wait=0.05, retry_delay=0.001)
+        second = TaskStore(path, lock_wait=0.05, retry_delay=0.001)
+        add_task(first, "one", 2)
+        with first.transaction() as tasks:
+            with self.assertRaises(RuntimeError):
+                add_task(second, "refused", 2)
+            self.assertNotIn("refused", [t.title for t in tasks])
+        add_task(second, "two", 2)
+        self.assertEqual([t.title for t in TaskStore(path).load()], ["one", "two"])
+        self.assertFalse(path.with_name(path.name + ".lock").exists())
+
+    def test_second_process_writer_wins_the_lock_after_release(self):
+        path = Path(self.directory.name) / "handoff.json"
+        first = TaskStore(path, lock_wait=0.05, retry_delay=0.001)
+        with first.transaction() as tasks:
+            tasks.append(Task(id=first.next_task_id(tasks), title="in-flight", priority=2, created_at=now()))
+        reader = TaskStore(path)
+        self.assertEqual([t.title for t in reader.load()], ["in-flight"])
+        self.assertFalse(path.with_name(path.name + ".lock").exists())
 
     def test_next_task_returns_top_open_task_in_due_order(self):
         first = add_task(self.store, "first", 2, "2026-11-02")
