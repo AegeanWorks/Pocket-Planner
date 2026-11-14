@@ -8,6 +8,8 @@
 
 A local-first task manager for capturing, prioritizing, and completing work from a fast terminal workflow.
 
+> **Archived**: Development concluded; feature-complete and delivered, no further work planned (archived 2026-11-14). This project is read-only; its GitHub repository is archived.
+
 ## ⚡ 30-Second Cold-Start Quick Reference
 
 - **Runtime Prerequisites**: Python 3.10+; standard library only.
