@@ -1,8 +1,8 @@
 {
   "schema": 2,
-  "next_run_id": 3,
+  "next_run_id": 4,
   "active_run": null,
-  "last_run": "run-2",
+  "last_run": "run-3",
   "runs": [
     {
       "id": "run-1",
@@ -1226,19 +1226,837 @@
         }
       ],
       "total_commits": 14
+    },
+    {
+      "id": "run-3",
+      "start": 3,
+      "step": 3,
+      "stop": null,
+      "stage": 8,
+      "window": 22,
+      "audited_commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+        "9c4853518470fa47e113808f453b360e179bb42a",
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124",
+        "72ca32838943c5106abe9587a1aeddbff66f61ae",
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+        "fe48698812fcaead7cd724b8621d9b13e6af940b",
+        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+        "df45464b7c96f04779a248f702ad16235d24ef4f",
+        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
+        "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+      ],
+      "status": "completed",
+      "created": "2026-11-14T18:54:08",
+      "updated": "2026-11-14T19:02:52",
+      "last_audit": {
+        "run": "run-3",
+        "stage": 8,
+        "window": 22,
+        "commits": [
+          "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+          "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+          "09184360dae4b575512725064a03d47249ec9161",
+          "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+          "b4a42417e859d75dda19942721839357b3570265",
+          "9b007f71475a63c278b42b11213d5788f1cf9516",
+          "28c3917ddde2d8d5df407c81468b2be093b21d25",
+          "11b9a27595db7f9833caeabaf469d7572ee7e633",
+          "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+          "9c4853518470fa47e113808f453b360e179bb42a",
+          "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+          "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+          "8e80ef145738ae1ece2d70649187e5568bd25124",
+          "72ca32838943c5106abe9587a1aeddbff66f61ae",
+          "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+          "fe48698812fcaead7cd724b8621d9b13e6af940b",
+          "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+          "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+          "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+          "df45464b7c96f04779a248f702ad16235d24ef4f",
+          "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
+          "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+        ],
+        "new_commits": [
+          "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+        ],
+        "prior_commits": [
+          "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+          "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+          "09184360dae4b575512725064a03d47249ec9161",
+          "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+          "b4a42417e859d75dda19942721839357b3570265",
+          "9b007f71475a63c278b42b11213d5788f1cf9516",
+          "28c3917ddde2d8d5df407c81468b2be093b21d25",
+          "11b9a27595db7f9833caeabaf469d7572ee7e633",
+          "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+          "9c4853518470fa47e113808f453b360e179bb42a",
+          "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+          "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+          "8e80ef145738ae1ece2d70649187e5568bd25124",
+          "72ca32838943c5106abe9587a1aeddbff66f61ae",
+          "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+          "fe48698812fcaead7cd724b8621d9b13e6af940b",
+          "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+          "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+          "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+          "df45464b7c96f04779a248f702ad16235d24ef4f",
+          "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab"
+        ],
+        "findings": [],
+        "repairs": [],
+        "counts": {},
+        "reviewed": 9,
+        "review": {
+          "status": "reviewed",
+          "rejected": [],
+          "files": [
+            ".aikit/decisions.md",
+            ".aikit/guidelines.md",
+            ".aikit/project.json",
+            ".gitignore",
+            "COMMERCIAL.md",
+            "LICENSE",
+            "LICENSES/LicenseRef-AL-1.1.txt",
+            "README.md",
+            "REUSE.toml"
+          ],
+          "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-8-72d56cf234d9.md",
+          "redacted": 0,
+          "reason": "the answer held no findings",
+          "method": "host",
+          "coverage": {
+            "reported": 9,
+            "total": 9,
+            "missing": [],
+            "unknown": [],
+            "invalid": []
+          },
+          "findings": []
+        },
+        "skipped": [],
+        "tests": {},
+        "gates": {},
+        "delivery": {
+          "commit": "",
+          "short": "",
+          "pushed": false,
+          "push_error": null,
+          "empty": true,
+          "timestamp": "2026-11-14T19:01:46"
+        },
+        "timestamp": "2026-11-14T19:01:46"
+      },
+      "history": [
+        {
+          "run": "run-3",
+          "stage": 1,
+          "window": 3,
+          "commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161"
+          ],
+          "new_commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161"
+          ],
+          "prior_commits": [],
+          "findings": [],
+          "repairs": [],
+          "counts": {},
+          "reviewed": 6,
+          "review": {
+            "status": "reviewed",
+            "rejected": [],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/decisions.md",
+              ".aikit/task_ledger_archive.jsonl",
+              "README.md",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-1-9962e4e88fcb.md",
+            "redacted": 0,
+            "reason": "the answer held no findings",
+            "method": "host",
+            "coverage": {
+              "reported": 32,
+              "total": 32,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": []
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T18:54:17"
+          },
+          "timestamp": "2026-11-14T18:54:17"
+        },
+        {
+          "run": "run-3",
+          "stage": 2,
+          "window": 6,
+          "commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516"
+          ],
+          "new_commits": [
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516"
+          ],
+          "prior_commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161"
+          ],
+          "findings": [],
+          "repairs": [],
+          "counts": {},
+          "reviewed": 6,
+          "review": {
+            "status": "reviewed",
+            "rejected": [],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/decisions.md",
+              ".aikit/task_ledger_archive.jsonl",
+              "README.md",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-2-6b585e50e56b.md",
+            "redacted": 0,
+            "reason": "the answer held no findings",
+            "method": "host",
+            "coverage": {
+              "reported": 26,
+              "total": 26,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": []
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T18:56:58"
+          },
+          "timestamp": "2026-11-14T18:56:58"
+        },
+        {
+          "run": "run-3",
+          "stage": 3,
+          "window": 9,
+          "commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12"
+          ],
+          "new_commits": [
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12"
+          ],
+          "prior_commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516"
+          ],
+          "findings": [
+            {
+              "code": "review-priority-guard-repeated",
+              "category": "improvement",
+              "severity": "low",
+              "path": "pocket_planner.py",
+              "line": 163,
+              "message": "The three-part boolean-aware priority guard is repeated in add_task, edit_task, list_tasks and TaskStore.load; a future edit to one copy, such as admitting a new priority level or changing the bool handling, would silently drift acceptance between the API layer and the store, which is the same cross-layer inconsistency class this fix was closing.",
+              "evidence": "if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):",
+              "commit": "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+              "hunk": "cb76ddd4c9d2:pocket_planner.py#1",
+              "symbol": "",
+              "introduced": true,
+              "reproducible": false,
+              "fixable": false,
+              "interaction": "",
+              "repaired": false,
+              "source": "review",
+              "patch_old": "",
+              "patch_new": ""
+            }
+          ],
+          "repairs": [],
+          "counts": {
+            "improvement": 1
+          },
+          "reviewed": 5,
+          "review": {
+            "status": "reviewed",
+            "rejected": [],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/decisions.md",
+              ".aikit/task_ledger_archive.jsonl",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-3-28c3917ddde2.md",
+            "redacted": 0,
+            "reason": "",
+            "method": "host",
+            "coverage": {
+              "reported": 22,
+              "total": 22,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": [
+              {
+                "code": "review-priority-guard-repeated",
+                "category": "improvement",
+                "severity": "low",
+                "path": "pocket_planner.py",
+                "line": 163,
+                "message": "The three-part boolean-aware priority guard is repeated in add_task, edit_task, list_tasks and TaskStore.load; a future edit to one copy, such as admitting a new priority level or changing the bool handling, would silently drift acceptance between the API layer and the store, which is the same cross-layer inconsistency class this fix was closing.",
+                "evidence": "if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):",
+                "commit": "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+                "hunk": "cb76ddd4c9d2:pocket_planner.py#1",
+                "symbol": "",
+                "introduced": true,
+                "reproducible": false,
+                "fixable": false,
+                "interaction": "",
+                "repaired": false,
+                "source": "review",
+                "patch_old": "",
+                "patch_new": ""
+              }
+            ]
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T18:58:03"
+          },
+          "timestamp": "2026-11-14T18:58:03"
+        },
+        {
+          "run": "run-3",
+          "stage": 4,
+          "window": 12,
+          "commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032"
+          ],
+          "new_commits": [
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032"
+          ],
+          "prior_commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12"
+          ],
+          "findings": [],
+          "repairs": [],
+          "counts": {},
+          "reviewed": 7,
+          "review": {
+            "status": "reviewed",
+            "rejected": [],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/task_ledger_archive.jsonl",
+              ".gitignore",
+              "LICENSE",
+              "LICENSES/LicenseRef-AL-1.1.txt",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-4-9c4853518470.md",
+            "redacted": 0,
+            "reason": "the answer held no findings",
+            "method": "host",
+            "coverage": {
+              "reported": 13,
+              "total": 13,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": []
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T18:59:10"
+          },
+          "timestamp": "2026-11-14T18:59:10"
+        },
+        {
+          "run": "run-3",
+          "stage": 5,
+          "window": 15,
+          "commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd"
+          ],
+          "new_commits": [
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd"
+          ],
+          "prior_commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032"
+          ],
+          "findings": [],
+          "repairs": [],
+          "counts": {},
+          "reviewed": 8,
+          "review": {
+            "status": "reviewed",
+            "rejected": [],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/decisions.md",
+              ".aikit/project.json",
+              ".aikit/task_ledger_archive.jsonl",
+              ".gitignore",
+              "README.md",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-5-8e80ef145738.md",
+            "redacted": 0,
+            "reason": "the answer held no findings",
+            "method": "host",
+            "coverage": {
+              "reported": 37,
+              "total": 37,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": []
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T18:59:39"
+          },
+          "timestamp": "2026-11-14T18:59:39"
+        },
+        {
+          "run": "run-3",
+          "stage": 6,
+          "window": 18,
+          "commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+            "fe48698812fcaead7cd724b8621d9b13e6af940b",
+            "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+            "b6679cf5ddc26755f93ab60e22d854339dd340b6"
+          ],
+          "new_commits": [
+            "fe48698812fcaead7cd724b8621d9b13e6af940b",
+            "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+            "b6679cf5ddc26755f93ab60e22d854339dd340b6"
+          ],
+          "prior_commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd"
+          ],
+          "findings": [],
+          "repairs": [],
+          "counts": {},
+          "reviewed": 10,
+          "review": {
+            "status": "reviewed",
+            "rejected": [],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/decisions.md",
+              ".aikit/media.json",
+              ".aikit/project.json",
+              ".gitignore",
+              "README.md",
+              "assets/logo.svg",
+              "assets/social-preview.svg",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-6-fe48698812fc.md",
+            "redacted": 0,
+            "reason": "the answer held no findings",
+            "method": "host",
+            "coverage": {
+              "reported": 19,
+              "total": 19,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": []
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T19:00:30"
+          },
+          "timestamp": "2026-11-14T19:00:30"
+        },
+        {
+          "run": "run-3",
+          "stage": 7,
+          "window": 21,
+          "commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+            "fe48698812fcaead7cd724b8621d9b13e6af940b",
+            "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+            "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+            "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+            "df45464b7c96f04779a248f702ad16235d24ef4f",
+            "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab"
+          ],
+          "new_commits": [
+            "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+            "df45464b7c96f04779a248f702ad16235d24ef4f",
+            "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab"
+          ],
+          "prior_commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+            "fe48698812fcaead7cd724b8621d9b13e6af940b",
+            "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+            "b6679cf5ddc26755f93ab60e22d854339dd340b6"
+          ],
+          "findings": [],
+          "repairs": [],
+          "counts": {},
+          "reviewed": 8,
+          "review": {
+            "status": "reviewed",
+            "rejected": [],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/media.json",
+              ".aikit/project.json",
+              "README.md",
+              "assets/logo.svg",
+              "assets/social-preview.svg",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-7-2a62a17a96c9.md",
+            "redacted": 0,
+            "reason": "the answer held no findings",
+            "method": "host",
+            "coverage": {
+              "reported": 14,
+              "total": 14,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": []
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T19:01:17"
+          },
+          "timestamp": "2026-11-14T19:01:17"
+        },
+        {
+          "run": "run-3",
+          "stage": 8,
+          "window": 22,
+          "commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+            "fe48698812fcaead7cd724b8621d9b13e6af940b",
+            "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+            "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+            "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+            "df45464b7c96f04779a248f702ad16235d24ef4f",
+            "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
+            "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+          ],
+          "new_commits": [
+            "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+          ],
+          "prior_commits": [
+            "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+            "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+            "09184360dae4b575512725064a03d47249ec9161",
+            "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+            "b4a42417e859d75dda19942721839357b3570265",
+            "9b007f71475a63c278b42b11213d5788f1cf9516",
+            "28c3917ddde2d8d5df407c81468b2be093b21d25",
+            "11b9a27595db7f9833caeabaf469d7572ee7e633",
+            "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "9c4853518470fa47e113808f453b360e179bb42a",
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+            "fe48698812fcaead7cd724b8621d9b13e6af940b",
+            "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+            "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+            "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+            "df45464b7c96f04779a248f702ad16235d24ef4f",
+            "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab"
+          ],
+          "findings": [],
+          "repairs": [],
+          "counts": {},
+          "reviewed": 9,
+          "review": {
+            "status": "reviewed",
+            "rejected": [],
+            "files": [
+              ".aikit/decisions.md",
+              ".aikit/guidelines.md",
+              ".aikit/project.json",
+              ".gitignore",
+              "COMMERCIAL.md",
+              "LICENSE",
+              "LICENSES/LicenseRef-AL-1.1.txt",
+              "README.md",
+              "REUSE.toml"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-8-72d56cf234d9.md",
+            "redacted": 0,
+            "reason": "the answer held no findings",
+            "method": "host",
+            "coverage": {
+              "reported": 9,
+              "total": 9,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": []
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T19:01:46"
+          },
+          "timestamp": "2026-11-14T19:01:46"
+        }
+      ],
+      "total_commits": 22
     }
   ],
-  "stage": 5,
-  "window": 14,
+  "stage": 8,
+  "window": 22,
   "audited_commits": [
+    "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+    "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+    "09184360dae4b575512725064a03d47249ec9161",
+    "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+    "b4a42417e859d75dda19942721839357b3570265",
+    "9b007f71475a63c278b42b11213d5788f1cf9516",
+    "28c3917ddde2d8d5df407c81468b2be093b21d25",
+    "11b9a27595db7f9833caeabaf469d7572ee7e633",
+    "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+    "9c4853518470fa47e113808f453b360e179bb42a",
     "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
     "73df17c2c93f4c8690cfb233576b4ed700bcd032",
     "8e80ef145738ae1ece2d70649187e5568bd25124",
     "72ca32838943c5106abe9587a1aeddbff66f61ae",
     "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
     "fe48698812fcaead7cd724b8621d9b13e6af940b",
-    "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
-    "9c4853518470fa47e113808f453b360e179bb42a",
     "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
     "b6679cf5ddc26755f93ab60e22d854339dd340b6",
     "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
@@ -1247,10 +2065,18 @@
     "72d56cf234d946599d7c3790a287c5b9fa32c25c"
   ],
   "last_audit": {
-    "run": "run-2",
-    "stage": 5,
-    "window": 14,
+    "run": "run-3",
+    "stage": 8,
+    "window": 22,
     "commits": [
+      "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+      "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+      "09184360dae4b575512725064a03d47249ec9161",
+      "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+      "b4a42417e859d75dda19942721839357b3570265",
+      "9b007f71475a63c278b42b11213d5788f1cf9516",
+      "28c3917ddde2d8d5df407c81468b2be093b21d25",
+      "11b9a27595db7f9833caeabaf469d7572ee7e633",
       "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
       "9c4853518470fa47e113808f453b360e179bb42a",
       "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
@@ -1267,54 +2093,56 @@
       "72d56cf234d946599d7c3790a287c5b9fa32c25c"
     ],
     "new_commits": [
-      "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
       "72d56cf234d946599d7c3790a287c5b9fa32c25c"
     ],
     "prior_commits": [
+      "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+      "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+      "09184360dae4b575512725064a03d47249ec9161",
+      "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+      "b4a42417e859d75dda19942721839357b3570265",
+      "9b007f71475a63c278b42b11213d5788f1cf9516",
+      "28c3917ddde2d8d5df407c81468b2be093b21d25",
+      "11b9a27595db7f9833caeabaf469d7572ee7e633",
+      "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+      "9c4853518470fa47e113808f453b360e179bb42a",
       "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
       "73df17c2c93f4c8690cfb233576b4ed700bcd032",
       "8e80ef145738ae1ece2d70649187e5568bd25124",
       "72ca32838943c5106abe9587a1aeddbff66f61ae",
       "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
       "fe48698812fcaead7cd724b8621d9b13e6af940b",
-      "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
-      "9c4853518470fa47e113808f453b360e179bb42a",
       "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
       "b6679cf5ddc26755f93ab60e22d854339dd340b6",
       "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
-      "df45464b7c96f04779a248f702ad16235d24ef4f"
+      "df45464b7c96f04779a248f702ad16235d24ef4f",
+      "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab"
     ],
     "findings": [],
     "repairs": [],
     "counts": {},
-    "reviewed": 15,
+    "reviewed": 9,
     "review": {
       "status": "reviewed",
       "rejected": [],
       "files": [
-        ".aikit/codebase_map.md",
         ".aikit/decisions.md",
         ".aikit/guidelines.md",
-        ".aikit/media.json",
         ".aikit/project.json",
         ".gitignore",
         "COMMERCIAL.md",
         "LICENSE",
         "LICENSES/LicenseRef-AL-1.1.txt",
         "README.md",
-        "REUSE.toml",
-        "assets/logo.svg",
-        "assets/social-preview.svg",
-        "pocket_planner.py",
-        "tests/test_pocket_planner.py"
+        "REUSE.toml"
       ],
-      "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-5-3bcfdb74c0ce.md",
+      "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-8-72d56cf234d9.md",
       "redacted": 0,
       "reason": "the answer held no findings",
       "method": "host",
       "coverage": {
-        "reported": 19,
-        "total": 19,
+        "reported": 9,
+        "total": 9,
         "missing": [],
         "unknown": [],
         "invalid": []
@@ -1330,38 +2158,169 @@
       "pushed": false,
       "push_error": null,
       "empty": true,
-      "timestamp": "2026-11-14T17:55:16"
+      "timestamp": "2026-11-14T19:01:46"
     },
-    "timestamp": "2026-11-14T17:55:16",
-    "dirty_targets": []
+    "timestamp": "2026-11-14T19:01:46"
   },
   "history": [
     {
-      "run": "run-2",
+      "run": "run-3",
       "stage": 1,
       "window": 3,
       "commits": [
-        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
-        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
-        "8e80ef145738ae1ece2d70649187e5568bd25124"
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161"
       ],
       "new_commits": [
-        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
-        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
-        "8e80ef145738ae1ece2d70649187e5568bd25124"
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161"
       ],
       "prior_commits": [],
+      "findings": [],
+      "repairs": [],
+      "counts": {},
+      "reviewed": 6,
+      "review": {
+        "status": "reviewed",
+        "rejected": [],
+        "files": [
+          ".aikit/codebase_map.md",
+          ".aikit/decisions.md",
+          ".aikit/task_ledger_archive.jsonl",
+          "README.md",
+          "pocket_planner.py",
+          "tests/test_pocket_planner.py"
+        ],
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-1-9962e4e88fcb.md",
+        "redacted": 0,
+        "reason": "the answer held no findings",
+        "method": "host",
+        "coverage": {
+          "reported": 32,
+          "total": 32,
+          "missing": [],
+          "unknown": [],
+          "invalid": []
+        },
+        "findings": []
+      },
+      "skipped": [],
+      "tests": {},
+      "gates": {},
+      "delivery": {
+        "commit": "",
+        "short": "",
+        "pushed": false,
+        "push_error": null,
+        "empty": true,
+        "timestamp": "2026-11-14T18:54:17"
+      },
+      "timestamp": "2026-11-14T18:54:17"
+    },
+    {
+      "run": "run-3",
+      "stage": 2,
+      "window": 6,
+      "commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516"
+      ],
+      "new_commits": [
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516"
+      ],
+      "prior_commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161"
+      ],
+      "findings": [],
+      "repairs": [],
+      "counts": {},
+      "reviewed": 6,
+      "review": {
+        "status": "reviewed",
+        "rejected": [],
+        "files": [
+          ".aikit/codebase_map.md",
+          ".aikit/decisions.md",
+          ".aikit/task_ledger_archive.jsonl",
+          "README.md",
+          "pocket_planner.py",
+          "tests/test_pocket_planner.py"
+        ],
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-2-6b585e50e56b.md",
+        "redacted": 0,
+        "reason": "the answer held no findings",
+        "method": "host",
+        "coverage": {
+          "reported": 26,
+          "total": 26,
+          "missing": [],
+          "unknown": [],
+          "invalid": []
+        },
+        "findings": []
+      },
+      "skipped": [],
+      "tests": {},
+      "gates": {},
+      "delivery": {
+        "commit": "",
+        "short": "",
+        "pushed": false,
+        "push_error": null,
+        "empty": true,
+        "timestamp": "2026-11-14T18:56:58"
+      },
+      "timestamp": "2026-11-14T18:56:58"
+    },
+    {
+      "run": "run-3",
+      "stage": 3,
+      "window": 9,
+      "commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12"
+      ],
+      "new_commits": [
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12"
+      ],
+      "prior_commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516"
+      ],
       "findings": [
         {
-          "code": "review-bool-passes-priority-guard",
-          "category": "review",
+          "code": "review-priority-guard-repeated",
+          "category": "improvement",
           "severity": "low",
           "path": "pocket_planner.py",
-          "line": 66,
-          "message": "The type validation this commit adds is inconsistent: the id guard explicitly rejects booleans, but the priority guard counts booleans as members of (1, 2, 3) because True == 1 and False == 0 in Python, so a store carrying \"priority\": true loads as priority 1 instead of failing with the documented RuntimeError. A follow-up test pinning \"priority\": true as rejected is advisable once the fix lands.",
-          "evidence": "if record.get(\"priority\") not in (1, 2, 3):",
-          "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
-          "hunk": "8e80ef145738:pocket_planner.py#2",
+          "line": 163,
+          "message": "The three-part boolean-aware priority guard is repeated in add_task, edit_task, list_tasks and TaskStore.load; a future edit to one copy, such as admitting a new priority level or changing the bool handling, would silently drift acceptance between the API layer and the store, which is the same cross-layer inconsistency class this fix was closing.",
+          "evidence": "if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):",
+          "commit": "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+          "hunk": "cb76ddd4c9d2:pocket_planner.py#1",
           "symbol": "",
           "introduced": true,
           "reproducible": false,
@@ -1375,26 +2334,20 @@
       ],
       "repairs": [],
       "counts": {
-        "review": 1
+        "improvement": 1
       },
-      "reviewed": 9,
+      "reviewed": 5,
       "review": {
         "status": "reviewed",
-        "rejected": [
-          "pocket_planner.py:66: suggestion dropped (the quoted text occurs 0 times in the file)"
-        ],
+        "rejected": [],
         "files": [
           ".aikit/codebase_map.md",
           ".aikit/decisions.md",
-          ".aikit/project.json",
           ".aikit/task_ledger_archive.jsonl",
-          ".gitignore",
-          "LICENSE",
-          "LICENSES/LicenseRef-AL-1.1.txt",
           "pocket_planner.py",
           "tests/test_pocket_planner.py"
         ],
-        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-1-1c779193ebe7.md",
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-3-28c3917ddde2.md",
         "redacted": 0,
         "reason": "",
         "method": "host",
@@ -1407,15 +2360,15 @@
         },
         "findings": [
           {
-            "code": "review-bool-passes-priority-guard",
-            "category": "review",
+            "code": "review-priority-guard-repeated",
+            "category": "improvement",
             "severity": "low",
             "path": "pocket_planner.py",
-            "line": 66,
-            "message": "The type validation this commit adds is inconsistent: the id guard explicitly rejects booleans, but the priority guard counts booleans as members of (1, 2, 3) because True == 1 and False == 0 in Python, so a store carrying \"priority\": true loads as priority 1 instead of failing with the documented RuntimeError. A follow-up test pinning \"priority\": true as rejected is advisable once the fix lands.",
-            "evidence": "if record.get(\"priority\") not in (1, 2, 3):",
-            "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
-            "hunk": "8e80ef145738:pocket_planner.py#2",
+            "line": 163,
+            "message": "The three-part boolean-aware priority guard is repeated in add_task, edit_task, list_tasks and TaskStore.load; a future edit to one copy, such as admitting a new priority level or changing the bool handling, would silently drift acceptance between the API layer and the store, which is the same cross-layer inconsistency class this fix was closing.",
+            "evidence": "if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):",
+            "commit": "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+            "hunk": "cb76ddd4c9d2:pocket_planner.py#1",
             "symbol": "",
             "introduced": true,
             "reproducible": false,
@@ -1437,104 +2390,72 @@
         "pushed": false,
         "push_error": null,
         "empty": true,
-        "timestamp": "2026-11-14T17:43:14"
+        "timestamp": "2026-11-14T18:58:03"
       },
-      "timestamp": "2026-11-14T17:43:14"
+      "timestamp": "2026-11-14T18:58:03"
     },
     {
-      "run": "run-2",
-      "stage": 2,
-      "window": 6,
+      "run": "run-3",
+      "stage": 4,
+      "window": 12,
       "commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+        "9c4853518470fa47e113808f453b360e179bb42a",
         "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
-        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
-        "8e80ef145738ae1ece2d70649187e5568bd25124",
-        "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b"
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032"
       ],
       "new_commits": [
-        "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b"
+        "9c4853518470fa47e113808f453b360e179bb42a",
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032"
       ],
       "prior_commits": [
-        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
-        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
-        "8e80ef145738ae1ece2d70649187e5568bd25124"
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12"
       ],
-      "findings": [
-        {
-          "code": "review-api-priority-guards-accept-bool",
-          "category": "review",
-          "severity": "low",
-          "path": "pocket_planner.py",
-          "line": 242,
-          "message": "The programmatic guards in edit_task (line 242), add_task (line 163) and list_tasks (line 272) still accept a boolean priority because True == 1 in Python, so the importable API can write store files that TaskStore.load now rejects; the CLI is safe because argparse coerces to int. Mirroring the bool exclusion the store guard uses would make every rejected shape consistent.",
-          "evidence": "if priority not in (1, 2, 3):",
-          "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-          "hunk": "72ca32838943:pocket_planner.py#3",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": false,
-          "interaction": "",
-          "repaired": false,
-          "source": "review",
-          "patch_old": "",
-          "patch_new": ""
-        }
-      ],
+      "findings": [],
       "repairs": [],
-      "counts": {
-        "review": 1
-      },
+      "counts": {},
       "reviewed": 7,
       "review": {
         "status": "reviewed",
         "rejected": [],
         "files": [
           ".aikit/codebase_map.md",
-          ".aikit/decisions.md",
-          ".aikit/project.json",
+          ".aikit/task_ledger_archive.jsonl",
           ".gitignore",
-          "README.md",
+          "LICENSE",
+          "LICENSES/LicenseRef-AL-1.1.txt",
           "pocket_planner.py",
           "tests/test_pocket_planner.py"
         ],
-        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-2-72ca32838943.md",
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-4-9c4853518470.md",
         "redacted": 0,
-        "reason": "",
+        "reason": "the answer held no findings",
         "method": "host",
         "coverage": {
-          "reported": 35,
-          "total": 35,
+          "reported": 13,
+          "total": 13,
           "missing": [],
           "unknown": [],
           "invalid": []
         },
-        "findings": [
-          {
-            "code": "review-api-priority-guards-accept-bool",
-            "category": "review",
-            "severity": "low",
-            "path": "pocket_planner.py",
-            "line": 242,
-            "message": "The programmatic guards in edit_task (line 242), add_task (line 163) and list_tasks (line 272) still accept a boolean priority because True == 1 in Python, so the importable API can write store files that TaskStore.load now rejects; the CLI is safe because argparse coerces to int. Mirroring the bool exclusion the store guard uses would make every rejected shape consistent.",
-            "evidence": "if priority not in (1, 2, 3):",
-            "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-            "hunk": "72ca32838943:pocket_planner.py#3",
-            "symbol": "",
-            "introduced": true,
-            "reproducible": false,
-            "fixable": false,
-            "interaction": "",
-            "repaired": false,
-            "source": "review",
-            "patch_old": "",
-            "patch_new": ""
-          }
-        ]
+        "findings": []
       },
       "skipped": [],
       "tests": {},
@@ -1545,64 +2466,74 @@
         "pushed": false,
         "push_error": null,
         "empty": true,
-        "timestamp": "2026-11-14T17:45:30"
+        "timestamp": "2026-11-14T18:59:10"
       },
-      "timestamp": "2026-11-14T17:45:30",
-      "dirty_targets": []
+      "timestamp": "2026-11-14T18:59:10"
     },
     {
-      "run": "run-2",
-      "stage": 3,
-      "window": 9,
+      "run": "run-3",
+      "stage": 5,
+      "window": 15,
       "commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
         "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
         "9c4853518470fa47e113808f453b360e179bb42a",
         "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
         "73df17c2c93f4c8690cfb233576b4ed700bcd032",
         "8e80ef145738ae1ece2d70649187e5568bd25124",
         "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b",
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7"
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd"
       ],
       "new_commits": [
-        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
-        "9c4853518470fa47e113808f453b360e179bb42a",
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7"
-      ],
-      "prior_commits": [
-        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
-        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
         "8e80ef145738ae1ece2d70649187e5568bd25124",
         "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b"
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd"
+      ],
+      "prior_commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+        "9c4853518470fa47e113808f453b360e179bb42a",
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032"
       ],
       "findings": [],
       "repairs": [],
       "counts": {},
-      "reviewed": 9,
+      "reviewed": 8,
       "review": {
         "status": "reviewed",
         "rejected": [],
         "files": [
           ".aikit/codebase_map.md",
-          ".aikit/media.json",
+          ".aikit/decisions.md",
           ".aikit/project.json",
           ".aikit/task_ledger_archive.jsonl",
           ".gitignore",
-          "assets/logo.svg",
-          "assets/social-preview.svg",
+          "README.md",
           "pocket_planner.py",
           "tests/test_pocket_planner.py"
         ],
-        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-3-cb76ddd4c9d2.md",
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-5-8e80ef145738.md",
         "redacted": 0,
         "reason": "the answer held no findings",
         "method": "host",
         "coverage": {
-          "reported": 21,
-          "total": 21,
+          "reported": 37,
+          "total": 37,
           "missing": [],
           "unknown": [],
           "invalid": []
@@ -1618,16 +2549,23 @@
         "pushed": false,
         "push_error": null,
         "empty": true,
-        "timestamp": "2026-11-14T17:53:35"
+        "timestamp": "2026-11-14T18:59:39"
       },
-      "timestamp": "2026-11-14T17:53:35",
-      "dirty_targets": []
+      "timestamp": "2026-11-14T18:59:39"
     },
     {
-      "run": "run-2",
-      "stage": 4,
-      "window": 12,
+      "run": "run-3",
+      "stage": 6,
+      "window": 18,
       "commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
         "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
         "9c4853518470fa47e113808f453b360e179bb42a",
         "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
@@ -1637,127 +2575,50 @@
         "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
         "fe48698812fcaead7cd724b8621d9b13e6af940b",
         "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
-        "df45464b7c96f04779a248f702ad16235d24ef4f"
+        "b6679cf5ddc26755f93ab60e22d854339dd340b6"
       ],
       "new_commits": [
-        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
-        "df45464b7c96f04779a248f702ad16235d24ef4f"
+        "fe48698812fcaead7cd724b8621d9b13e6af940b",
+        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+        "b6679cf5ddc26755f93ab60e22d854339dd340b6"
       ],
       "prior_commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+        "9c4853518470fa47e113808f453b360e179bb42a",
         "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
         "73df17c2c93f4c8690cfb233576b4ed700bcd032",
         "8e80ef145738ae1ece2d70649187e5568bd25124",
         "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b",
-        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
-        "9c4853518470fa47e113808f453b360e179bb42a",
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7"
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd"
       ],
       "findings": [],
       "repairs": [],
       "counts": {},
-      "reviewed": 2,
-      "review": {
-        "status": "reviewed",
-        "rejected": [],
-        "files": [
-          ".aikit/media.json",
-          "README.md"
-        ],
-        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-4-b6679cf5ddc2.md",
-        "redacted": 0,
-        "reason": "the answer held no findings",
-        "method": "host",
-        "coverage": {
-          "reported": 4,
-          "total": 4,
-          "missing": [],
-          "unknown": [],
-          "invalid": []
-        },
-        "findings": []
-      },
-      "skipped": [],
-      "tests": {},
-      "gates": {},
-      "delivery": {
-        "commit": "",
-        "short": "",
-        "pushed": false,
-        "push_error": null,
-        "empty": true,
-        "timestamp": "2026-11-14T17:54:37"
-      },
-      "timestamp": "2026-11-14T17:54:37",
-      "dirty_targets": []
-    },
-    {
-      "run": "run-2",
-      "stage": 5,
-      "window": 14,
-      "commits": [
-        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
-        "9c4853518470fa47e113808f453b360e179bb42a",
-        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
-        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
-        "8e80ef145738ae1ece2d70649187e5568bd25124",
-        "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b",
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
-        "df45464b7c96f04779a248f702ad16235d24ef4f",
-        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-        "72d56cf234d946599d7c3790a287c5b9fa32c25c"
-      ],
-      "new_commits": [
-        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-        "72d56cf234d946599d7c3790a287c5b9fa32c25c"
-      ],
-      "prior_commits": [
-        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
-        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
-        "8e80ef145738ae1ece2d70649187e5568bd25124",
-        "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b",
-        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
-        "9c4853518470fa47e113808f453b360e179bb42a",
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
-        "df45464b7c96f04779a248f702ad16235d24ef4f"
-      ],
-      "findings": [],
-      "repairs": [],
-      "counts": {},
-      "reviewed": 15,
+      "reviewed": 10,
       "review": {
         "status": "reviewed",
         "rejected": [],
         "files": [
           ".aikit/codebase_map.md",
           ".aikit/decisions.md",
-          ".aikit/guidelines.md",
           ".aikit/media.json",
           ".aikit/project.json",
           ".gitignore",
-          "COMMERCIAL.md",
-          "LICENSE",
-          "LICENSES/LicenseRef-AL-1.1.txt",
           "README.md",
-          "REUSE.toml",
           "assets/logo.svg",
           "assets/social-preview.svg",
           "pocket_planner.py",
           "tests/test_pocket_planner.py"
         ],
-        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-5-3bcfdb74c0ce.md",
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-6-fe48698812fc.md",
         "redacted": 0,
         "reason": "the answer held no findings",
         "method": "host",
@@ -1779,10 +2640,202 @@
         "pushed": false,
         "push_error": null,
         "empty": true,
-        "timestamp": "2026-11-14T17:55:16"
+        "timestamp": "2026-11-14T19:00:30"
       },
-      "timestamp": "2026-11-14T17:55:16",
-      "dirty_targets": []
+      "timestamp": "2026-11-14T19:00:30"
+    },
+    {
+      "run": "run-3",
+      "stage": 7,
+      "window": 21,
+      "commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+        "9c4853518470fa47e113808f453b360e179bb42a",
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124",
+        "72ca32838943c5106abe9587a1aeddbff66f61ae",
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+        "fe48698812fcaead7cd724b8621d9b13e6af940b",
+        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+        "df45464b7c96f04779a248f702ad16235d24ef4f",
+        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab"
+      ],
+      "new_commits": [
+        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+        "df45464b7c96f04779a248f702ad16235d24ef4f",
+        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab"
+      ],
+      "prior_commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+        "9c4853518470fa47e113808f453b360e179bb42a",
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124",
+        "72ca32838943c5106abe9587a1aeddbff66f61ae",
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+        "fe48698812fcaead7cd724b8621d9b13e6af940b",
+        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+        "b6679cf5ddc26755f93ab60e22d854339dd340b6"
+      ],
+      "findings": [],
+      "repairs": [],
+      "counts": {},
+      "reviewed": 8,
+      "review": {
+        "status": "reviewed",
+        "rejected": [],
+        "files": [
+          ".aikit/codebase_map.md",
+          ".aikit/media.json",
+          ".aikit/project.json",
+          "README.md",
+          "assets/logo.svg",
+          "assets/social-preview.svg",
+          "pocket_planner.py",
+          "tests/test_pocket_planner.py"
+        ],
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-7-2a62a17a96c9.md",
+        "redacted": 0,
+        "reason": "the answer held no findings",
+        "method": "host",
+        "coverage": {
+          "reported": 14,
+          "total": 14,
+          "missing": [],
+          "unknown": [],
+          "invalid": []
+        },
+        "findings": []
+      },
+      "skipped": [],
+      "tests": {},
+      "gates": {},
+      "delivery": {
+        "commit": "",
+        "short": "",
+        "pushed": false,
+        "push_error": null,
+        "empty": true,
+        "timestamp": "2026-11-14T19:01:17"
+      },
+      "timestamp": "2026-11-14T19:01:17"
+    },
+    {
+      "run": "run-3",
+      "stage": 8,
+      "window": 22,
+      "commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+        "9c4853518470fa47e113808f453b360e179bb42a",
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124",
+        "72ca32838943c5106abe9587a1aeddbff66f61ae",
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+        "fe48698812fcaead7cd724b8621d9b13e6af940b",
+        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+        "df45464b7c96f04779a248f702ad16235d24ef4f",
+        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
+        "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+      ],
+      "new_commits": [
+        "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+      ],
+      "prior_commits": [
+        "9962e4e88fcb34448e5dcb8088c7c8c4e7f4c1bb",
+        "fd43b69f6c62b4b56562aa43263415dc11437aa3",
+        "09184360dae4b575512725064a03d47249ec9161",
+        "6b585e50e56b4a6cfa480718b72c6056fbe26e26",
+        "b4a42417e859d75dda19942721839357b3570265",
+        "9b007f71475a63c278b42b11213d5788f1cf9516",
+        "28c3917ddde2d8d5df407c81468b2be093b21d25",
+        "11b9a27595db7f9833caeabaf469d7572ee7e633",
+        "cb76ddd4c9d24c2f04cd21fa27d56c78258e8e12",
+        "9c4853518470fa47e113808f453b360e179bb42a",
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124",
+        "72ca32838943c5106abe9587a1aeddbff66f61ae",
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+        "fe48698812fcaead7cd724b8621d9b13e6af940b",
+        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
+        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
+        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
+        "df45464b7c96f04779a248f702ad16235d24ef4f",
+        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab"
+      ],
+      "findings": [],
+      "repairs": [],
+      "counts": {},
+      "reviewed": 9,
+      "review": {
+        "status": "reviewed",
+        "rejected": [],
+        "files": [
+          ".aikit/decisions.md",
+          ".aikit/guidelines.md",
+          ".aikit/project.json",
+          ".gitignore",
+          "COMMERCIAL.md",
+          "LICENSE",
+          "LICENSES/LicenseRef-AL-1.1.txt",
+          "README.md",
+          "REUSE.toml"
+        ],
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-3-8-72d56cf234d9.md",
+        "redacted": 0,
+        "reason": "the answer held no findings",
+        "method": "host",
+        "coverage": {
+          "reported": 9,
+          "total": 9,
+          "missing": [],
+          "unknown": [],
+          "invalid": []
+        },
+        "findings": []
+      },
+      "skipped": [],
+      "tests": {},
+      "gates": {},
+      "delivery": {
+        "commit": "",
+        "short": "",
+        "pushed": false,
+        "push_error": null,
+        "empty": true,
+        "timestamp": "2026-11-14T19:01:46"
+      },
+      "timestamp": "2026-11-14T19:01:46"
     }
   ]
 }
