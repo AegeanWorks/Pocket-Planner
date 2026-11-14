@@ -8,9 +8,9 @@
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `2`
 - **Total Classes**: `5`
-- **Total Top-Level Functions**: `15`
-- **Total Class Methods**: `73`
-- **Total Source Lines**: `1106`
+- **Total Top-Level Functions**: `17`
+- **Total Class Methods**: `77`
+- **Total Source Lines**: `1170`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `516` lines (`20093` bytes)
+**Size**: `544` lines (`20979` bytes)
 
 **Classes:**
 - `class Task`
@@ -49,14 +49,16 @@
 - `def edit_task(store, task_id, title, priority, due, clear_due, tags, clear_tags)`
 - `def _sort_key(name)`
 - `def list_tasks(store, include_done, tag, overdue, priority, query, sort)`
+- `def next_task(store)`
 - `def task_stats(store)`
+- `def render_task(task)`
 - `def build_parser()`
 - `def main(argv)`
 
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `590` lines (`22765` bytes)
+**Size**: `626` lines (`24382` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -118,6 +120,8 @@
   - Method `.test_api_boolean_priority_is_rejected()`
   - Method `.test_edit_updates_title_priority_due_and_tags()`
   - Method `.test_edit_clear_due_and_tags()`
+  - Method `.test_next_task_returns_top_open_task_in_due_order()`
+  - Method `.test_next_task_without_open_tasks_raises()`
   - Method `.test_edit_noop_and_conflicts_raise()`
 - `class MainTests`
   - Method `.setUp()`
@@ -127,6 +131,8 @@
   - Method `.test_main_sort_priority_orders_and_bad_sort_is_argparse_rejected()`
   - Method `.test_main_stats_prints_summary_and_priorities()`
   - Method `.test_main_bad_priority_is_argparse_rejected_with_usage_error()`
+  - Method `.test_main_next_prints_top_open_task_and_empty_store_fails_cleanly()`
+  - Method `.test_main_stats_json_prints_parseable_summary()`
   - Method `.test_main_added_task_is_persisted()`
 
 ---
