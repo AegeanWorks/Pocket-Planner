@@ -97,8 +97,7 @@ class TaskStore:
                 seen_ids.add(record["id"])
                 if not isinstance(record.get("title"), str):
                     raise ValueError("title must be a string")
-                priority = record.get("priority")
-                validate_priority(priority)
+                validate_priority(record.get("priority"))
                 if not isinstance(record.get("done"), bool):
                     raise ValueError("done must be true or false")
                 if not isinstance(record.get("created_at"), str):
@@ -419,7 +418,7 @@ def build_parser() -> argparse.ArgumentParser:
     add = commands.add_parser("add", help="create a task")
     add.add_argument("title", nargs="+")
     add.add_argument("-p", "--priority", type=int, default=2, choices=(1, 2, 3))
-    add.add_argument("--due", help="due date in YYYY-MM-DD format")
+    add.add_argument("--due", help="due date in YYYY-MM-DD or YYYYMMDD format")
     add.add_argument("--tag", action="append", default=[], help="tag (repeatable)")
 
     show = commands.add_parser("list", help="list tasks")
@@ -440,7 +439,7 @@ def build_parser() -> argparse.ArgumentParser:
     edit.add_argument("id", type=int)
     edit.add_argument("--title", nargs="+", default=None, help="new title")
     edit.add_argument("--priority", type=int, choices=(1, 2, 3), default=None)
-    edit.add_argument("--due", default=None, help="new due date in YYYY-MM-DD format")
+    edit.add_argument("--due", default=None, help="new due date in YYYY-MM-DD or YYYYMMDD format")
     edit.add_argument("--clear-due", action="store_true", help="remove the due date")
     edit.add_argument("--tag", action="append", default=None, dest="tags", help="replacement tag (repeatable)")
     edit.add_argument("--clear-tags", action="store_true", help="remove all tags")
