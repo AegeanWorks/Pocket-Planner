@@ -9,20 +9,9 @@
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794677956.7489424
+    "completed_at": 1794677979.5959523
   },
   "checkpoints": [
-    {
-      "task_id": "pp-advisory-locking",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[3/3] Implemented: lock file + transaction wrapper, five mutators refactored, ADR-010 recorded, README lock paragraph added. Suite 74/74 passed (74 = 70+4 lock tests); failing-first confirmed; live smoke verified lock refusal (exit 1), release recovery, and stale-lock break. checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794676878.4379659,
-      "timestamp_str": "2026-11-14 20:21:18",
-      "agent": "vibe:1"
-    },
     {
       "task_id": "pp-advisory-locking",
       "phase": "completed",
@@ -301,6 +290,22 @@
       "status": "completed",
       "timestamp": 1794677956.7489445,
       "timestamp_str": "2026-11-14 20:39:16",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-wiring-map-cover",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-wiring-map-cover' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794677979.5959554,
+      "timestamp_str": "2026-11-14 20:39:39",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
