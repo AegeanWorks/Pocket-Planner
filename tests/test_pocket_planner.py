@@ -150,8 +150,27 @@ class PocketPlannerTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             self.store.load()
 
+    def test_non_positive_next_id_raises_runtime_error(self):
+        for bad_value in (0, -7):
+            with self.subTest(next_id=bad_value):
+                self.store.path.write_text(
+                    f'{{"next_id": {bad_value}, "tasks": []}}',
+                    encoding="utf-8",
+                )
+                with self.assertRaises(RuntimeError):
+                    self.store.load()
+
     def test_non_object_task_raises_runtime_error(self):
         self.store.path.write_text('{"tasks": [1]}', encoding="utf-8")
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_duplicate_task_ids_raise_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "a", "priority": 2, "done": false, "created_at": "x"}, '
+            '{"id": 1, "title": "b", "priority": 3, "done": false, "created_at": "x"}]}',
+            encoding="utf-8",
+        )
         with self.assertRaises(RuntimeError):
             self.store.load()
 
@@ -178,6 +197,19 @@ class PocketPlannerTests(unittest.TestCase):
         payload = json.loads(self.store.path.read_text(encoding="utf-8"))
         future = next(item for item in payload["tasks"] if item["id"] == 1)
         self.assertEqual(future["extra_future"], {"keep": 123})
+
+    def test_unknown_root_keys_survive_an_unrelated_write(self):
+        self.store.path.write_text(
+            '{"schema_version": 9, "tasks": [{"id": 1, "title": "rooted", "priority": 2, '
+            '"done": false, "created_at": "x"}]}',
+            encoding="utf-8",
+        )
+
+        add_task(self.store, "new task", 2)
+
+        payload = json.loads(self.store.path.read_text(encoding="utf-8"))
+        self.assertEqual(payload["schema_version"], 9)
+        self.assertEqual(payload["next_id"], 3)
 
     def test_empty_due_string_loads_as_none(self):
         self.store.path.write_text(

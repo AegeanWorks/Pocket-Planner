@@ -30,10 +30,12 @@ class TaskStore:
         self.path = path
         self._extras: dict[int, dict[str, object]] = {}
         self._next_id: int | None = None
+        self._root_extras: dict[str, object] = {}
 
     def load(self) -> list[Task]:
         self._extras = {}
         self._next_id = None
+        self._root_extras = {}
         if not self.path.exists():
             return []
         try:
@@ -43,12 +45,18 @@ class TaskStore:
             raw_tasks = data["tasks"]
             if not isinstance(raw_tasks, list):
                 raise ValueError("'tasks' must be a list")
+            self._root_extras = {
+                key: value for key, value in data.items() if key not in ("tasks", "next_id")
+            }
             stored_next = data.get("next_id")
             if stored_next is not None:
                 if isinstance(stored_next, bool) or not isinstance(stored_next, int):
                     raise ValueError("next_id must be an integer")
+                if stored_next < 1:
+                    raise ValueError("next_id must be a positive integer")
                 self._next_id = stored_next
             tasks = []
+            seen_ids: set[int] = set()
             known = {"id", "title", "priority", "done", "created_at", "completed_at", "due", "tags"}
             for item in raw_tasks:
                 if not isinstance(item, dict):
@@ -61,6 +69,9 @@ class TaskStore:
                 record.setdefault("tags", [])
                 if isinstance(record.get("id"), bool) or not isinstance(record.get("id"), int):
                     raise ValueError("id must be an integer")
+                if record["id"] in seen_ids:
+                    raise ValueError("task ids must be unique")
+                seen_ids.add(record["id"])
                 if not isinstance(record.get("title"), str):
                     raise ValueError("title must be a string")
                 priority = record.get("priority")
@@ -105,7 +116,9 @@ class TaskStore:
             records.append(record)
         next_id = max([self._next_id or 0] + [task.id + 1 for task in tasks])
         self._next_id = next_id
-        payload = json.dumps({"next_id": next_id, "tasks": records}, indent=2) + "\n"
+        payload_data = {"next_id": next_id, "tasks": records}
+        payload_data.update(self._root_extras)
+        payload = json.dumps(payload_data, indent=2) + "\n"
         handle, temporary = tempfile.mkstemp(prefix=f".{self.path.name}.", dir=self.path.parent)
         try:
             with os.fdopen(handle, "w", encoding="utf-8") as file:

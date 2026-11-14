@@ -1,11 +1,11 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "api-priority-bool-guards",
+    "task_id": "store-root-hardening",
     "last_phase": "phase 4",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1794667993.9686964,
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1794668990.3300698,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
@@ -16,99 +16,13 @@
       }
     ],
     "impact_assessment": {
-      "why": "Reforge run-2 stage-2 review found the programmatic API guards count True as priority 1, so imported callers could write store files the hardened loader now rejects.",
-      "benefits": "Rejected shapes are consistent across store and API layers; regression test pins bool through add_task, edit_task and list_tasks.",
-      "risks": "contract: API rejects one more malformed value with the same documented ValueError; dependency: none; concurrency: single-writer; state: none",
-      "mitigation": "CLI already coerces to int via argparse, so no user-facing change; full gate suite before commit; explicit staging"
-    },
-    "completed_at": 1794668003.7197843
+      "why": "Delivery-verification probes found three store-contract gaps; each now fails loud or round-trips per the documented contract",
+      "benefits": "Ambiguous duplicate-id stores are rejected; root metadata survives this client's writes; counter cannot be nonsense",
+      "risks": "contract: two new loud failures and one write-shape change, all recorded in ADR-006; dependency: none; concurrency: unchanged single-writer; state: store files and decisions.md only",
+      "mitigation": "Per-guard regression tests including subTest for 0 and -7; full gate suite; explicit staging of the five changed files"
+    }
   },
   "checkpoints": [
-    {
-      "task_id": "store-integrity-audit-fixes",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[4/4] Verified: 39 unit tests pass (0.55s); CLI probe shows edit --due '   ' exits 1 with 'pass --clear-due to remove the due date' and leaves the due unchanged; add writes next_id=2 after issuing id 1; aikit check pocket-planner 4/4 gates (test, hygiene, guidelines, secrets) after map regeneration",
-      "files_affected": [
-        ".aikit/codebase_map.md",
-        ".aikit/decisions.md",
-        ".aikit/project.json",
-        ".aikit/task_ledger.json",
-        "pocket_planner.py",
-        "tests/test_pocket_planner.py",
-        ".aikit/reforge.json",
-        ".aikit/reforge.reviews/stage-run-1-1-72ca32838943.md",
-        ".aikit/reforge.reviews/stage-run-1-2-7d7c7ccdb13d.md",
-        ".aikit/reforge.reviews/stage-run-1-3-df45464b7c96.md"
-      ],
-      "status": "in_progress",
-      "timestamp": 1794649934.3408022,
-      "timestamp_str": "2026-11-14 12:52:14",
-      "agent": "kilo:goal",
-      "checklists": "passed",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "store-integrity-audit-fixes",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'store-integrity-audit-fixes' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794651198.3364685,
-      "timestamp_str": "2026-11-14 13:13:18",
-      "agent": "kilo:goal",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "license-github-links",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "Point CLA and ACL references in LICENSE files at the canonical Aegean-Licensing URLs",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667222.7006896,
-      "timestamp_str": "2026-11-14 17:40:22",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "Relative in-repo links are broken context for readers outside AIKit; the licenses now live in the Aegean-Licensing repository.",
-        "benefits": "Both license files reference resolvable, canonical upstream URLs.",
-        "risks": "contract: change applies to shipped license text; dependency: none; concurrency: single-writer git; state: two tracked files only",
-        "mitigation": "Byte-identical edit across both files; full gate suite before commit; explicit staging of only the two changed files"
-      },
-      "checklists": "passed",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
-    {
-      "task_id": "license-github-links",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'license-github-links' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794667232.4392912,
-      "timestamp_str": "2026-11-14 17:40:32",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
     {
       "task_id": "reforge:run-2",
       "phase": "reforge run",
@@ -320,6 +234,94 @@
       "timestamp": 1794668228.0164375,
       "timestamp_str": "2026-11-14 17:57:08",
       "agent": "unidentified"
+    },
+    {
+      "task_id": "reforge-run-2-bookkeeping",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "Commit reforge run-2 stage-review ledger state (11b9a27) after run-2 completed with 14 commits audited and 0 pending findings",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794668252.5416236,
+      "timestamp_str": "2026-11-14 17:57:32",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "Run-2 completed its five-stage review of the full history and wrote its final stage/delivery state to the project ledger and reforge.json, which are tracked project memory.",
+        "benefits": "Ledger records all five reviewed stages and both resolved review findings; delivery check sees a consistent committed tree.",
+        "risks": "contract: bookkeeping only, no code, test or doc text; dependency: none; concurrency: single-writer; state: tracked .aikit files only",
+        "mitigation": "Explicit staging of the three .aikit files; strict delivery check after task completion"
+      },
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "reforge-run-2-bookkeeping",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'reforge-run-2-bookkeeping' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794668253.0864947,
+      "timestamp_str": "2026-11-14 17:57:33",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "store-root-hardening",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/4] Plan harden TaskStore root level: reject duplicate task ids, require next_id >= 1, preserve unknown root keys; M2 guards+tests, M3 root-extras round-trip+test, M4 ADR-006+map+gates+commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794668674.3915422,
+      "timestamp_str": "2026-11-14 18:04:34",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "Probe analysis of the last two pushes found three gaps in the store contract proven by runtime probes: duplicate ids load silently and break stable-reference behaviour, nonsense next_id values are laundered instead of failing loud, and unknown root keys are deleted on the first write - an asymmetry with the per-task unknown-field preservation ADR-004 established.",
+        "benefits": "Malformed or hostile stores fail as the documented RuntimeError before mutation; future store versions keep root-level metadata across writes, matching the round-trip promise already made for task fields.",
+        "risks": "contract: two more store shapes now fail loud (duplicate ids, next_id < 1) and one write shape changes (unknown root keys round-trip); a store a future client wrote could carry root keys this client must not drop; dependency: standard library only; concurrency: single-writer unchanged, no locking in scope; state: store files only, no rename of existing keys; members of seen-set ordering matter for the extras map",
+        "mitigation": "Three tiny isolated guards plus mirroring the existing per-task extras mechanism for the root; one failure-mode test per guard; ADR-006 records the contract change; full gate suite and strict check before delivery; explicit staging"
+      },
+      "plan_digest": "c0b72ea8fbbe4e42076c53ec700f70bf609dd8492ed3a45c2bf988c4e4e9ca59",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "store-root-hardening",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/4]-[4/4] Implemented and verified: load rejects duplicate ids and next_id < 1, unknown root keys round-trip via _root_extras, 44 tests pass (3 new), ADR-006 recorded; aikit check 4/4 gates and checklists passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794668990.3300698,
+      "timestamp_str": "2026-11-14 18:09:50",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "Delivery-verification probes found three store-contract gaps; each now fails loud or round-trips per the documented contract",
+        "benefits": "Ambiguous duplicate-id stores are rejected; root metadata survives this client's writes; counter cannot be nonsense",
+        "risks": "contract: two new loud failures and one write-shape change, all recorded in ADR-006; dependency: none; concurrency: unchanged single-writer; state: store files and decisions.md only",
+        "mitigation": "Per-guard regression tests including subTest for 0 and -7; full gate suite; explicit staging of the five changed files"
+      },
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
     }
   ]
 }

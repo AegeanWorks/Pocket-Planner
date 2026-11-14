@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `3`
 - **Total Top-Level Functions**: `11`
-- **Total Class Methods**: `47`
-- **Total Source Lines**: `728`
+- **Total Class Methods**: `50`
+- **Total Source Lines**: `773`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `369` lines (`15004` bytes)
+**Size**: `382` lines (`15611` bytes)
 
 **Classes:**
 - `class Task`
@@ -49,7 +49,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `359` lines (`13507` bytes)
+**Size**: `391` lines (`14819` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -73,9 +73,12 @@
   - Method `.test_corrupt_store_raises_runtime_error()`
   - Method `.test_store_missing_tasks_key_raises_runtime_error()`
   - Method `.test_non_object_store_root_raises_runtime_error()`
+  - Method `.test_non_positive_next_id_raises_runtime_error()`
   - Method `.test_non_object_task_raises_runtime_error()`
+  - Method `.test_duplicate_task_ids_raise_runtime_error()`
   - Method `.test_unknown_fields_are_ignored_for_forward_compat()`
   - Method `.test_unknown_task_fields_survive_an_unrelated_write()`
+  - Method `.test_unknown_root_keys_survive_an_unrelated_write()`
   - Method `.test_empty_due_string_loads_as_none()`
   - Method `.test_invalid_due_on_load_raises_runtime_error()`
   - Method `.test_non_list_tags_on_load_raises_runtime_error()`
