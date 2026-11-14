@@ -42,6 +42,10 @@ class TaskStore:
     def _backup_path(self) -> Path:
         return self.path.with_name(self.path.name + ".bak")
 
+    @property
+    def _rotated_backup_path(self) -> Path:
+        return self.path.with_name(self.path.name + ".bak.1")
+
     def load(self) -> list[Task]:
         self._extras = {}
         self._next_id = None
@@ -141,7 +145,10 @@ class TaskStore:
         payload_data.update(self._root_extras)
         payload = json.dumps(payload_data, indent=2) + "\n"
         if self.path.exists():
-            os.replace(self.path, self._backup_path)
+            backup_path = self._backup_path
+            if backup_path.exists():
+                os.replace(backup_path, self._rotated_backup_path)
+            os.replace(self.path, backup_path)
         handle, temporary = tempfile.mkstemp(prefix=f".{self.path.name}.", dir=self.path.parent)
         try:
             with os.fdopen(handle, "w", encoding="utf-8") as file:

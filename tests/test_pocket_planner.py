@@ -296,6 +296,22 @@ class PocketPlannerTests(unittest.TestCase):
 
         self.assertEqual([item["title"] for item in payload["tasks"]], ["one"])
 
+    def test_save_rotates_two_backup_generations(self):
+        store = TaskStore(Path(self.directory.name) / "rotated.json")
+        add_task(store, "one", 2)
+        add_task(store, "two", 2)
+        add_task(store, "three", 2)
+
+        backup = store.path.with_name(store.path.name + ".bak")
+        rotated = store.path.with_name(store.path.name + ".bak.1")
+
+        payload = json.loads(backup.read_text(encoding="utf-8"))
+        self.assertEqual([item["title"] for item in payload["tasks"]], ["one", "two"])
+        rotated_payload = json.loads(rotated.read_text(encoding="utf-8"))
+        self.assertEqual([item["title"] for item in rotated_payload["tasks"]], ["one"])
+        main_payload = json.loads(store.path.read_text(encoding="utf-8"))
+        self.assertEqual([item["title"] for item in main_payload["tasks"]], ["one", "two", "three"])
+
     def test_load_falls_back_to_bak_when_store_is_missing(self):
         add_task(self.store, "one", 2)
         add_task(self.store, "two", 2)
