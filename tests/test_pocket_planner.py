@@ -6,6 +6,7 @@ from pathlib import Path
 from unittest import mock
 
 from pocket_planner import (
+    SCHEMA_VERSION,
     Stats,
     TaskStore,
     add_task,
@@ -87,6 +88,36 @@ class PocketPlannerTests(unittest.TestCase):
 
         payload = json.loads(self.store.path.read_text(encoding="utf-8"))
         self.assertEqual(payload["tasks"][0]["title"], "write docs")
+
+    def test_save_writes_schema_version(self):
+        add_task(self.store, "versioned", 2)
+
+        payload = json.loads(self.store.path.read_text(encoding="utf-8"))
+        self.assertEqual(payload["schema_version"], SCHEMA_VERSION)
+
+    def test_legacy_store_without_schema_version_loads(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "legacy", "priority": 2, '
+            '"done": false, "created_at": "2026-01-01T00:00:00+00:00"}]}',
+            encoding="utf-8",
+        )
+
+        self.assertEqual(self.store.load()[0].title, "legacy")
+
+    def test_newer_schema_version_fails_load(self):
+        self.store.path.write_text(
+            '{"schema_version": 99, "tasks": [], "next_id": 1}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_invalid_schema_version_fails_load(self):
+        for payload in ('{"schema_version": "2", "tasks": []}', '{"schema_version": 0, "tasks": []}'):
+            with self.subTest(payload=payload):
+                self.store.path.write_text(payload, encoding="utf-8")
+                with self.assertRaises(RuntimeError):
+                    self.store.load()
 
     def test_legacy_tasks_without_metadata_still_load(self):
         self.store.path.write_text(
@@ -240,7 +271,7 @@ class PocketPlannerTests(unittest.TestCase):
 
     def test_unknown_root_keys_survive_an_unrelated_write(self):
         self.store.path.write_text(
-            '{"schema_version": 9, "tasks": [{"id": 1, "title": "rooted", "priority": 2, '
+            '{"future_root": {"keep": 123}, "tasks": [{"id": 1, "title": "rooted", "priority": 2, '
             '"done": false, "created_at": "x"}]}',
             encoding="utf-8",
         )
@@ -248,7 +279,8 @@ class PocketPlannerTests(unittest.TestCase):
         add_task(self.store, "new task", 2)
 
         payload = json.loads(self.store.path.read_text(encoding="utf-8"))
-        self.assertEqual(payload["schema_version"], 9)
+        self.assertEqual(payload["future_root"], {"keep": 123})
+        self.assertEqual(payload["schema_version"], SCHEMA_VERSION)
         self.assertEqual(payload["next_id"], 3)
 
     def test_save_keeps_a_bak_of_the_previous_store(self):

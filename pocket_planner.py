@@ -14,6 +14,8 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import NamedTuple
 
+SCHEMA_VERSION = 2
+
 
 @dataclass
 class Task:
@@ -57,8 +59,18 @@ class TaskStore:
             if not isinstance(raw_tasks, list):
                 raise ValueError("'tasks' must be a list")
             self._root_extras = {
-                key: value for key, value in data.items() if key not in ("tasks", "next_id")
+                key: value
+                for key, value in data.items()
+                if key not in ("tasks", "next_id", "schema_version")
             }
+            stored_schema = data.get("schema_version")
+            if stored_schema is not None:
+                if isinstance(stored_schema, bool) or not isinstance(stored_schema, int) or stored_schema < 1:
+                    raise ValueError("schema_version must be a positive integer")
+                if stored_schema > SCHEMA_VERSION:
+                    raise ValueError(
+                        f"schema_version {stored_schema} is newer than this version supports ({SCHEMA_VERSION})"
+                    )
             stored_next = data.get("next_id")
             if stored_next is not None:
                 if isinstance(stored_next, bool) or not isinstance(stored_next, int):
@@ -127,7 +139,7 @@ class TaskStore:
             records.append(record)
         next_id = max([self._next_id or 0] + [task.id + 1 for task in tasks])
         self._next_id = next_id
-        payload_data = {"next_id": next_id, "tasks": records}
+        payload_data = {"schema_version": SCHEMA_VERSION, "next_id": next_id, "tasks": records}
         payload_data.update(self._root_extras)
         payload = json.dumps(payload_data, indent=2) + "\n"
         if self.path.exists():

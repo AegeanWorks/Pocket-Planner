@@ -68,4 +68,12 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
 - **Decision**: A single `canonical_due` helper defines the acceptance set: compact 8-digit dates are accepted and rewritten to `YYYY-MM-DD`; week dates, partial forms and any other shape fail `ValueError` before `fromisoformat` runs, identically on every supported runtime. `validate_due` (CLI add/edit) and the load path both go through it, and the load path's wrapped `RuntimeError` message is unchanged.
 - **Consequences**: This resolves the migration decision ADR-004 deferred: stores written by 3.11 runtimes with non-canonical due values self-heal on load and persist canonical form on the next write (a one-time normalizing write), while week dates - never deliberately usable - fail loud instead of being laundered. Due values are comparable and filterable consistently across runtimes; clients relying on week-date input must switch to `YYYY-MM-DD` (or `YYYYMMDD`).
 
+### ADR-009: Store carries a root schema_version; newer stores fail load
+- **Date**: 2026-11-14
+- **Status**: Accepted
+- **Context**: Successive store-contract changes (root `next_id`, root extras, due canonicalization) each had to argue from the absence of any format marker; nothing in a store file told a reader which writer produced it, so a future format change could silently misread older or newer shapes.
+- **Decision**: `save` writes a root `schema_version` equal to module constant `SCHEMA_VERSION` (currently 2). `load` accepts a missing key (every legacy store) and requires a positive integer otherwise; a value greater than `SCHEMA_VERSION` fails load with a `RuntimeError` that names both versions. The key is a known root key, so unlike opaque root extras it is owned by the writer, never re-merged from loaded data.
+- **Consequences**: Newer stores written by a future client are refused with an actionable message instead of being misinterpreted; migration tooling gets an explicit anchor. Version 2 acknowledges that the store now guarantees `next_id`, root-extras round-tripping and canonical due values - stores whose writer predates those guarantees load as version-less legacy and conform on their first write, so no data migration is required.
+
+
 

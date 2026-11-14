@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `4`
 - **Total Top-Level Functions**: `14`
-- **Total Class Methods**: `61`
-- **Total Source Lines**: `1003`
+- **Total Class Methods**: `65`
+- **Total Source Lines**: `1047`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `504` lines (`19808` bytes)
+**Size**: `516` lines (`20426` bytes)
 
 **Classes:**
 - `class Task`
@@ -55,7 +55,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `499` lines (`19001` bytes)
+**Size**: `531` lines (`20329` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -69,6 +69,10 @@
   - Method `.test_stats_counts_open_done_overdue_and_priorities()`
   - Method `.test_complete_sets_timestamp_and_hides_from_default_list()`
   - Method `.test_save_is_valid_json()`
+  - Method `.test_save_writes_schema_version()`
+  - Method `.test_legacy_store_without_schema_version_loads()`
+  - Method `.test_newer_schema_version_fails_load()`
+  - Method `.test_invalid_schema_version_fails_load()`
   - Method `.test_legacy_tasks_without_metadata_still_load()`
   - Method `.test_metadata_is_persisted_and_filterable()`
   - Method `.test_invalid_due_date_is_rejected()`

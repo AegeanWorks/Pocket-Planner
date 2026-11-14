@@ -42,7 +42,7 @@ python pocket_planner.py stats
 
 `list` accepts `--search text` (case-insensitive substring match over titles and tags) and `--sort {due,priority,id,created}`; the default order is due, then priority, then id. `stats` prints open/done/overdue counts and the priority distribution.
 
-Tasks are stored in `.pocket-planner.json` in the current directory. Use `--file path/to/tasks.json` to select another store. Tasks support priorities, ISO due dates in `YYYY-MM-DD` format (a compact `YYYYMMDD` value is accepted and canonicalized), and repeatable tags. Writes use a temporary file, `fsync`, and atomic replacement; each write also keeps a `.bak` of the previous store beside it, which is read back if the main file is missing after a crash, so an interrupted write never leaves a partial database.
+Tasks are stored in `.pocket-planner.json` in the current directory. Use `--file path/to/tasks.json` to select another store. Tasks support priorities, ISO due dates in `YYYY-MM-DD` format (a compact `YYYYMMDD` value is accepted and canonicalized), and repeatable tags. The store root carries a `schema_version` key; stores written by a newer client fail load with an error naming the version instead of being misread. Writes use a temporary file, `fsync`, and atomic replacement; each write also keeps a `.bak` of the previous store beside it, which is read back if the main file is missing after a crash, so an interrupted write never leaves a partial database.
 
 ### 🛠️ AIKit Commands (run from the AIKit folder)
 | Role | Command |
