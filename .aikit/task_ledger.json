@@ -1,50 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-backup-rotation",
+    "task_id": "pp-relative-due",
     "last_phase": "in_progress",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794673970.20413,
+    "updated_at": 1794676071.2780824,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794673980.8558953
+    "completed_at": 1794676083.0180502
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 5",
-      "phase_num": 3,
-      "description": "Reforge stage 5: stage 5 host review reviewed; run active; coverage 37/37",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794672027.1445296,
-      "timestamp_str": "2026-11-14 19:00:27",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 6",
-      "phase_num": 3,
-      "description": "Reforge stage 6: window 18, 3 commit(s), 10 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794672030.3047185,
-      "timestamp_str": "2026-11-14 19:00:30",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 6",
-      "phase_num": 3,
-      "description": "Reforge stage 6: stage 6 host review reviewed; run active; coverage 19/19",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794672066.6053267,
-      "timestamp_str": "2026-11-14 19:01:06",
-      "agent": "unidentified"
-    },
     {
       "task_id": "reforge:run-3",
       "phase": "reforge stage 7",
@@ -284,6 +251,51 @@
       "status": "completed",
       "timestamp": 1794673980.8558972,
       "timestamp_str": "2026-11-14 19:33:00",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-relative-due",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/2] Plan: relative due input in validate_due (today, today+N, today-N, case-insensitive, frozen to absolute ISO at insert via date.today + timedelta); canonical_due/load stays strict disk-format; help text and README updated",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794675961.495144,
+      "timestamp_str": "2026-11-14 20:06:01",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "backlog: computing offsets by hand is friction for the most common planning case",
+        "benefits": "one-word and N-day due entry from CLI and API; stored data stays absolute and canonical",
+        "risks": "contract: additive input grammar, disk format unchanged; dependency: datetime.timedelta only; concurrency: none; state: uses local date.today, same as overdue logic elsewhere",
+        "mitigation": "failing-first tests for +N/-N/today/case-insensitivity and CLI wiring; full suite + strict check; validate commit subject"
+      },
+      "plan_digest": "e6a177bd92c08e06f106ce1825872ad89a1989961a8af8b9039f8afe8da5c299"
+    },
+    {
+      "task_id": "pp-relative-due",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[2/2] Implemented relative due forms (today, today+N, today-N) in validate_due, frozen to absolute ISO at insert; disk format and load path unchanged; help text and README updated. Failing-first test confirmed; suite 69/69 passed; live CLI smoke verified. checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794676071.2780824,
+      "timestamp_str": "2026-11-14 20:07:51",
+      "agent": "vibe:1"
+    },
+    {
+      "task_id": "pp-relative-due",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-relative-due' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794676083.018052,
+      "timestamp_str": "2026-11-14 20:08:03",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
