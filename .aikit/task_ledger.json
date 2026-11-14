@@ -1,62 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-cli-wiring-tests",
+    "task_id": "pp-wiring-map-cover",
     "last_phase": "in_progress",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794677847.6049206,
+    "updated_at": 1794677956.1792796,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794677848.4041436
+    "completed_at": 1794677956.7489424
   },
   "checkpoints": [
-    {
-      "task_id": "pp-relative-due",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[2/2] Implemented relative due forms (today, today+N, today-N) in validate_due, frozen to absolute ISO at insert; disk format and load path unchanged; help text and README updated. Failing-first test confirmed; suite 69/69 passed; live CLI smoke verified. checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794676071.2780824,
-      "timestamp_str": "2026-11-14 20:07:51",
-      "agent": "vibe:1"
-    },
-    {
-      "task_id": "pp-relative-due",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'pp-relative-due' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794676083.018052,
-      "timestamp_str": "2026-11-14 20:08:03",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "pp-advisory-locking",
-      "phase": "in_progress",
-      "phase_num": 2,
-      "description": "[1/3] Plan: close ADR-007 deferral. Lock file <store>.lock (O_CREAT|O_EXCL, pid+timestamp, one fsync), wait 3s / stale 30s per PRINCIPLE-013; transaction() contextmanager = acquire, load, yield, save on clean exit, release always; all five mutators refactor onto transaction (input validation stays lock-free, not-found raises inside the with so no spurious save); injectable lock_wait/retry_delay/stale_after for fast tests; save stays an unlocked primitive",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794676447.7155178,
-      "timestamp_str": "2026-11-14 20:14:07",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "ADR-007 deferred locking until a second process appears; stats --json and agent/script usage now make concurrent CLI invocations realistic",
-        "benefits": "lost-update window between simultaneous commands is closed; lock is advisory, zero cost on the normal path",
-        "risks": "contract: new .lock file beside store, mutators semantically identical; dependency: stdlib os/contextlib only; concurrency: cross-process via lock file, single-threaded per process (documented); state: stale-lock break by mtime can break a live >30s writer - documented, bounded",
-        "mitigation": "failing-first tests (lock refusal, stale break, recovery after release, error-path release); suite + strict check; ADR-010 before commit; validate commit subject"
-      },
-      "plan_digest": "7587e1c1ec8e88e279cb33fcd946bf14e1a1642f8b830a40dfbb37e4c0cb593d"
-    },
     {
       "task_id": "pp-advisory-locking",
       "phase": "in_progress",
@@ -301,6 +256,51 @@
       "status": "completed",
       "timestamp": 1794677848.4041471,
       "timestamp_str": "2026-11-14 20:37:28",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-wiring-map-cover",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/1] Plan: bookkeeping-only covering task (ADR-419 remedy) - the wiring-tests commit shares the completion second, so --since counts it; open a new task to re-anchor the freshness check",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677955.8583333,
+      "timestamp_str": "2026-11-14 20:39:15",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "same-second commit/completion collision; no content problem in the tree",
+        "benefits": "strict ledger freshness exits clean",
+        "risks": "contract: none; dependency: none; concurrency: none; state: none",
+        "mitigation": "no tree changes; verify strict after completion"
+      },
+      "plan_digest": "fe4e267f514a7e68817bd410bda5cd7713780330e563c0af977929d2c8526127"
+    },
+    {
+      "task_id": "pp-wiring-map-cover",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[1/1] No tree changes; strict re-verified in this step below. checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677956.1792796,
+      "timestamp_str": "2026-11-14 20:39:16",
+      "agent": "vibe:1"
+    },
+    {
+      "task_id": "pp-wiring-map-cover",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-wiring-map-cover' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794677956.7489445,
+      "timestamp_str": "2026-11-14 20:39:16",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
