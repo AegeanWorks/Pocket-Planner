@@ -870,6 +870,137 @@ class MainTests(unittest.TestCase):
         self.assertEqual([t.title for t in store.load()], ["persisted"])
         self.assertEqual(store.load()[0].priority, 2)
 
+    def test_export_then_import_round_trips_extras_and_next_id(self):
+        Path(self.store_path).write_text(
+            json.dumps(
+                {
+                    "schema_version": SCHEMA_VERSION,
+                    "next_id": 12,
+                    "tasks": [
+                        {
+                            "id": 1,
+                            "title": "annotated",
+                            "priority": 2,
+                            "done": False,
+                            "created_at": "2026-01-01T00:00:00+00:00",
+                            "completed_at": None,
+                            "due": None,
+                            "tags": [],
+                            "starred": True,
+                        }
+                    ],
+                    "workload": "sprint-7",
+                }
+            ),
+            encoding="utf-8",
+        )
+        export_path = str(Path(self.directory.name) / "copy.json")
+        code, out, err = self.run_main("export", export_path)
+        self.assertEqual((code, err), (0, ""), out)
+
+        other_path = str(Path(self.directory.name) / "other.json")
+        code, out, err = self.run_main("--file", other_path, "import", export_path)
+        self.assertEqual((code, err), (0, ""), out)
+
+        reloaded = TaskStore(Path(other_path))
+        self.assertEqual([t.title for t in reloaded.load()], ["annotated"])
+        self.assertEqual(reloaded._extras.get(1), {"starred": True})
+        self.assertEqual(reloaded._root_extras.get("workload"), "sprint-7")
+        self.assertEqual(reloaded.next_task_id(reloaded.load()), 12)
+
+    def test_import_merge_renumbers_colliding_ids_and_keeps_extras(self):
+        self.run_main("add", "mine-one")
+        self.run_main("add", "mine-two")
+        incoming_path = Path(self.directory.name) / "incoming.json"
+        incoming_path.write_text(
+            json.dumps(
+                {
+                    "schema_version": SCHEMA_VERSION,
+                    "tasks": [
+                        {
+                            "id": 1,
+                            "title": "theirs-one",
+                            "priority": 1,
+                            "done": True,
+                            "created_at": "2026-01-01T00:00:00+00:00",
+                            "completed_at": "2026-01-02T00:00:00+00:00",
+                            "due": None,
+                            "tags": ["inbox"],
+                            "origin": "backup",
+                        },
+                        {
+                            "id": 2,
+                            "title": "theirs-two",
+                            "priority": 3,
+                            "done": False,
+                            "created_at": "2026-01-01T00:00:00+00:00",
+                            "completed_at": None,
+                            "due": None,
+                            "tags": [],
+                        },
+                    ],
+                }
+            ),
+            encoding="utf-8",
+        )
+        code, out, err = self.run_main("import", str(incoming_path), "--merge")
+        self.assertEqual((code, err), (0, ""), out)
+
+        store = TaskStore(Path(self.store_path))
+        tasks = store.load()
+        self.assertEqual(len(tasks), 4)
+        ids = [t.id for t in tasks]
+        self.assertEqual(len(set(ids)), 4, ids)
+        by_title = {t.title: t for t in tasks}
+        self.assertEqual({t.id for t in tasks if t.title.startswith("mine-")}, {1, 2})
+        theirs_one = by_title["theirs-one"]
+        self.assertTrue(theirs_one.done)
+        self.assertEqual(store._extras[theirs_one.id], {"origin": "backup"})
+
+    def test_import_accepts_bare_json_task_array(self):
+        array_path = Path(self.directory.name) / "array.json"
+        array_path.write_text(
+            json.dumps(
+                [
+                    {
+                        "id": 7,
+                        "title": "from-array",
+                        "priority": 2,
+                        "done": False,
+                        "created_at": "2026-01-01T00:00:00+00:00",
+                        "completed_at": None,
+                        "due": None,
+                        "tags": ["seed"],
+                    }
+                ]
+            ),
+            encoding="utf-8",
+        )
+        code, out, err = self.run_main("import", str(array_path))
+        self.assertEqual((code, err), (0, ""), out)
+        tasks = TaskStore(Path(self.store_path)).load()
+        self.assertEqual([(t.id, t.title, t.tags) for t in tasks], [(7, "from-array", ["seed"])])
+
+    def test_export_json_tasks_format_writes_a_bare_array(self):
+        self.run_main("add", "json-one")
+        export_path = str(Path(self.directory.name) / "tasks-only.json")
+        code, out, err = self.run_main("export", export_path, "--format", "json-tasks")
+        self.assertEqual((code, err), (0, ""), out)
+        payload = json.loads(Path(export_path).read_text(encoding="utf-8"))
+        self.assertIsInstance(payload, list)
+        self.assertEqual([record["title"] for record in payload], ["json-one"])
+
+    def test_export_markdown_format_writes_a_checklist(self):
+        self.run_main("add", "markdown-one", "--tag", "notes")
+        self.run_main("done", "1")
+        export_path = str(Path(self.directory.name) / "tasks.md")
+        code, out, err = self.run_main("export", export_path, "--format", "markdown")
+        self.assertEqual((code, err), (0, ""), out)
+        text = Path(export_path).read_text(encoding="utf-8")
+        self.assertIn("- [x] #1", text)
+        self.assertIn("markdown-one", text)
+        self.assertIn("#notes", text)
+
 
 if __name__ == "__main__":
     unittest.main()

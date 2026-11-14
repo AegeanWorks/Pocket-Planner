@@ -132,83 +132,94 @@ class TaskStore:
                 return []
         try:
             data = json.loads(source.read_text(encoding="utf-8"))
-            if not isinstance(data, dict):
-                raise ValueError("store root must be an object with a 'tasks' list")
-            raw_tasks = data["tasks"]
-            if not isinstance(raw_tasks, list):
-                raise ValueError("'tasks' must be a list")
-            self._root_extras = {
-                key: value
-                for key, value in data.items()
-                if key not in ("tasks", "next_id", "schema_version")
-            }
-            stored_schema = data.get("schema_version")
-            if stored_schema is not None:
-                if isinstance(stored_schema, bool) or not isinstance(stored_schema, int) or stored_schema < 1:
-                    raise ValueError("schema_version must be a positive integer")
-                if stored_schema > SCHEMA_VERSION:
-                    raise ValueError(
-                        f"schema_version {stored_schema} is newer than this version supports ({SCHEMA_VERSION})"
-                    )
-            stored_next = data.get("next_id")
-            if stored_next is not None:
-                if isinstance(stored_next, bool) or not isinstance(stored_next, int):
-                    raise ValueError("next_id must be an integer")
-                if stored_next < 1:
-                    raise ValueError("next_id must be a positive integer")
-                self._next_id = stored_next
-            tasks = []
-            seen_ids: set[int] = set()
-            known = {"id", "title", "priority", "done", "created_at", "completed_at", "due", "tags"}
-            for item in raw_tasks:
-                if not isinstance(item, dict):
-                    raise ValueError("each task must be an object")
-                record = {key: value for key, value in item.items() if key in known}
-                extras = {key: value for key, value in item.items() if key not in known}
-                if extras and "id" in record:
-                    self._extras[record["id"]] = extras
-                record.setdefault("due", None)
-                record.setdefault("tags", [])
-                if isinstance(record.get("id"), bool) or not isinstance(record.get("id"), int):
-                    raise ValueError("id must be an integer")
-                if record["id"] in seen_ids:
-                    raise ValueError("task ids must be unique")
-                seen_ids.add(record["id"])
-                if not isinstance(record.get("title"), str):
-                    raise ValueError("title must be a string")
-                validate_priority(record.get("priority"))
-                if not isinstance(record.get("done"), bool):
-                    raise ValueError("done must be true or false")
-                if not isinstance(record.get("created_at"), str):
-                    raise ValueError("created_at must be a string")
-                if record.get("completed_at") is not None and not isinstance(record.get("completed_at"), str):
-                    raise ValueError("completed_at must be a string or null")
-                if record["due"] == "":
-                    record["due"] = None
-                if record["due"] is not None:
-                    if not isinstance(record["due"], str):
-                        raise ValueError("due must be a YYYY-MM-DD string or null")
-                    record["due"] = canonical_due(record["due"].strip())
-                tags = record.get("tags")
-                if tags is None:
-                    record["tags"] = []
-                elif isinstance(tags, list):
-                    if any(not isinstance(entry, str) for entry in tags):
-                        raise ValueError("tags must be a list of strings")
-                    record["tags"] = normalize_tags(tags)
-                else:
-                    raise ValueError("tags must be a list of strings or null")
-                tasks.append(Task(**record))
-            return tasks
+            return self._parse_payload(data)
         except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as error:
             raise RuntimeError(f"cannot read {source}: {error}") from error
+
+    def _parse_payload(self, data: object) -> list[Task]:
+        self._extras = {}
+        self._next_id = None
+        self._root_extras = {}
+        if not isinstance(data, dict):
+            raise ValueError("store root must be an object with a 'tasks' list")
+        raw_tasks = data["tasks"]
+        if not isinstance(raw_tasks, list):
+            raise ValueError("'tasks' must be a list")
+        self._root_extras = {
+            key: value
+            for key, value in data.items()
+            if key not in ("tasks", "next_id", "schema_version")
+        }
+        stored_schema = data.get("schema_version")
+        if stored_schema is not None:
+            if isinstance(stored_schema, bool) or not isinstance(stored_schema, int) or stored_schema < 1:
+                raise ValueError("schema_version must be a positive integer")
+            if stored_schema > SCHEMA_VERSION:
+                raise ValueError(
+                    f"schema_version {stored_schema} is newer than this version supports ({SCHEMA_VERSION})"
+                )
+        stored_next = data.get("next_id")
+        if stored_next is not None:
+            if isinstance(stored_next, bool) or not isinstance(stored_next, int):
+                raise ValueError("next_id must be an integer")
+            if stored_next < 1:
+                raise ValueError("next_id must be a positive integer")
+            self._next_id = stored_next
+        tasks = []
+        seen_ids: set[int] = set()
+        known = {"id", "title", "priority", "done", "created_at", "completed_at", "due", "tags"}
+        for item in raw_tasks:
+            if not isinstance(item, dict):
+                raise ValueError("each task must be an object")
+            record = {key: value for key, value in item.items() if key in known}
+            extras = {key: value for key, value in item.items() if key not in known}
+            if extras and "id" in record:
+                self._extras[record["id"]] = extras
+            record.setdefault("due", None)
+            record.setdefault("tags", [])
+            if isinstance(record.get("id"), bool) or not isinstance(record.get("id"), int):
+                raise ValueError("id must be an integer")
+            if record["id"] in seen_ids:
+                raise ValueError("task ids must be unique")
+            seen_ids.add(record["id"])
+            if not isinstance(record.get("title"), str):
+                raise ValueError("title must be a string")
+            validate_priority(record.get("priority"))
+            if not isinstance(record.get("done"), bool):
+                raise ValueError("done must be true or false")
+            if not isinstance(record.get("created_at"), str):
+                raise ValueError("created_at must be a string")
+            if record.get("completed_at") is not None and not isinstance(record.get("completed_at"), str):
+                raise ValueError("completed_at must be a string or null")
+            if record["due"] == "":
+                record["due"] = None
+            if record["due"] is not None:
+                if not isinstance(record["due"], str):
+                    raise ValueError("due must be a YYYY-MM-DD string or null")
+                record["due"] = canonical_due(record["due"].strip())
+            tags = record.get("tags")
+            if tags is None:
+                record["tags"] = []
+            elif isinstance(tags, list):
+                if any(not isinstance(entry, str) for entry in tags):
+                    raise ValueError("tags must be a list of strings")
+                record["tags"] = normalize_tags(tags)
+            else:
+                raise ValueError("tags must be a list of strings or null")
+            tasks.append(Task(**record))
+        return tasks
+
+    def _copy_state_from(self, other: "TaskStore") -> None:
+        """Carry forward-compat unknown fields and the retired-id fence (ADR-004/ADR-005)."""
+        self._extras = {task_id: dict(extra) for task_id, extra in other._extras.items()}
+        self._root_extras = dict(other._root_extras)
+        self._next_id = other._next_id
 
     def next_task_id(self, tasks: list[Task]) -> int:
         """The next id this store issues; never an id a deleted task already used."""
         return max([self._next_id or 1] + [task.id + 1 for task in tasks])
 
     def save(self, tasks: list[Task]) -> None:
-        self.path.parent.mkdir(parents=True, exist_ok=True)
         records = []
         for task in tasks:
             record = asdict(task)
@@ -224,6 +235,10 @@ class TaskStore:
             if backup_path.exists():
                 os.replace(backup_path, self._rotated_backup_path)
             os.replace(self.path, backup_path)
+        self._replace_with_payload(payload)
+
+    def _replace_with_payload(self, payload: str) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         handle, temporary = tempfile.mkstemp(prefix=f".{self.path.name}.", dir=self.path.parent)
         try:
             with os.fdopen(handle, "w", encoding="utf-8") as file:
@@ -517,20 +532,70 @@ def render_task(task: Task) -> str:
     return f"[{marker}] #{task.id} P{task.priority} {task.title}{suffix}"
 
 
-def export_store(store: TaskStore, destination: Path) -> int:
+def render_task_markdown(task: Task) -> str:
+    details = []
+    if task.due:
+        details.append(f"due {task.due}")
+    if task.tags:
+        details.append(" ".join(f"#{tag}" for tag in task.tags))
+    suffix = f" ({', '.join(details)})" if details else ""
+    return f"- [{'x' if task.done else ' '}] #{task.id} P{task.priority} {task.title}{suffix}"
+
+
+EXPORT_FORMATS = ("store", "json-tasks", "markdown")
+
+
+def export_store(store: TaskStore, destination: Path, fmt: str = EXPORT_FORMATS[0]) -> int:
     tasks = store.load()
-    TaskStore(destination).save(tasks)
+    writer = TaskStore(destination)
+    if fmt == "store":
+        # A fresh store would drop the extras and the retired-id fence, so the
+        # full formatting state has to be carried over before saving.
+        writer._copy_state_from(store)
+        writer.save(tasks)
+    elif fmt == "json-tasks":
+        records = []
+        for task in tasks:
+            record = asdict(task)
+            record.update(store._extras.get(task.id, {}))
+            records.append(record)
+        writer._replace_with_payload(json.dumps(records, indent=2) + "\n")
+    else:
+        lines = [render_task_markdown(task) for task in sorted(tasks, key=_sort_key("due"))]
+        writer._replace_with_payload("\n".join(lines) + "\n")
     return len(tasks)
 
 
-def import_store(store: TaskStore, source: Path) -> int:
+def import_store(store: TaskStore, source: Path, merge: bool = False) -> int:
     if not source.exists():
         # Deliberate: a missing import source must not fall back to the .bak
         # beside it, so load's crash-recovery contract does not apply here.
         raise ValueError(f"import source {source} does not exist")
+    try:
+        data = json.loads(source.read_text(encoding="utf-8"))
+        if isinstance(data, list):
+            data = {"tasks": data}
+        reader = TaskStore(source)
+        incoming = reader._parse_payload(data)
+    except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as error:
+        raise RuntimeError(f"cannot import {source}: {error}") from error
     with store.transaction() as tasks:
-        incoming = TaskStore(source).load()
+        if merge:
+            # Renumber colliding ids into free space; keep the extras with them.
+            taken = {task.id for task in tasks}
+            next_free = store.next_task_id(tasks)
+            for candidate in incoming:
+                original = candidate.id
+                if original in taken:
+                    candidate.id = next_free
+                    next_free += 1
+                if original in reader._extras:
+                    store._extras[candidate.id] = reader._extras[original]
+                taken.add(candidate.id)
+                tasks.append(candidate)
+            return len(incoming)
         tasks[:] = incoming
+        store._copy_state_from(reader)
         return len(tasks)
 
 
@@ -565,8 +630,19 @@ def build_parser() -> argparse.ArgumentParser:
     next_cmd = commands.add_parser("next", help="show the top open task")
     export = commands.add_parser("export", help="write a full copy of the store to a file")
     export.add_argument("path", type=Path)
+    export.add_argument(
+        "--format",
+        choices=EXPORT_FORMATS,
+        default="store",
+        help="store: full copy (re-importable); json-tasks: bare task array; markdown: human checklist (one-way)",
+    )
     importer = commands.add_parser("import", help="replace the store with the tasks of another store file")
     importer.add_argument("path", type=Path)
+    importer.add_argument(
+        "--merge",
+        action="store_true",
+        help="add the incoming tasks instead of replacing; colliding ids are renumbered",
+    )
     done = commands.add_parser("done", help="complete a task")
     done.add_argument("id", type=int)
     reopen = commands.add_parser("reopen", help="reopen a completed task")
@@ -636,9 +712,11 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "next":
             print(render_task(next_task(store)))
         elif args.command == "export":
-            print(f"Exported {export_store(store, args.path)} tasks: {args.path}")
+            print(f"Exported {export_store(store, args.path, args.format)} tasks: {args.path}")
         elif args.command == "import":
-            print(f"Imported {import_store(store, args.path)} tasks.")
+            count = import_store(store, args.path, merge=args.merge)
+            verb = "Merged" if args.merge else "Imported"
+            print(f"{verb} {count} tasks.")
         elif args.command == "stats":
             summary = task_stats(store)
             if args.json:
