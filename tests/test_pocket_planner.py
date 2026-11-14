@@ -603,6 +603,15 @@ class PocketPlannerTests(unittest.TestCase):
         self.assertEqual([t.title for t in reader.load()], ["in-flight"])
         self.assertFalse(path.with_name(path.name + ".lock").exists())
 
+    def test_list_limit_binds_after_sorting_and_rejects_non_positive(self):
+        add_task(self.store, "low", 3)
+        add_task(self.store, "high", 1)
+        add_task(self.store, "mid", 2)
+        limited = list_tasks(self.store, sort="priority", limit=2)
+        self.assertEqual([task.title for task in limited], ["high", "mid"])
+        with self.assertRaises(ValueError):
+            list_tasks(self.store, limit=0)
+
     def test_next_task_returns_top_open_task_in_due_order(self):
         first = add_task(self.store, "first", 2, "2026-11-02")
         add_task(self.store, "laidate", 2, "2026-11-05")
@@ -750,6 +759,33 @@ class MainTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertEqual(out, "")
         self.assertIn("Error: task 2 was not found", err)
+
+    def test_main_list_json_prints_one_parseable_line_of_records(self):
+        self.run_main("add", "work item", "-p", "1", "--due", "today+3", "--tag", "work")
+        self.run_main("add", "chore", "-p", "3")
+        self.run_main("done", "1")
+        code, out, err = self.run_main("list", "--json")
+        self.assertEqual(code, 0)
+        self.assertEqual(err, "")
+        self.assertEqual(out.count("\n"), 1)
+        payload = json.loads(out)
+        self.assertEqual([record["title"] for record in payload], ["chore"])
+        self.assertFalse(payload[0]["done"])
+        self.assertIsNone(payload[0]["due"])
+
+    def test_main_list_limit_caps_after_sorting(self):
+        self.run_main("add", "low", "-p", "3")
+        self.run_main("add", "high", "-p", "1")
+        self.run_main("add", "mid", "-p", "2")
+        code, out, _ = self.run_main("list", "--sort", "priority", "--limit", "2")
+        self.assertEqual(code, 0)
+        self.assertIn("high", out)
+        self.assertIn("mid", out)
+        self.assertNotIn("low", out)
+        code, out, err = self.run_main("list", "--limit", "0")
+        self.assertEqual(code, 1)
+        self.assertEqual(out, "")
+        self.assertIn("Error: --limit must be a positive integer", err)
 
     def test_main_relative_due_round_trips_through_add_and_edit(self):
         expected = (date.today() + timedelta(days=7)).isoformat()

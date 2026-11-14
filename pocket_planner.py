@@ -436,7 +436,10 @@ def list_tasks(
     priority: int | None = None,
     query: str | None = None,
     sort: str = "due",
+    limit: int | None = None,
 ) -> list[Task]:
+    if limit is not None and (isinstance(limit, bool) or limit < 1):
+        raise ValueError("--limit must be a positive integer")
     tasks = store.load()
     visible = [task for task in tasks if include_done or not task.done]
     if tag:
@@ -462,7 +465,8 @@ def list_tasks(
             for task in visible
             if task.due and task.due < today and not task.done
         ]
-    return sorted(visible, key=_sort_key(sort))
+    ordered = sorted(visible, key=_sort_key(sort))
+    return ordered if limit is None else ordered[:limit]
 
 
 def next_task(store: TaskStore) -> Task:
@@ -530,6 +534,8 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("--priority", type=int, choices=(1, 2, 3), help="only show this priority")
     show.add_argument("--search", help="only show tasks whose title or tags contain this text")
     show.add_argument("--sort", choices=SORT_KEYS, default="due", help="order by due, priority, id, or created")
+    show.add_argument("--limit", type=int, default=None, help="show only the first N tasks (after sorting)")
+    show.add_argument("--json", action="store_true", help="print the matching tasks as a single JSON line")
     stats = commands.add_parser("stats", help="summarize the store")
     stats.add_argument("--json", action="store_true", help="print the summary as JSON")
     next_cmd = commands.add_parser("next", help="show the top open task")
@@ -588,11 +594,15 @@ def main(argv: list[str] | None = None) -> int:
                 args.priority,
                 args.search,
                 args.sort,
+                args.limit,
             )
-            if not tasks:
-                print("No tasks.")
-            for task in tasks:
-                print(render_task(task))
+            if args.json:
+                print(json.dumps([asdict(task) for task in tasks]))
+            else:
+                if not tasks:
+                    print("No tasks.")
+                for task in tasks:
+                    print(render_task(task))
         elif args.command == "next":
             print(render_task(next_task(store)))
         elif args.command == "stats":
