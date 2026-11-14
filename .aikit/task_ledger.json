@@ -1,51 +1,16 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-wiring-map-cover",
+    "task_id": "pp-list-json-limit",
     "last_phase": "in_progress",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1794677956.1792796,
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1794678495.0155013,
     "owner": "vibe:1",
     "started_by": "vibe:1",
-    "continuations": [],
-    "completed_at": 1794677979.5959523
+    "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "pp-advisory-locking",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'pp-advisory-locking' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794676945.198165,
-      "timestamp_str": "2026-11-14 20:22:25",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "pp-lock-hygiene-tag",
-      "phase": "in_progress",
-      "phase_num": 2,
-      "description": "[1/1] Plan: add the required deliberate-exception marker to the stale-lock OSError handler; no code behavior change; suite already 74/74 after the edit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794677151.905062,
-      "timestamp_str": "2026-11-14 20:25:51",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "hygiene gate flags a silent except without a deliberate marker",
-        "benefits": "gate passes; intent documented",
-        "risks": "contract: none; dependency: none; concurrency: none; state: none",
-        "mitigation": "marker follows the pattern used in _sync_directory; strict check verifies"
-      },
-      "plan_digest": "23d2b46b73df0d4809417e9bbca73f3f43a6170faca129489278933e8bd762df"
-    },
     {
       "task_id": "pp-lock-hygiene-tag",
       "phase": "in_progress",
@@ -313,6 +278,35 @@
         ],
         "forced": false
       }
+    },
+    {
+      "task_id": "pp-list-json-limit",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/2] Plan: list_tasks gains limit kwarg (validated >=1, applied after sort) and main passes --limit; list --json prints one JSON line of asdict task records through the same filters; README updated; order discipline: map refresh committed before complete, paced ledger commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794678173.23074,
+      "timestamp_str": "2026-11-14 20:42:53",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "audit backlog: machine readability and bounded output for scripts/agents",
+        "benefits": "automation can consume tasks without parsing prose; large lists can be capped",
+        "risks": "contract: additive flags, no store change; dependency: json already imported; concurrency: read-only; state: none",
+        "mitigation": "failing-first tests for limit validation and json payload; suite + strict check; ADR not needed (no store contract change)"
+      },
+      "plan_digest": "453f533f58867102eac02a20d6f3141d8d1a5629203cb14fc67045ca215b516d"
+    },
+    {
+      "task_id": "pp-list-json-limit",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[2/2] Implemented list_tasks limit kwarg (>=1 validation, after-sort slice), --limit and --json CLI flags; README updated. Suite 81/81; failing-first confirmed; live smoke verified limit, one-line JSON, and limit-0 error contract. checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794678495.0155013,
+      "timestamp_str": "2026-11-14 20:48:15",
+      "agent": "vibe:1"
     }
   ]
 }
