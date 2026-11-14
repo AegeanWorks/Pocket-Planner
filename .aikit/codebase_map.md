@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `626` lines (`24167` bytes)
+**Size**: `626` lines (`24239` bytes)
 
 **Classes:**
 - `class Task`
