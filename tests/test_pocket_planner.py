@@ -787,6 +787,63 @@ class MainTests(unittest.TestCase):
         self.assertEqual(out, "")
         self.assertIn("Error: --limit must be a positive integer", err)
 
+    def test_main_wait_zero_and_negative_are_respected_or_rejected(self):
+        self.run_main("add", "seed", "-p", "2")
+        lock = Path(self.store_path + ".lock")
+        lock.write_text("999999 held\n", encoding="utf-8")
+        code, out, err = self.run_main("--wait", "0", "add", "instant")
+        self.assertEqual(code, 1)
+        self.assertIn("Error: store is locked by another process", err)
+        lock.unlink()
+        store = TaskStore(Path(self.store_path))
+        self.assertEqual([t.title for t in store.load()], ["seed"])
+        code, out, err = self.run_main("--wait", "-1", "add", "bad")
+        self.assertEqual(code, 1)
+        self.assertIn("Error: --wait must be a non-negative number", err)
+
+    def test_main_export_import_round_trip_and_error_paths(self):
+        self.run_main("add", "first", "-p", "1", "--due", "today+4", "--tag", "work")
+        second = self.run_main("add", "second", "-p", "3")
+        self.run_main("done", "1")
+        export_path = Path(self.directory.name) / "export-copy.json"
+        code, out, _ = self.run_main("export", str(export_path))
+        self.assertEqual(code, 0)
+        self.assertIn("Exported 2 tasks", out)
+
+        self.run_main("rm", "1")
+        self.run_main("rm", "2")
+        code, _, _ = self.run_main("import", str(export_path))
+        self.assertEqual(code, 0)
+        store = TaskStore(Path(self.store_path))
+        tasks = store.load()
+        self.assertEqual([t.title for t in tasks], ["first", "second"])
+        self.assertTrue(tasks[0].done)
+        self.assertEqual(tasks[0].due, (date.today() + timedelta(days=4)).isoformat())
+        self.assertEqual(tasks[0].tags, ["work"])
+
+        missing = Path(self.directory.name) / "absent.json"
+        code, out, err = self.run_main("import", str(missing))
+        self.assertEqual(code, 1)
+        self.assertEqual(out, "")
+        self.assertIn("Error:", err)
+
+        duplicate = Path(self.directory.name) / "duplicate.json"
+        duplicate.write_text(
+            json.dumps({"schema_version": SCHEMA_VERSION, "next_id": 3, "tasks": [
+                {"id": 1, "title": "a", "priority": 2, "done": False, "created_at": "2026-01-01T00:00:00+00:00",
+                 "completed_at": None, "due": None, "tags": []},
+                {"id": 1, "title": "b", "priority": 2, "done": False, "created_at": "2026-01-01T00:00:00+00:00",
+                 "completed_at": None, "due": None, "tags": []},
+            ]}),
+            encoding="utf-8",
+        )
+        code, out, err = self.run_main("import", str(duplicate))
+        self.assertEqual(code, 1)
+        self.assertIn("Error:", err)
+        self.assertIn("unique", err)
+        store = TaskStore(Path(self.store_path))
+        self.assertEqual(len(store.load()), 2)
+
     def test_main_relative_due_round_trips_through_add_and_edit(self):
         expected = (date.today() + timedelta(days=7)).isoformat()
         code, _, _ = self.run_main("add", "next-week", "-p", "1", "--due", "today+7")

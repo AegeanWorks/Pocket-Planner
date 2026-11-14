@@ -516,9 +516,32 @@ def render_task(task: Task) -> str:
     return f"[{marker}] #{task.id} P{task.priority} {task.title}{suffix}"
 
 
+def export_store(store: TaskStore, destination: Path) -> int:
+    tasks = store.load()
+    TaskStore(destination).save(tasks)
+    return len(tasks)
+
+
+def import_store(store: TaskStore, source: Path) -> int:
+    if not source.exists():
+        # Deliberate: a missing import source must not fall back to the .bak
+        # beside it, so load's crash-recovery contract does not apply here.
+        raise ValueError(f"import source {source} does not exist")
+    with store.transaction() as tasks:
+        incoming = TaskStore(source).load()
+        tasks[:] = incoming
+        return len(tasks)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Manage tasks in a local JSON file.")
     parser.add_argument("--file", type=Path, default=Path(".pocket-planner.json"))
+    parser.add_argument(
+        "--wait",
+        type=float,
+        default=None,
+        help="seconds to wait for the store lock (default 3, 0 fails immediately)",
+    )
     commands = parser.add_subparsers(dest="command", required=True)
 
     add = commands.add_parser("add", help="create a task")
@@ -539,6 +562,10 @@ def build_parser() -> argparse.ArgumentParser:
     stats = commands.add_parser("stats", help="summarize the store")
     stats.add_argument("--json", action="store_true", help="print the summary as JSON")
     next_cmd = commands.add_parser("next", help="show the top open task")
+    export = commands.add_parser("export", help="write a full copy of the store to a file")
+    export.add_argument("path", type=Path)
+    importer = commands.add_parser("import", help="replace the store with the tasks of another store file")
+    importer.add_argument("path", type=Path)
     done = commands.add_parser("done", help="complete a task")
     done.add_argument("id", type=int)
     reopen = commands.add_parser("reopen", help="reopen a completed task")
@@ -558,8 +585,10 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    store = TaskStore(args.file)
     try:
+        if args.wait is not None and args.wait < 0:
+            raise ValueError("--wait must be a non-negative number")
+        store = TaskStore(args.file, lock_wait=3.0 if args.wait is None else args.wait)
         if args.command == "add":
             task = add_task(store, " ".join(args.title), args.priority, args.due, args.tag)
             print(f"Added #{task.id}: {task.title} (priority {task.priority})")
@@ -605,6 +634,10 @@ def main(argv: list[str] | None = None) -> int:
                     print(render_task(task))
         elif args.command == "next":
             print(render_task(next_task(store)))
+        elif args.command == "export":
+            print(f"Exported {export_store(store, args.path)} tasks: {args.path}")
+        elif args.command == "import":
+            print(f"Imported {import_store(store, args.path)} tasks.")
         elif args.command == "stats":
             summary = task_stats(store)
             if args.json:
