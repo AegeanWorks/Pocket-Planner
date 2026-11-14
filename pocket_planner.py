@@ -98,7 +98,7 @@ class TaskStore:
                 if record["due"] is not None:
                     if not isinstance(record["due"], str):
                         raise ValueError("due must be a YYYY-MM-DD string or null")
-                    record["due"] = validate_due(record["due"].strip())
+                    record["due"] = canonical_due(record["due"].strip())
                 tags = record.get("tags")
                 if tags is None:
                     record["tags"] = []
@@ -179,17 +179,26 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def canonical_due(value: str) -> str:
+    compact = value.strip()
+    if len(compact) == 8 and compact.isdigit():
+        compact = f"{compact[:4]}-{compact[4:6]}-{compact[6:]}"
+    if len(compact) != 10 or compact[4] != "-" or compact[7] != "-":
+        raise ValueError("due date must use YYYY-MM-DD format")
+    try:
+        date.fromisoformat(compact)
+    except ValueError as error:
+        raise ValueError("due date must use YYYY-MM-DD format") from error
+    return compact
+
+
 def validate_due(value: str | None) -> str | None:
     if value is None:
         return None
     value = value.strip()
     if not value:
         return None
-    try:
-        date.fromisoformat(value)
-    except ValueError as error:
-        raise ValueError("due date must use YYYY-MM-DD format") from error
-    return value
+    return canonical_due(value)
 
 
 def normalize_tags(tags: list[str] | None) -> list[str]:

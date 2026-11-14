@@ -271,7 +271,35 @@ class PocketPlannerTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             self.store.load()
 
-    def test_non_list_tags_on_load_raises_runtime_error(self):
+    def test_basic_iso_due_is_canonicalized_on_load(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "compact", "priority": 2, '
+            '"done": false, "created_at": "2026-01-01T00:00:00+00:00", "due": "20261101"}]}',
+            encoding="utf-8",
+        )
+
+        tasks = self.store.load()
+        self.assertEqual(tasks[0].due, "2026-11-01")
+        self.store.save(tasks)
+        self.assertEqual(self.store.load()[0].due, "2026-11-01")
+
+    def test_week_date_due_is_rejected(self):
+        with self.assertRaises(ValueError):
+            add_task(self.store, "week", 2, "2026-W44-2")
+
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "week", "priority": 2, '
+            '"done": false, "created_at": "2026-01-01T00:00:00+00:00", "due": "2026-W44-2"}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
+    def test_compact_due_is_canonicalized_on_add(self):
+        task = add_task(self.store, "compact", 2, "20261101")
+
+        self.assertEqual(task.due, "2026-11-01")
+        self.assertEqual(self.store.load()[0].due, "2026-11-01")
         self.store.path.write_text(
             '{"tasks": [{"id": 1, "title": "bad", "priority": 2, '
             '"done": false, "created_at": "2026-01-01T00:00:00+00:00", "tags": "work"}]}',

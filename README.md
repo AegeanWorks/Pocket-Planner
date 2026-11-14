@@ -38,7 +38,7 @@ python pocket_planner.py list --all
 
 `edit` updates title, priority, due date, or tags in place. Pass `--clear-due` to remove the due date or `--clear-tags` to remove all tags. `--tag` may be repeated and replaces the tag set.
 
-Tasks are stored in `.pocket-planner.json` in the current directory. Use `--file path/to/tasks.json` to select another store. Tasks support priorities, ISO due dates, and repeatable tags. Writes use a temporary file, `fsync`, and atomic replacement; each write also keeps a `.bak` of the previous store beside it, which is read back if the main file is missing after a crash, so an interrupted write never leaves a partial database.
+Tasks are stored in `.pocket-planner.json` in the current directory. Use `--file path/to/tasks.json` to select another store. Tasks support priorities, ISO due dates in `YYYY-MM-DD` format (a compact `YYYYMMDD` value is accepted and canonicalized), and repeatable tags. Writes use a temporary file, `fsync`, and atomic replacement; each write also keeps a `.bak` of the previous store beside it, which is read back if the main file is missing after a crash, so an interrupted write never leaves a partial database.
 
 ### 🛠️ AIKit Commands (run from the AIKit folder)
 | Role | Command |

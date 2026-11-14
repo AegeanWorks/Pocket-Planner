@@ -1,11 +1,11 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "store-durability-bak",
-    "last_phase": "phase 4",
+    "task_id": "due-canonicalization",
+    "last_phase": "in_progress",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794669818.7621608,
+    "updated_at": 1794671077.0000687,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
@@ -14,61 +14,9 @@
         "name": "pocket-planner",
         "path": "projects/pocket-planner"
       }
-    ],
-    "impact_assessment": {
-      "why": "PRINCIPLE-013 durability pattern was absent from the store; a mid-save crash or blocked rename could lose the store head irrecoverably",
-      "benefits": "Previous store always recoverable as .bak; transient replace failures self-heal; rename reaches the directory entry on POSIX",
-      "risks": "contract: .bak files appear beside the store and missing main files read from .bak; dependency: time module only; concurrency: locking deliberately deferred via ADR-007 single-writer stance; state: save failure paths restructured, temp cleanup preserved",
-      "mitigation": "Three regression tests including mocked transient double-failure; retry delay injectable keeping tests fast; ADR-007 and README document the recovery and Windows skip; full gates plus strict check before delivery"
-    }
+    ]
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: window 6, 3 commit(s), 7 file(s) reviewed (partial), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667530.4729095,
-      "timestamp_str": "2026-11-14 17:45:30",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: stage 2 host review partial; run active; coverage 0/35",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667564.7156088,
-      "timestamp_str": "2026-11-14 17:46:04",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "priority-bool-guard",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "Reject boolean priority in TaskStore.load per reforge run-2 stage-1 review finding",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667859.708621,
-      "timestamp_str": "2026-11-14 17:50:59",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "Reforge run-2 reviewed 8e80ef1 and found the new priority guard accepts booleans because True == 1, so a malformed store loads instead of raising the documented RuntimeError.",
-        "benefits": "Store field-type validation is now consistent: id was bool-guarded, priority matches; regression test pins the case.",
-        "risks": "contract: load rejects one more malformed shape (bool priority) loudly, per the documented RuntimeError contract; dependency: none; concurrency: single-writer; state: store files only",
-        "mitigation": "None-shape change; failing unpinned behavior is deleted because bool priority was never a documented acceptance; full gate suite before commit; explicit staging"
-      },
-      "checklists": "passed",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
     {
       "task_id": "priority-bool-guard",
       "phase": "completed",
@@ -347,6 +295,63 @@
         "mitigation": "Three regression tests including mocked transient double-failure; retry delay injectable keeping tests fast; ADR-007 and README document the recovery and Windows skip; full gates plus strict check before delivery"
       },
       "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "store-durability-bak",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'store-durability-bak' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794669869.3734896,
+      "timestamp_str": "2026-11-14 18:24:29",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "due-canonicalization",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/4] Plan resolve ADR-004 due-format deferral: one canonical acceptance set for due values; compact YYYYMMDD accepted and canonicalized to YYYY-MM-DD at CLI add/edit and store load; week dates and other parseable-but-non-canonical forms fail loud on every supported runtime; M2 implement canonical_due + validate_due/load wiring, M3 tests + ADR-008 + README wording, M4 gates + commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794670967.4752588,
+      "timestamp_str": "2026-11-14 18:42:47",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "ADR-004 deferred strict due parsing because date.fromisoformat accepts non-canonical forms on 3.11+ only, so the same store read differently across the runtimes the README supports; canonicalizing at every entry point converges the accepted set without breaking stores a 3.11 runtime already wrote",
+        "benefits": "Due values are comparable and filterable identically on 3.10 and 3.11+; stores self-heal to canonical form on the next write; the open migration question from ADR-004 closes",
+        "risks": "contract: due acceptance changes (new compact form accepted, week dates now rejected everywhere) and error message set changes; dependency: standard library only; concurrency: single-writer unchanged; state: due values already stored in non-canonical ISO forms are canonicalized on first write - a one-time normalizing write",
+        "mitigation": "canonical_due shared by both entry points (single implementation); per-shape regression tests including week-date rejection and load canonicalization; ADR-008 + README document the acceptance set; full gates and strict check before delivery; explicit staging"
+      },
+      "plan_digest": "50e972623ea12f0284e1e9323df9151ea89b54da3b4f64a01c0d0f1453645b11",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "due-canonicalization",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[4/4] Verify resolve ADR-004 due-format deferral: canonical_due acceptance set shipped (M2), 49/49 tests incl. load canonicalization + week-date rejection + compact add roundtrip (M3), ADR-008 + README wording + knowledge map regenerated (M3), checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671077.0000687,
+      "timestamp_str": "2026-11-14 18:44:37",
+      "agent": "vibe:1",
       "workspaces": [
         {
           "name": "pocket-planner",

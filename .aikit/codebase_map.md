@@ -8,9 +8,9 @@
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `2`
 - **Total Classes**: `3`
-- **Total Top-Level Functions**: `11`
-- **Total Class Methods**: `55`
-- **Total Source Lines**: `853`
+- **Total Top-Level Functions**: `12`
+- **Total Class Methods**: `57`
+- **Total Source Lines**: `890`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `420` lines (`17109` bytes)
+**Size**: `429` lines (`17459` bytes)
 
 **Classes:**
 - `class Task`
@@ -37,6 +37,7 @@
 
 **Functions:**
 - `def now()`
+- `def canonical_due(value)`
 - `def validate_due(value)`
 - `def normalize_tags(tags)`
 - `def add_task(store, title, priority, due, tags)`
@@ -51,7 +52,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `433` lines (`16316` bytes)
+**Size**: `461` lines (`17437` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -86,7 +87,9 @@
   - Method `.test_save_retries_transient_replace_failures()`
   - Method `.test_empty_due_string_loads_as_none()`
   - Method `.test_invalid_due_on_load_raises_runtime_error()`
-  - Method `.test_non_list_tags_on_load_raises_runtime_error()`
+  - Method `.test_basic_iso_due_is_canonicalized_on_load()`
+  - Method `.test_week_date_due_is_rejected()`
+  - Method `.test_compact_due_is_canonicalized_on_add()`
   - Method `.test_non_integer_id_raises_runtime_error()`
   - Method `.test_out_of_range_priority_raises_runtime_error()`
   - Method `.test_non_boolean_done_raises_runtime_error()`
