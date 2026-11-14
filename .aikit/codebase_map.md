@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `5`
 - **Total Top-Level Functions**: `17`
-- **Total Class Methods**: `81`
-- **Total Source Lines**: `1221`
+- **Total Class Methods**: `90`
+- **Total Source Lines**: `1343`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,14 +23,18 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `559` lines (`21629` bytes)
+**Size**: `626` lines (`24167` bytes)
 
 **Classes:**
 - `class Task`
 - `class TaskStore`
-  - Method `.__init__(path, *, replace_tries, retry_delay)`
+  - Method `.__init__(path, *, replace_tries, retry_delay, lock_wait, stale_after)`
   - Property `._backup_path`
   - Property `._rotated_backup_path`
+  - Property `._lock_path`
+  - Method `._acquire_lock()`
+  - Method `._release_lock()`
+  - Method `.transaction()` - *Lock, load, yield the task list, save on a clean exit, release always.*
   - Method `.load()`
   - Method `.next_task_id(tasks)` - *The next id this store issues; never an id a deleted task already used.*
   - Method `.save(tasks)`
@@ -59,7 +63,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `662` lines (`26345` bytes)
+**Size**: `717` lines (`29157` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -123,6 +127,11 @@
   - Method `.test_api_boolean_priority_is_rejected()`
   - Method `.test_edit_updates_title_priority_due_and_tags()`
   - Method `.test_edit_clear_due_and_tags()`
+  - Method `.test_locked_store_refuses_mutator_with_runtime_error()`
+  - Method `.test_stale_lock_is_broken_and_mutation_succeeds()`
+  - Method `.test_error_inside_transaction_releases_lock_and_writes_nothing()`
+  - Method `.test_second_store_is_locked_out_while_a_transaction_is_open()`
+  - Method `.test_second_process_writer_wins_the_lock_after_release()`
   - Method `.test_next_task_returns_top_open_task_in_due_order()`
   - Method `.test_next_task_without_open_tasks_raises()`
   - Method `.test_edit_noop_and_conflicts_raise()`
