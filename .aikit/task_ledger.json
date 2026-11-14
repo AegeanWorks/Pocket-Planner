@@ -3,8 +3,8 @@
   "active_task": {
     "task_id": "priority-guard-helper",
     "last_phase": "in_progress",
-    "active_phase": 4,
-    "status": "in_progress",
+    "active_phase": 5,
+    "status": "completed",
     "updated_at": 1794672322.9404912,
     "owner": "vibe:1",
     "started_by": "vibe:1",
@@ -14,25 +14,10 @@
         "name": "pocket-planner",
         "path": "projects/pocket-planner"
       }
-    ]
+    ],
+    "completed_at": 1794672346.0235612
   },
   "checkpoints": [
-    {
-      "task_id": "schema-version",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'schema-version' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794671564.9684334,
-      "timestamp_str": "2026-11-14 18:52:44",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
     {
       "task_id": "reforge:run-3",
       "phase": "reforge run",
@@ -260,6 +245,22 @@
           "path": "projects/pocket-planner"
         }
       ]
+    },
+    {
+      "task_id": "priority-guard-helper",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'priority-guard-helper' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794672346.023566,
+      "timestamp_str": "2026-11-14 19:05:46",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
     }
   ]
 }
