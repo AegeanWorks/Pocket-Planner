@@ -4,6 +4,7 @@ import os
 import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
+from datetime import date, timedelta
 from pathlib import Path
 from unittest import mock
 
@@ -145,6 +146,15 @@ class PocketPlannerTests(unittest.TestCase):
         self.assertEqual([task.title for task in tasks], ["plan launch"])
         self.assertEqual(tasks[0].tags, ["work", "launch"])
         self.assertEqual(tasks[0].due, "2026-11-02")
+
+    def test_relative_due_dates_freeze_to_absolute_iso_dates(self):
+        task = add_task(self.store, "soon", 2, "today+3")
+        today = date.today()
+        self.assertEqual(task.due, (today + timedelta(days=3)).isoformat())
+        backward = add_task(self.store, "past", 2, "today-2")
+        self.assertEqual(backward.due, (today - timedelta(days=2)).isoformat())
+        plain = add_task(self.store, "now", 2, "TODAY")
+        self.assertEqual(plain.due, today.isoformat())
 
     def test_invalid_due_date_is_rejected(self):
         with self.assertRaises(ValueError):
@@ -629,6 +639,16 @@ class MainTests(unittest.TestCase):
         self.assertEqual(err, "")
         payload = json.loads(out)
         self.assertEqual(payload, {"tasks": 2, "open": 1, "done": 1, "overdue": 0, "by_priority": {"1": 1, "2": 0, "3": 1}})
+
+    def test_main_relative_due_round_trips_through_add_and_edit(self):
+        expected = (date.today() + timedelta(days=7)).isoformat()
+        code, _, _ = self.run_main("add", "next-week", "-p", "1", "--due", "today+7")
+        self.assertEqual(code, 0)
+        self.assertEqual(TaskStore(Path(self.store_path)).load()[0].due, expected)
+        edited = (date.today() + timedelta(days=2)).isoformat()
+        code, _, _ = self.run_main("edit", "1", "--due", "today+2")
+        self.assertEqual(code, 0)
+        self.assertEqual(TaskStore(Path(self.store_path)).load()[0].due, edited)
 
     def test_main_added_task_is_persisted(self):
         code, _, _ = self.run_main("add", "persisted", "-p", "2")

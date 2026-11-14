@@ -6,11 +6,12 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import tempfile
 import time
 from dataclasses import asdict, dataclass
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import NamedTuple
 
@@ -208,12 +209,15 @@ def canonical_due(value: str) -> str:
     if len(compact) == 8 and compact.isdigit():
         compact = f"{compact[:4]}-{compact[4:6]}-{compact[6:]}"
     if len(compact) != 10 or compact[4] != "-" or compact[7] != "-":
-        raise ValueError("due date must use YYYY-MM-DD format")
+        raise ValueError("due date must use YYYY-MM-DD format, or a relative form like today+N")
     try:
         date.fromisoformat(compact)
     except ValueError as error:
-        raise ValueError("due date must use YYYY-MM-DD format") from error
+        raise ValueError("due date must use YYYY-MM-DD format, or a relative form like today+N") from error
     return compact
+
+
+RELATIVE_DUE_PATTERN = re.compile(r"today(?P<days>[+-]\d+)?", re.IGNORECASE)
 
 
 def validate_due(value: str | None) -> str | None:
@@ -222,6 +226,10 @@ def validate_due(value: str | None) -> str | None:
     value = value.strip()
     if not value:
         return None
+    relative = RELATIVE_DUE_PATTERN.fullmatch(value)
+    if relative:
+        days = int(relative.group("days") or 0)
+        return (date.today() + timedelta(days=days)).isoformat()
     return canonical_due(value)
 
 
@@ -443,7 +451,7 @@ def build_parser() -> argparse.ArgumentParser:
     add = commands.add_parser("add", help="create a task")
     add.add_argument("title", nargs="+")
     add.add_argument("-p", "--priority", type=int, default=2, choices=(1, 2, 3))
-    add.add_argument("--due", help="due date in YYYY-MM-DD or YYYYMMDD format")
+    add.add_argument("--due", help="due date in YYYY-MM-DD or YYYYMMDD format, or today, today+N")
     add.add_argument("--tag", action="append", default=[], help="tag (repeatable)")
 
     show = commands.add_parser("list", help="list tasks")
@@ -466,7 +474,7 @@ def build_parser() -> argparse.ArgumentParser:
     edit.add_argument("id", type=int)
     edit.add_argument("--title", nargs="+", default=None, help="new title")
     edit.add_argument("--priority", type=int, choices=(1, 2, 3), default=None)
-    edit.add_argument("--due", default=None, help="new due date in YYYY-MM-DD or YYYYMMDD format")
+    edit.add_argument("--due", default=None, help="new due date in YYYY-MM-DD or YYYYMMDD format, or today, today+N")
     edit.add_argument("--clear-due", action="store_true", help="remove the due date")
     edit.add_argument("--tag", action="append", default=None, dest="tags", help="replacement tag (repeatable)")
     edit.add_argument("--clear-tags", action="store_true", help="remove all tags")
