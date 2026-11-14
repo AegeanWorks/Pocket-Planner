@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `5`
 - **Total Top-Level Functions**: `17`
-- **Total Class Methods**: `90`
-- **Total Source Lines**: `1343`
+- **Total Class Methods**: `91`
+- **Total Source Lines**: `1352`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `626` lines (`24239` bytes)
+**Size**: `628` lines (`24366` bytes)
 
 **Classes:**
 - `class Task`
@@ -63,7 +63,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `717` lines (`29157` bytes)
+**Size**: `724` lines (`29521` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -128,6 +128,7 @@
   - Method `.test_edit_updates_title_priority_due_and_tags()`
   - Method `.test_edit_clear_due_and_tags()`
   - Method `.test_locked_store_refuses_mutator_with_runtime_error()`
+  - Method `.test_unusable_lock_path_fails_with_runtime_error()`
   - Method `.test_stale_lock_is_broken_and_mutation_succeeds()`
   - Method `.test_error_inside_transaction_releases_lock_and_writes_nothing()`
   - Method `.test_second_store_is_locked_out_while_a_transaction_is_open()`
