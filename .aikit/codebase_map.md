@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `3`
 - **Total Top-Level Functions**: `11`
-- **Total Class Methods**: `45`
-- **Total Source Lines**: `710`
+- **Total Class Methods**: `46`
+- **Total Source Lines**: `719`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `368` lines (`14716` bytes)
+**Size**: `369` lines (`14815` bytes)
 
 **Classes:**
 - `class Task`
@@ -49,7 +49,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `342` lines (`12804` bytes)
+**Size**: `350` lines (`13119` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -85,6 +85,7 @@
   - Method `.test_non_string_title_raises_runtime_error()`
   - Method `.test_non_string_created_at_raises_runtime_error()`
   - Method `.test_non_string_completed_at_raises_runtime_error()`
+  - Method `.test_boolean_priority_raises_runtime_error()`
   - Method `.test_due_whitespace_is_stripped()`
   - Method `.test_deleted_task_id_is_not_reused()`
   - Method `.test_legacy_store_without_next_id_still_assigns_fresh_ids()`

@@ -10,3 +10,5 @@ node_modules/
 .aikit/*.log
 # Reforge review packets are reproducible stage artifacts (reforge.json is tracked)
 .aikit/reforge.reviews/
+# Reforge answer files are consumed review inputs for one stage run
+.aikit/reforge-answers/

@@ -63,7 +63,8 @@ class TaskStore:
                     raise ValueError("id must be an integer")
                 if not isinstance(record.get("title"), str):
                     raise ValueError("title must be a string")
-                if record.get("priority") not in (1, 2, 3):
+                priority = record.get("priority")
+                if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
                     raise ValueError("priority must be 1, 2, or 3")
                 if not isinstance(record.get("done"), bool):
                     raise ValueError("done must be true or false")

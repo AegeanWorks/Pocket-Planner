@@ -1,8 +1,8 @@
 {
   "schema": 2,
-  "next_run_id": 2,
-  "active_run": null,
-  "last_run": "run-1",
+  "next_run_id": 3,
+  "active_run": "run-2",
+  "last_run": "run-2",
   "runs": [
     {
       "id": "run-1",
@@ -659,169 +659,508 @@
         }
       ],
       "total_commits": 9
+    },
+    {
+      "id": "run-2",
+      "start": 3,
+      "step": 3,
+      "stop": null,
+      "stage": 2,
+      "window": 6,
+      "audited_commits": [
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124",
+        "72ca32838943c5106abe9587a1aeddbff66f61ae",
+        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+        "fe48698812fcaead7cd724b8621d9b13e6af940b"
+      ],
+      "status": "active",
+      "created": "2026-11-14T17:43:08",
+      "updated": "2026-11-14T17:45:30",
+      "last_audit": {
+        "run": "run-2",
+        "stage": 2,
+        "window": 6,
+        "commits": [
+          "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+          "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+          "8e80ef145738ae1ece2d70649187e5568bd25124",
+          "72ca32838943c5106abe9587a1aeddbff66f61ae",
+          "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+          "fe48698812fcaead7cd724b8621d9b13e6af940b"
+        ],
+        "new_commits": [
+          "72ca32838943c5106abe9587a1aeddbff66f61ae",
+          "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+          "fe48698812fcaead7cd724b8621d9b13e6af940b"
+        ],
+        "prior_commits": [
+          "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+          "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+          "8e80ef145738ae1ece2d70649187e5568bd25124"
+        ],
+        "findings": [],
+        "repairs": [],
+        "counts": {},
+        "reviewed": 7,
+        "review": {
+          "status": "partial",
+          "rejected": [
+            "pocket_planner.py: hunk '8e80ef145738:pocket_planner.py#2' is not in this packet"
+          ],
+          "files": [
+            ".aikit/codebase_map.md",
+            ".aikit/decisions.md",
+            ".aikit/project.json",
+            ".gitignore",
+            "README.md",
+            "pocket_planner.py",
+            "tests/test_pocket_planner.py"
+          ],
+          "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-2-72ca32838943.md",
+          "redacted": 0,
+          "reason": "the answer attested 0/35 hunks; 35 missing, 22 unknown, 0 unattested",
+          "method": "host",
+          "coverage": {
+            "reported": 0,
+            "total": 35,
+            "missing": [
+              "0f6c6e579702:.aikit/codebase_map.md#1",
+              "0f6c6e579702:.aikit/codebase_map.md#2",
+              "0f6c6e579702:.aikit/codebase_map.md#3",
+              "0f6c6e579702:README.md#1",
+              "0f6c6e579702:tests/test_pocket_planner.py#1",
+              "72ca32838943:.aikit/codebase_map.md#1",
+              "72ca32838943:.aikit/codebase_map.md#2",
+              "72ca32838943:.aikit/codebase_map.md#3",
+              "72ca32838943:.aikit/codebase_map.md#4",
+              "72ca32838943:.aikit/decisions.md#1",
+              "72ca32838943:.aikit/project.json#1",
+              "72ca32838943:README.md#1",
+              "72ca32838943:pocket_planner.py#1",
+              "72ca32838943:pocket_planner.py#2",
+              "72ca32838943:pocket_planner.py#3",
+              "72ca32838943:pocket_planner.py#4",
+              "72ca32838943:pocket_planner.py#5",
+              "72ca32838943:pocket_planner.py#6",
+              "72ca32838943:tests/test_pocket_planner.py#1",
+              "72ca32838943:tests/test_pocket_planner.py#2",
+              "fe48698812fc:.aikit/codebase_map.md#1",
+              "fe48698812fc:.aikit/codebase_map.md#2",
+              "fe48698812fc:.aikit/codebase_map.md#3",
+              "fe48698812fc:.aikit/codebase_map.md#4",
+              "fe48698812fc:.aikit/codebase_map.md#5",
+              "fe48698812fc:.aikit/decisions.md#1",
+              "fe48698812fc:.aikit/project.json#1",
+              "fe48698812fc:.gitignore#1",
+              "fe48698812fc:README.md#1",
+              "fe48698812fc:pocket_planner.py#1",
+              "fe48698812fc:pocket_planner.py#2",
+              "fe48698812fc:pocket_planner.py#3",
+              "fe48698812fc:pocket_planner.py#4",
+              "fe48698812fc:tests/test_pocket_planner.py#1",
+              "fe48698812fc:tests/test_pocket_planner.py#2"
+            ],
+            "unknown": [
+              "1c779193ebe7:LICENSE#1",
+              "1c779193ebe7:LICENSE#2",
+              "1c779193ebe7:LICENSES/LicenseRef-AL-1.1.txt#1",
+              "1c779193ebe7:LICENSES/LicenseRef-AL-1.1.txt#2",
+              "73df17c2c93f:.aikit/task_ledger_archive.jsonl#1",
+              "8e80ef145738:.aikit/codebase_map.md#1",
+              "8e80ef145738:.aikit/codebase_map.md#2",
+              "8e80ef145738:.aikit/codebase_map.md#3",
+              "8e80ef145738:.aikit/codebase_map.md#4",
+              "8e80ef145738:.aikit/codebase_map.md#5",
+              "8e80ef145738:.aikit/decisions.md#1",
+              "8e80ef145738:.aikit/project.json#1",
+              "8e80ef145738:.aikit/task_ledger_archive.jsonl#1",
+              "8e80ef145738:.gitignore#1",
+              "8e80ef145738:pocket_planner.py#1",
+              "8e80ef145738:pocket_planner.py#2",
+              "8e80ef145738:pocket_planner.py#3",
+              "8e80ef145738:pocket_planner.py#4",
+              "8e80ef145738:pocket_planner.py#5",
+              "8e80ef145738:tests/test_pocket_planner.py#1",
+              "8e80ef145738:tests/test_pocket_planner.py#2",
+              "8e80ef145738:tests/test_pocket_planner.py#3"
+            ],
+            "invalid": []
+          },
+          "findings": []
+        },
+        "skipped": [],
+        "tests": {},
+        "gates": {},
+        "delivery": {
+          "commit": "",
+          "short": "",
+          "pushed": false,
+          "push_error": null,
+          "empty": true,
+          "timestamp": "2026-11-14T17:45:30"
+        },
+        "timestamp": "2026-11-14T17:45:30",
+        "dirty_targets": []
+      },
+      "history": [
+        {
+          "run": "run-2",
+          "stage": 1,
+          "window": 3,
+          "commits": [
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124"
+          ],
+          "new_commits": [
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124"
+          ],
+          "prior_commits": [],
+          "findings": [
+            {
+              "code": "review-bool-passes-priority-guard",
+              "category": "review",
+              "severity": "low",
+              "path": "pocket_planner.py",
+              "line": 66,
+              "message": "The type validation this commit adds is inconsistent: the id guard explicitly rejects booleans, but the priority guard counts booleans as members of (1, 2, 3) because True == 1 and False == 0 in Python, so a store carrying \"priority\": true loads as priority 1 instead of failing with the documented RuntimeError. A follow-up test pinning \"priority\": true as rejected is advisable once the fix lands.",
+              "evidence": "if record.get(\"priority\") not in (1, 2, 3):",
+              "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
+              "hunk": "8e80ef145738:pocket_planner.py#2",
+              "symbol": "",
+              "introduced": true,
+              "reproducible": false,
+              "fixable": false,
+              "interaction": "",
+              "repaired": false,
+              "source": "review",
+              "patch_old": "",
+              "patch_new": ""
+            }
+          ],
+          "repairs": [],
+          "counts": {
+            "review": 1
+          },
+          "reviewed": 9,
+          "review": {
+            "status": "reviewed",
+            "rejected": [
+              "pocket_planner.py:66: suggestion dropped (the quoted text occurs 0 times in the file)"
+            ],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/decisions.md",
+              ".aikit/project.json",
+              ".aikit/task_ledger_archive.jsonl",
+              ".gitignore",
+              "LICENSE",
+              "LICENSES/LicenseRef-AL-1.1.txt",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-1-1c779193ebe7.md",
+            "redacted": 0,
+            "reason": "",
+            "method": "host",
+            "coverage": {
+              "reported": 22,
+              "total": 22,
+              "missing": [],
+              "unknown": [],
+              "invalid": []
+            },
+            "findings": [
+              {
+                "code": "review-bool-passes-priority-guard",
+                "category": "review",
+                "severity": "low",
+                "path": "pocket_planner.py",
+                "line": 66,
+                "message": "The type validation this commit adds is inconsistent: the id guard explicitly rejects booleans, but the priority guard counts booleans as members of (1, 2, 3) because True == 1 and False == 0 in Python, so a store carrying \"priority\": true loads as priority 1 instead of failing with the documented RuntimeError. A follow-up test pinning \"priority\": true as rejected is advisable once the fix lands.",
+                "evidence": "if record.get(\"priority\") not in (1, 2, 3):",
+                "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
+                "hunk": "8e80ef145738:pocket_planner.py#2",
+                "symbol": "",
+                "introduced": true,
+                "reproducible": false,
+                "fixable": false,
+                "interaction": "",
+                "repaired": false,
+                "source": "review",
+                "patch_old": "",
+                "patch_new": ""
+              }
+            ]
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T17:43:14"
+          },
+          "timestamp": "2026-11-14T17:43:14"
+        },
+        {
+          "run": "run-2",
+          "stage": 2,
+          "window": 6,
+          "commits": [
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+            "fe48698812fcaead7cd724b8621d9b13e6af940b"
+          ],
+          "new_commits": [
+            "72ca32838943c5106abe9587a1aeddbff66f61ae",
+            "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
+            "fe48698812fcaead7cd724b8621d9b13e6af940b"
+          ],
+          "prior_commits": [
+            "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+            "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+            "8e80ef145738ae1ece2d70649187e5568bd25124"
+          ],
+          "findings": [],
+          "repairs": [],
+          "counts": {},
+          "reviewed": 7,
+          "review": {
+            "status": "partial",
+            "rejected": [
+              "pocket_planner.py: hunk '8e80ef145738:pocket_planner.py#2' is not in this packet"
+            ],
+            "files": [
+              ".aikit/codebase_map.md",
+              ".aikit/decisions.md",
+              ".aikit/project.json",
+              ".gitignore",
+              "README.md",
+              "pocket_planner.py",
+              "tests/test_pocket_planner.py"
+            ],
+            "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-2-72ca32838943.md",
+            "redacted": 0,
+            "reason": "the answer attested 0/35 hunks; 35 missing, 22 unknown, 0 unattested",
+            "method": "host",
+            "coverage": {
+              "reported": 0,
+              "total": 35,
+              "missing": [
+                "0f6c6e579702:.aikit/codebase_map.md#1",
+                "0f6c6e579702:.aikit/codebase_map.md#2",
+                "0f6c6e579702:.aikit/codebase_map.md#3",
+                "0f6c6e579702:README.md#1",
+                "0f6c6e579702:tests/test_pocket_planner.py#1",
+                "72ca32838943:.aikit/codebase_map.md#1",
+                "72ca32838943:.aikit/codebase_map.md#2",
+                "72ca32838943:.aikit/codebase_map.md#3",
+                "72ca32838943:.aikit/codebase_map.md#4",
+                "72ca32838943:.aikit/decisions.md#1",
+                "72ca32838943:.aikit/project.json#1",
+                "72ca32838943:README.md#1",
+                "72ca32838943:pocket_planner.py#1",
+                "72ca32838943:pocket_planner.py#2",
+                "72ca32838943:pocket_planner.py#3",
+                "72ca32838943:pocket_planner.py#4",
+                "72ca32838943:pocket_planner.py#5",
+                "72ca32838943:pocket_planner.py#6",
+                "72ca32838943:tests/test_pocket_planner.py#1",
+                "72ca32838943:tests/test_pocket_planner.py#2",
+                "fe48698812fc:.aikit/codebase_map.md#1",
+                "fe48698812fc:.aikit/codebase_map.md#2",
+                "fe48698812fc:.aikit/codebase_map.md#3",
+                "fe48698812fc:.aikit/codebase_map.md#4",
+                "fe48698812fc:.aikit/codebase_map.md#5",
+                "fe48698812fc:.aikit/decisions.md#1",
+                "fe48698812fc:.aikit/project.json#1",
+                "fe48698812fc:.gitignore#1",
+                "fe48698812fc:README.md#1",
+                "fe48698812fc:pocket_planner.py#1",
+                "fe48698812fc:pocket_planner.py#2",
+                "fe48698812fc:pocket_planner.py#3",
+                "fe48698812fc:pocket_planner.py#4",
+                "fe48698812fc:tests/test_pocket_planner.py#1",
+                "fe48698812fc:tests/test_pocket_planner.py#2"
+              ],
+              "unknown": [
+                "1c779193ebe7:LICENSE#1",
+                "1c779193ebe7:LICENSE#2",
+                "1c779193ebe7:LICENSES/LicenseRef-AL-1.1.txt#1",
+                "1c779193ebe7:LICENSES/LicenseRef-AL-1.1.txt#2",
+                "73df17c2c93f:.aikit/task_ledger_archive.jsonl#1",
+                "8e80ef145738:.aikit/codebase_map.md#1",
+                "8e80ef145738:.aikit/codebase_map.md#2",
+                "8e80ef145738:.aikit/codebase_map.md#3",
+                "8e80ef145738:.aikit/codebase_map.md#4",
+                "8e80ef145738:.aikit/codebase_map.md#5",
+                "8e80ef145738:.aikit/decisions.md#1",
+                "8e80ef145738:.aikit/project.json#1",
+                "8e80ef145738:.aikit/task_ledger_archive.jsonl#1",
+                "8e80ef145738:.gitignore#1",
+                "8e80ef145738:pocket_planner.py#1",
+                "8e80ef145738:pocket_planner.py#2",
+                "8e80ef145738:pocket_planner.py#3",
+                "8e80ef145738:pocket_planner.py#4",
+                "8e80ef145738:pocket_planner.py#5",
+                "8e80ef145738:tests/test_pocket_planner.py#1",
+                "8e80ef145738:tests/test_pocket_planner.py#2",
+                "8e80ef145738:tests/test_pocket_planner.py#3"
+              ],
+              "invalid": []
+            },
+            "findings": []
+          },
+          "skipped": [],
+          "tests": {},
+          "gates": {},
+          "delivery": {
+            "commit": "",
+            "short": "",
+            "pushed": false,
+            "push_error": null,
+            "empty": true,
+            "timestamp": "2026-11-14T17:45:30"
+          },
+          "timestamp": "2026-11-14T17:45:30",
+          "dirty_targets": []
+        }
+      ],
+      "total_commits": 12
     }
   ],
-  "stage": 3,
-  "window": 9,
+  "stage": 2,
+  "window": 6,
   "audited_commits": [
+    "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+    "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+    "8e80ef145738ae1ece2d70649187e5568bd25124",
     "72ca32838943c5106abe9587a1aeddbff66f61ae",
     "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-    "fe48698812fcaead7cd724b8621d9b13e6af940b",
-    "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-    "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-    "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
-    "df45464b7c96f04779a248f702ad16235d24ef4f",
-    "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-    "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+    "fe48698812fcaead7cd724b8621d9b13e6af940b"
   ],
   "last_audit": {
-    "run": "run-1",
-    "stage": 3,
-    "window": 9,
+    "run": "run-2",
+    "stage": 2,
+    "window": 6,
     "commits": [
+      "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+      "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+      "8e80ef145738ae1ece2d70649187e5568bd25124",
       "72ca32838943c5106abe9587a1aeddbff66f61ae",
       "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-      "fe48698812fcaead7cd724b8621d9b13e6af940b",
-      "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-      "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-      "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
-      "df45464b7c96f04779a248f702ad16235d24ef4f",
-      "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-      "72d56cf234d946599d7c3790a287c5b9fa32c25c"
+      "fe48698812fcaead7cd724b8621d9b13e6af940b"
     ],
     "new_commits": [
-      "df45464b7c96f04779a248f702ad16235d24ef4f",
-      "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-      "72d56cf234d946599d7c3790a287c5b9fa32c25c"
-    ],
-    "prior_commits": [
       "72ca32838943c5106abe9587a1aeddbff66f61ae",
       "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-      "fe48698812fcaead7cd724b8621d9b13e6af940b",
-      "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-      "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-      "2a62a17a96c916cfc26c178cdeaefe43106c8dc7"
+      "fe48698812fcaead7cd724b8621d9b13e6af940b"
     ],
-    "findings": [
-      {
-        "code": "review-missing-license-paths",
-        "category": "improvement",
-        "severity": "low",
-        "path": "LICENSE",
-        "line": 194,
-        "message": "The license text points readers at licenses/ACL-1.0.md (Section 9) and licenses/CONTRIBUTING_CLA.md (Section 7), but this repository only ships LICENSES/LicenseRef-AL-1.1.txt, so both pointers are dead here. Ship the referenced files or replace the paths with the licensing address so a reader can act on them.",
-        "evidence": "Commercial License (`licenses/ACL-1.0.md`) and evidenced by a License Grant Certificate issued by",
-        "commit": "72d56cf234d946599d7c3790a287c5b9fa32c25c",
-        "hunk": "72d56cf234d9:LICENSE#1",
-        "symbol": "",
-        "introduced": true,
-        "reproducible": false,
-        "fixable": false,
-        "interaction": "",
-        "repaired": false,
-        "source": "review",
-        "patch_old": "",
-        "patch_new": ""
-      },
-      {
-        "code": "review-due-format-runtime-drift",
-        "category": "improvement",
-        "severity": "low",
-        "path": "pocket_planner.py",
-        "line": 102,
-        "message": "validate_due relies on date.fromisoformat, which since Python 3.11 also accepts basic dates like 20261102 and week dates, so the accepted set differs between the 3.10 and 3.11+ runtimes the README both supports, and values the error message calls invalid are accepted. Checking the YYYY-MM-DD shape before parsing would make every supported runtime agree; note that tightening validation also rejects",
-        "evidence": "date.fromisoformat(value)",
-        "commit": "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-        "hunk": "3bcfdb74c0ce:pocket_planner.py#1",
-        "symbol": "",
-        "introduced": true,
-        "reproducible": false,
-        "fixable": false,
-        "interaction": "",
-        "repaired": false,
-        "source": "review",
-        "patch_old": "",
-        "patch_new": ""
-      }
+    "prior_commits": [
+      "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+      "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+      "8e80ef145738ae1ece2d70649187e5568bd25124"
     ],
+    "findings": [],
     "repairs": [],
-    "counts": {
-      "improvement": 2
-    },
-    "reviewed": 15,
+    "counts": {},
+    "reviewed": 7,
     "review": {
-      "status": "reviewed",
-      "rejected": [],
+      "status": "partial",
+      "rejected": [
+        "pocket_planner.py: hunk '8e80ef145738:pocket_planner.py#2' is not in this packet"
+      ],
       "files": [
         ".aikit/codebase_map.md",
         ".aikit/decisions.md",
-        ".aikit/guidelines.md",
-        ".aikit/media.json",
         ".aikit/project.json",
         ".gitignore",
-        "COMMERCIAL.md",
-        "LICENSE",
-        "LICENSES/LicenseRef-AL-1.1.txt",
         "README.md",
-        "REUSE.toml",
-        "assets/logo.svg",
-        "assets/social-preview.svg",
         "pocket_planner.py",
         "tests/test_pocket_planner.py"
       ],
-      "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-1-3-df45464b7c96.md",
+      "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-2-72ca32838943.md",
       "redacted": 0,
-      "reason": "",
+      "reason": "the answer attested 0/35 hunks; 35 missing, 22 unknown, 0 unattested",
       "method": "host",
       "coverage": {
-        "reported": 20,
-        "total": 20,
-        "missing": [],
-        "unknown": [],
+        "reported": 0,
+        "total": 35,
+        "missing": [
+          "0f6c6e579702:.aikit/codebase_map.md#1",
+          "0f6c6e579702:.aikit/codebase_map.md#2",
+          "0f6c6e579702:.aikit/codebase_map.md#3",
+          "0f6c6e579702:README.md#1",
+          "0f6c6e579702:tests/test_pocket_planner.py#1",
+          "72ca32838943:.aikit/codebase_map.md#1",
+          "72ca32838943:.aikit/codebase_map.md#2",
+          "72ca32838943:.aikit/codebase_map.md#3",
+          "72ca32838943:.aikit/codebase_map.md#4",
+          "72ca32838943:.aikit/decisions.md#1",
+          "72ca32838943:.aikit/project.json#1",
+          "72ca32838943:README.md#1",
+          "72ca32838943:pocket_planner.py#1",
+          "72ca32838943:pocket_planner.py#2",
+          "72ca32838943:pocket_planner.py#3",
+          "72ca32838943:pocket_planner.py#4",
+          "72ca32838943:pocket_planner.py#5",
+          "72ca32838943:pocket_planner.py#6",
+          "72ca32838943:tests/test_pocket_planner.py#1",
+          "72ca32838943:tests/test_pocket_planner.py#2",
+          "fe48698812fc:.aikit/codebase_map.md#1",
+          "fe48698812fc:.aikit/codebase_map.md#2",
+          "fe48698812fc:.aikit/codebase_map.md#3",
+          "fe48698812fc:.aikit/codebase_map.md#4",
+          "fe48698812fc:.aikit/codebase_map.md#5",
+          "fe48698812fc:.aikit/decisions.md#1",
+          "fe48698812fc:.aikit/project.json#1",
+          "fe48698812fc:.gitignore#1",
+          "fe48698812fc:README.md#1",
+          "fe48698812fc:pocket_planner.py#1",
+          "fe48698812fc:pocket_planner.py#2",
+          "fe48698812fc:pocket_planner.py#3",
+          "fe48698812fc:pocket_planner.py#4",
+          "fe48698812fc:tests/test_pocket_planner.py#1",
+          "fe48698812fc:tests/test_pocket_planner.py#2"
+        ],
+        "unknown": [
+          "1c779193ebe7:LICENSE#1",
+          "1c779193ebe7:LICENSE#2",
+          "1c779193ebe7:LICENSES/LicenseRef-AL-1.1.txt#1",
+          "1c779193ebe7:LICENSES/LicenseRef-AL-1.1.txt#2",
+          "73df17c2c93f:.aikit/task_ledger_archive.jsonl#1",
+          "8e80ef145738:.aikit/codebase_map.md#1",
+          "8e80ef145738:.aikit/codebase_map.md#2",
+          "8e80ef145738:.aikit/codebase_map.md#3",
+          "8e80ef145738:.aikit/codebase_map.md#4",
+          "8e80ef145738:.aikit/codebase_map.md#5",
+          "8e80ef145738:.aikit/decisions.md#1",
+          "8e80ef145738:.aikit/project.json#1",
+          "8e80ef145738:.aikit/task_ledger_archive.jsonl#1",
+          "8e80ef145738:.gitignore#1",
+          "8e80ef145738:pocket_planner.py#1",
+          "8e80ef145738:pocket_planner.py#2",
+          "8e80ef145738:pocket_planner.py#3",
+          "8e80ef145738:pocket_planner.py#4",
+          "8e80ef145738:pocket_planner.py#5",
+          "8e80ef145738:tests/test_pocket_planner.py#1",
+          "8e80ef145738:tests/test_pocket_planner.py#2",
+          "8e80ef145738:tests/test_pocket_planner.py#3"
+        ],
         "invalid": []
       },
-      "findings": [
-        {
-          "code": "review-missing-license-paths",
-          "category": "improvement",
-          "severity": "low",
-          "path": "LICENSE",
-          "line": 194,
-          "message": "The license text points readers at licenses/ACL-1.0.md (Section 9) and licenses/CONTRIBUTING_CLA.md (Section 7), but this repository only ships LICENSES/LicenseRef-AL-1.1.txt, so both pointers are dead here. Ship the referenced files or replace the paths with the licensing address so a reader can act on them.",
-          "evidence": "Commercial License (`licenses/ACL-1.0.md`) and evidenced by a License Grant Certificate issued by",
-          "commit": "72d56cf234d946599d7c3790a287c5b9fa32c25c",
-          "hunk": "72d56cf234d9:LICENSE#1",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": false,
-          "interaction": "",
-          "repaired": false,
-          "source": "review",
-          "patch_old": "",
-          "patch_new": ""
-        },
-        {
-          "code": "review-due-format-runtime-drift",
-          "category": "improvement",
-          "severity": "low",
-          "path": "pocket_planner.py",
-          "line": 102,
-          "message": "validate_due relies on date.fromisoformat, which since Python 3.11 also accepts basic dates like 20261102 and week dates, so the accepted set differs between the 3.10 and 3.11+ runtimes the README both supports, and values the error message calls invalid are accepted. Checking the YYYY-MM-DD shape before parsing would make every supported runtime agree; note that tightening validation also rejects",
-          "evidence": "date.fromisoformat(value)",
-          "commit": "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-          "hunk": "3bcfdb74c0ce:pocket_planner.py#1",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": false,
-          "interaction": "",
-          "repaired": false,
-          "source": "review",
-          "patch_old": "",
-          "patch_new": ""
-        }
-      ]
+      "findings": []
     },
     "skipped": [],
     "tests": {},
@@ -832,16 +1171,125 @@
       "pushed": false,
       "push_error": null,
       "empty": true,
-      "timestamp": "2026-11-14T11:26:51"
+      "timestamp": "2026-11-14T17:45:30"
     },
-    "timestamp": "2026-11-14T11:26:51"
+    "timestamp": "2026-11-14T17:45:30",
+    "dirty_targets": []
   },
   "history": [
     {
-      "run": "run-1",
+      "run": "run-2",
       "stage": 1,
       "window": 3,
       "commits": [
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124"
+      ],
+      "new_commits": [
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124"
+      ],
+      "prior_commits": [],
+      "findings": [
+        {
+          "code": "review-bool-passes-priority-guard",
+          "category": "review",
+          "severity": "low",
+          "path": "pocket_planner.py",
+          "line": 66,
+          "message": "The type validation this commit adds is inconsistent: the id guard explicitly rejects booleans, but the priority guard counts booleans as members of (1, 2, 3) because True == 1 and False == 0 in Python, so a store carrying \"priority\": true loads as priority 1 instead of failing with the documented RuntimeError. A follow-up test pinning \"priority\": true as rejected is advisable once the fix lands.",
+          "evidence": "if record.get(\"priority\") not in (1, 2, 3):",
+          "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
+          "hunk": "8e80ef145738:pocket_planner.py#2",
+          "symbol": "",
+          "introduced": true,
+          "reproducible": false,
+          "fixable": false,
+          "interaction": "",
+          "repaired": false,
+          "source": "review",
+          "patch_old": "",
+          "patch_new": ""
+        }
+      ],
+      "repairs": [],
+      "counts": {
+        "review": 1
+      },
+      "reviewed": 9,
+      "review": {
+        "status": "reviewed",
+        "rejected": [
+          "pocket_planner.py:66: suggestion dropped (the quoted text occurs 0 times in the file)"
+        ],
+        "files": [
+          ".aikit/codebase_map.md",
+          ".aikit/decisions.md",
+          ".aikit/project.json",
+          ".aikit/task_ledger_archive.jsonl",
+          ".gitignore",
+          "LICENSE",
+          "LICENSES/LicenseRef-AL-1.1.txt",
+          "pocket_planner.py",
+          "tests/test_pocket_planner.py"
+        ],
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-1-1c779193ebe7.md",
+        "redacted": 0,
+        "reason": "",
+        "method": "host",
+        "coverage": {
+          "reported": 22,
+          "total": 22,
+          "missing": [],
+          "unknown": [],
+          "invalid": []
+        },
+        "findings": [
+          {
+            "code": "review-bool-passes-priority-guard",
+            "category": "review",
+            "severity": "low",
+            "path": "pocket_planner.py",
+            "line": 66,
+            "message": "The type validation this commit adds is inconsistent: the id guard explicitly rejects booleans, but the priority guard counts booleans as members of (1, 2, 3) because True == 1 and False == 0 in Python, so a store carrying \"priority\": true loads as priority 1 instead of failing with the documented RuntimeError. A follow-up test pinning \"priority\": true as rejected is advisable once the fix lands.",
+            "evidence": "if record.get(\"priority\") not in (1, 2, 3):",
+            "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "hunk": "8e80ef145738:pocket_planner.py#2",
+            "symbol": "",
+            "introduced": true,
+            "reproducible": false,
+            "fixable": false,
+            "interaction": "",
+            "repaired": false,
+            "source": "review",
+            "patch_old": "",
+            "patch_new": ""
+          }
+        ]
+      },
+      "skipped": [],
+      "tests": {},
+      "gates": {},
+      "delivery": {
+        "commit": "",
+        "short": "",
+        "pushed": false,
+        "push_error": null,
+        "empty": true,
+        "timestamp": "2026-11-14T17:43:14"
+      },
+      "timestamp": "2026-11-14T17:43:14"
+    },
+    {
+      "run": "run-2",
+      "stage": 2,
+      "window": 6,
+      "commits": [
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124",
         "72ca32838943c5106abe9587a1aeddbff66f61ae",
         "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
         "fe48698812fcaead7cd724b8621d9b13e6af940b"
@@ -851,108 +1299,19 @@
         "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
         "fe48698812fcaead7cd724b8621d9b13e6af940b"
       ],
-      "prior_commits": [],
-      "findings": [
-        {
-          "code": "review-unreachable-empty-due-guard",
-          "category": "improvement",
-          "severity": "low",
-          "path": "pocket_planner.py",
-          "line": 56,
-          "message": "The empty-due guard after validate_due is unreachable: validate_due already strips the value and returns None when the result is blank, so these two lines can never run. Removing the dead branch keeps one authoritative normalisation path for an empty due.",
-          "evidence": "if record[\"due\"] == \"\":",
-          "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-          "hunk": "72ca32838943:pocket_planner.py#1",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": false,
-          "interaction": "",
-          "repaired": false,
-          "source": "review",
-          "patch_old": "",
-          "patch_new": ""
-        },
-        {
-          "code": "review-unknown-fields-lost-on-save",
-          "category": "review",
-          "severity": "medium",
-          "path": "pocket_planner.py",
-          "line": 47,
-          "message": "load() now silently drops fields it does not know, and save() rewrites the store from Task alone, so opening a store written by a future version and then adding, completing or editing any task permanently deletes those unknown fields. The ADR-003 promise that older clients tolerate newer stores therefore holds only until the first write; either preserve the extra keys per task or state the destruc",
-          "evidence": "record = {key: value for key, value in item.items() if key in known}",
-          "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-          "hunk": "72ca32838943:pocket_planner.py#1",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": false,
-          "interaction": "",
-          "repaired": false,
-          "source": "review",
-          "patch_old": "",
-          "patch_new": ""
-        },
-        {
-          "code": "review-untested-shape-guards",
-          "category": "improvement",
-          "severity": "low",
-          "path": "pocket_planner.py",
-          "line": 38,
-          "message": "The new root-shape and task-shape guards are untested: no test writes a list root or a non-object task entry, so a regression that raises TypeError from Task(**record) instead of the intended RuntimeError would still pass the suite. Add cases for a top-level [] and for {\"tasks\": [1]} expecting RuntimeError.",
-          "evidence": "raise ValueError(\"store root must be an object with a 'tasks' list\")",
-          "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-          "hunk": "72ca32838943:pocket_planner.py#1",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": false,
-          "interaction": "",
-          "repaired": false,
-          "source": "review",
-          "patch_old": "",
-          "patch_new": ""
-        },
-        {
-          "code": "review-empty-due-dead-branch",
-          "category": "improvement",
-          "severity": "low",
-          "path": "pocket_planner.py",
-          "line": 55,
-          "message": "The blank-due guard after validate_due can never run: validate_due already strips and returns None for a blank string. Removing the branch leaves one normalisation path for an empty due. This is the CRLF-corrected patch for the earlier suggestion that the first review pass dropped.",
-          "evidence": "record[\"due\"] = validate_due(record[\"due\"].strip())",
-          "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-          "hunk": "72ca32838943:pocket_planner.py#1",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": true,
-          "interaction": "",
-          "repaired": true,
-          "source": "review",
-          "patch_old": "                    record[\"due\"] = validate_due(record[\"due\"].strip())\r\n                    if record[\"due\"] == \"\":\r\n                        record[\"due\"] = None",
-          "patch_new": "                    record[\"due\"] = validate_due(record[\"due\"].strip())"
-        }
+      "prior_commits": [
+        "1c779193ebe7ed1d7a00014bfdce6b564d074c93",
+        "73df17c2c93f4c8690cfb233576b4ed700bcd032",
+        "8e80ef145738ae1ece2d70649187e5568bd25124"
       ],
-      "repairs": [
-        {
-          "code": "review-empty-due-dead-branch",
-          "path": "pocket_planner.py",
-          "line": 55,
-          "summary": "applied review suggestion: The blank-due guard after validate_due can never run: validate_due already strip",
-          "test_name": "",
-          "applied": true
-        }
-      ],
-      "counts": {
-        "improvement": 3,
-        "review": 1
-      },
+      "findings": [],
+      "repairs": [],
+      "counts": {},
       "reviewed": 7,
       "review": {
-        "status": "reviewed",
+        "status": "partial",
         "rejected": [
-          "pocket_planner.py:56: suggestion dropped (the quoted text occurs 0 times in the file)"
+          "pocket_planner.py: hunk '8e80ef145738:pocket_planner.py#2' is not in this packet"
         ],
         "files": [
           ".aikit/codebase_map.md",
@@ -963,170 +1322,74 @@
           "pocket_planner.py",
           "tests/test_pocket_planner.py"
         ],
-        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-1-1-72ca32838943.md",
+        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-2-2-72ca32838943.md",
         "redacted": 0,
-        "reason": "",
+        "reason": "the answer attested 0/35 hunks; 35 missing, 22 unknown, 0 unattested",
         "method": "host",
         "coverage": {
-          "reported": 35,
+          "reported": 0,
           "total": 35,
-          "missing": [],
-          "unknown": [],
-          "invalid": []
-        },
-        "findings": [
-          {
-            "code": "review-unreachable-empty-due-guard",
-            "category": "improvement",
-            "severity": "low",
-            "path": "pocket_planner.py",
-            "line": 56,
-            "message": "The empty-due guard after validate_due is unreachable: validate_due already strips the value and returns None when the result is blank, so these two lines can never run. Removing the dead branch keeps one authoritative normalisation path for an empty due.",
-            "evidence": "if record[\"due\"] == \"\":",
-            "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-            "hunk": "72ca32838943:pocket_planner.py#1",
-            "symbol": "",
-            "introduced": true,
-            "reproducible": false,
-            "fixable": false,
-            "interaction": "",
-            "repaired": false,
-            "source": "review",
-            "patch_old": "",
-            "patch_new": ""
-          },
-          {
-            "code": "review-unknown-fields-lost-on-save",
-            "category": "review",
-            "severity": "medium",
-            "path": "pocket_planner.py",
-            "line": 47,
-            "message": "load() now silently drops fields it does not know, and save() rewrites the store from Task alone, so opening a store written by a future version and then adding, completing or editing any task permanently deletes those unknown fields. The ADR-003 promise that older clients tolerate newer stores therefore holds only until the first write; either preserve the extra keys per task or state the destruc",
-            "evidence": "record = {key: value for key, value in item.items() if key in known}",
-            "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-            "hunk": "72ca32838943:pocket_planner.py#1",
-            "symbol": "",
-            "introduced": true,
-            "reproducible": false,
-            "fixable": false,
-            "interaction": "",
-            "repaired": false,
-            "source": "review",
-            "patch_old": "",
-            "patch_new": ""
-          },
-          {
-            "code": "review-untested-shape-guards",
-            "category": "improvement",
-            "severity": "low",
-            "path": "pocket_planner.py",
-            "line": 38,
-            "message": "The new root-shape and task-shape guards are untested: no test writes a list root or a non-object task entry, so a regression that raises TypeError from Task(**record) instead of the intended RuntimeError would still pass the suite. Add cases for a top-level [] and for {\"tasks\": [1]} expecting RuntimeError.",
-            "evidence": "raise ValueError(\"store root must be an object with a 'tasks' list\")",
-            "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-            "hunk": "72ca32838943:pocket_planner.py#1",
-            "symbol": "",
-            "introduced": true,
-            "reproducible": false,
-            "fixable": false,
-            "interaction": "",
-            "repaired": false,
-            "source": "review",
-            "patch_old": "",
-            "patch_new": ""
-          },
-          {
-            "code": "review-empty-due-dead-branch",
-            "category": "improvement",
-            "severity": "low",
-            "path": "pocket_planner.py",
-            "line": 55,
-            "message": "The blank-due guard after validate_due can never run: validate_due already strips and returns None for a blank string. Removing the branch leaves one normalisation path for an empty due. This is the CRLF-corrected patch for the earlier suggestion that the first review pass dropped.",
-            "evidence": "record[\"due\"] = validate_due(record[\"due\"].strip())",
-            "commit": "72ca32838943c5106abe9587a1aeddbff66f61ae",
-            "hunk": "72ca32838943:pocket_planner.py#1",
-            "symbol": "",
-            "introduced": true,
-            "reproducible": false,
-            "fixable": true,
-            "interaction": "",
-            "repaired": false,
-            "source": "review",
-            "patch_old": "                    record[\"due\"] = validate_due(record[\"due\"].strip())\r\n                    if record[\"due\"] == \"\":\r\n                        record[\"due\"] = None",
-            "patch_new": "                    record[\"due\"] = validate_due(record[\"due\"].strip())"
-          }
-        ]
-      },
-      "skipped": [],
-      "tests": {
-        "command": "C:\\Python314\\python.exe -m unittest discover tests",
-        "code": 0,
-        "passed": true,
-        "output": "...........................\n----------------------------------------------------------------------\nRan 27 tests in 0.416s\n\nOK",
-        "tail": [
-          "...........................",
-          "----------------------------------------------------------------------",
-          "Ran 27 tests in 0.416s",
-          "OK"
-        ]
-      },
-      "gates": {},
-      "delivery": {
-        "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
-        "short": "8e80ef1",
-        "pushed": false,
-        "push_error": null,
-        "empty": false,
-        "timestamp": "2026-11-14T13:15:28"
-      },
-      "timestamp": "2026-11-14T11:06:15",
-      "dirty_targets": []
-    },
-    {
-      "run": "run-1",
-      "stage": 2,
-      "window": 6,
-      "commits": [
-        "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b",
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7"
-      ],
-      "new_commits": [
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7"
-      ],
-      "prior_commits": [
-        "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b"
-      ],
-      "findings": [],
-      "repairs": [],
-      "counts": {},
-      "reviewed": 5,
-      "review": {
-        "status": "reviewed",
-        "rejected": [],
-        "files": [
-          ".aikit/media.json",
-          ".aikit/project.json",
-          "README.md",
-          "assets/logo.svg",
-          "assets/social-preview.svg"
-        ],
-        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-1-2-7d7c7ccdb13d.md",
-        "redacted": 0,
-        "reason": "the answer held no findings",
-        "method": "host",
-        "coverage": {
-          "reported": 7,
-          "total": 7,
-          "missing": [],
-          "unknown": [],
+          "missing": [
+            "0f6c6e579702:.aikit/codebase_map.md#1",
+            "0f6c6e579702:.aikit/codebase_map.md#2",
+            "0f6c6e579702:.aikit/codebase_map.md#3",
+            "0f6c6e579702:README.md#1",
+            "0f6c6e579702:tests/test_pocket_planner.py#1",
+            "72ca32838943:.aikit/codebase_map.md#1",
+            "72ca32838943:.aikit/codebase_map.md#2",
+            "72ca32838943:.aikit/codebase_map.md#3",
+            "72ca32838943:.aikit/codebase_map.md#4",
+            "72ca32838943:.aikit/decisions.md#1",
+            "72ca32838943:.aikit/project.json#1",
+            "72ca32838943:README.md#1",
+            "72ca32838943:pocket_planner.py#1",
+            "72ca32838943:pocket_planner.py#2",
+            "72ca32838943:pocket_planner.py#3",
+            "72ca32838943:pocket_planner.py#4",
+            "72ca32838943:pocket_planner.py#5",
+            "72ca32838943:pocket_planner.py#6",
+            "72ca32838943:tests/test_pocket_planner.py#1",
+            "72ca32838943:tests/test_pocket_planner.py#2",
+            "fe48698812fc:.aikit/codebase_map.md#1",
+            "fe48698812fc:.aikit/codebase_map.md#2",
+            "fe48698812fc:.aikit/codebase_map.md#3",
+            "fe48698812fc:.aikit/codebase_map.md#4",
+            "fe48698812fc:.aikit/codebase_map.md#5",
+            "fe48698812fc:.aikit/decisions.md#1",
+            "fe48698812fc:.aikit/project.json#1",
+            "fe48698812fc:.gitignore#1",
+            "fe48698812fc:README.md#1",
+            "fe48698812fc:pocket_planner.py#1",
+            "fe48698812fc:pocket_planner.py#2",
+            "fe48698812fc:pocket_planner.py#3",
+            "fe48698812fc:pocket_planner.py#4",
+            "fe48698812fc:tests/test_pocket_planner.py#1",
+            "fe48698812fc:tests/test_pocket_planner.py#2"
+          ],
+          "unknown": [
+            "1c779193ebe7:LICENSE#1",
+            "1c779193ebe7:LICENSE#2",
+            "1c779193ebe7:LICENSES/LicenseRef-AL-1.1.txt#1",
+            "1c779193ebe7:LICENSES/LicenseRef-AL-1.1.txt#2",
+            "73df17c2c93f:.aikit/task_ledger_archive.jsonl#1",
+            "8e80ef145738:.aikit/codebase_map.md#1",
+            "8e80ef145738:.aikit/codebase_map.md#2",
+            "8e80ef145738:.aikit/codebase_map.md#3",
+            "8e80ef145738:.aikit/codebase_map.md#4",
+            "8e80ef145738:.aikit/codebase_map.md#5",
+            "8e80ef145738:.aikit/decisions.md#1",
+            "8e80ef145738:.aikit/project.json#1",
+            "8e80ef145738:.aikit/task_ledger_archive.jsonl#1",
+            "8e80ef145738:.gitignore#1",
+            "8e80ef145738:pocket_planner.py#1",
+            "8e80ef145738:pocket_planner.py#2",
+            "8e80ef145738:pocket_planner.py#3",
+            "8e80ef145738:pocket_planner.py#4",
+            "8e80ef145738:pocket_planner.py#5",
+            "8e80ef145738:tests/test_pocket_planner.py#1",
+            "8e80ef145738:tests/test_pocket_planner.py#2",
+            "8e80ef145738:tests/test_pocket_planner.py#3"
+          ],
           "invalid": []
         },
         "findings": []
@@ -1140,171 +1403,10 @@
         "pushed": false,
         "push_error": null,
         "empty": true,
-        "timestamp": "2026-11-14T11:23:52"
+        "timestamp": "2026-11-14T17:45:30"
       },
-      "timestamp": "2026-11-14T11:23:52"
-    },
-    {
-      "run": "run-1",
-      "stage": 3,
-      "window": 9,
-      "commits": [
-        "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b",
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7",
-        "df45464b7c96f04779a248f702ad16235d24ef4f",
-        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-        "72d56cf234d946599d7c3790a287c5b9fa32c25c"
-      ],
-      "new_commits": [
-        "df45464b7c96f04779a248f702ad16235d24ef4f",
-        "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-        "72d56cf234d946599d7c3790a287c5b9fa32c25c"
-      ],
-      "prior_commits": [
-        "72ca32838943c5106abe9587a1aeddbff66f61ae",
-        "0f6c6e579702c2e38d7d7f57065641cda4bd0ccd",
-        "fe48698812fcaead7cd724b8621d9b13e6af940b",
-        "7d7c7ccdb13d4e382c06d3107970f9b1358104d7",
-        "b6679cf5ddc26755f93ab60e22d854339dd340b6",
-        "2a62a17a96c916cfc26c178cdeaefe43106c8dc7"
-      ],
-      "findings": [
-        {
-          "code": "review-missing-license-paths",
-          "category": "improvement",
-          "severity": "low",
-          "path": "LICENSE",
-          "line": 194,
-          "message": "The license text points readers at licenses/ACL-1.0.md (Section 9) and licenses/CONTRIBUTING_CLA.md (Section 7), but this repository only ships LICENSES/LicenseRef-AL-1.1.txt, so both pointers are dead here. Ship the referenced files or replace the paths with the licensing address so a reader can act on them.",
-          "evidence": "Commercial License (`licenses/ACL-1.0.md`) and evidenced by a License Grant Certificate issued by",
-          "commit": "72d56cf234d946599d7c3790a287c5b9fa32c25c",
-          "hunk": "72d56cf234d9:LICENSE#1",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": false,
-          "interaction": "",
-          "repaired": false,
-          "source": "review",
-          "patch_old": "",
-          "patch_new": ""
-        },
-        {
-          "code": "review-due-format-runtime-drift",
-          "category": "improvement",
-          "severity": "low",
-          "path": "pocket_planner.py",
-          "line": 102,
-          "message": "validate_due relies on date.fromisoformat, which since Python 3.11 also accepts basic dates like 20261102 and week dates, so the accepted set differs between the 3.10 and 3.11+ runtimes the README both supports, and values the error message calls invalid are accepted. Checking the YYYY-MM-DD shape before parsing would make every supported runtime agree; note that tightening validation also rejects",
-          "evidence": "date.fromisoformat(value)",
-          "commit": "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-          "hunk": "3bcfdb74c0ce:pocket_planner.py#1",
-          "symbol": "",
-          "introduced": true,
-          "reproducible": false,
-          "fixable": false,
-          "interaction": "",
-          "repaired": false,
-          "source": "review",
-          "patch_old": "",
-          "patch_new": ""
-        }
-      ],
-      "repairs": [],
-      "counts": {
-        "improvement": 2
-      },
-      "reviewed": 15,
-      "review": {
-        "status": "reviewed",
-        "rejected": [],
-        "files": [
-          ".aikit/codebase_map.md",
-          ".aikit/decisions.md",
-          ".aikit/guidelines.md",
-          ".aikit/media.json",
-          ".aikit/project.json",
-          ".gitignore",
-          "COMMERCIAL.md",
-          "LICENSE",
-          "LICENSES/LicenseRef-AL-1.1.txt",
-          "README.md",
-          "REUSE.toml",
-          "assets/logo.svg",
-          "assets/social-preview.svg",
-          "pocket_planner.py",
-          "tests/test_pocket_planner.py"
-        ],
-        "packet": "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner\\.aikit\\reforge.reviews\\stage-run-1-3-df45464b7c96.md",
-        "redacted": 0,
-        "reason": "",
-        "method": "host",
-        "coverage": {
-          "reported": 20,
-          "total": 20,
-          "missing": [],
-          "unknown": [],
-          "invalid": []
-        },
-        "findings": [
-          {
-            "code": "review-missing-license-paths",
-            "category": "improvement",
-            "severity": "low",
-            "path": "LICENSE",
-            "line": 194,
-            "message": "The license text points readers at licenses/ACL-1.0.md (Section 9) and licenses/CONTRIBUTING_CLA.md (Section 7), but this repository only ships LICENSES/LicenseRef-AL-1.1.txt, so both pointers are dead here. Ship the referenced files or replace the paths with the licensing address so a reader can act on them.",
-            "evidence": "Commercial License (`licenses/ACL-1.0.md`) and evidenced by a License Grant Certificate issued by",
-            "commit": "72d56cf234d946599d7c3790a287c5b9fa32c25c",
-            "hunk": "72d56cf234d9:LICENSE#1",
-            "symbol": "",
-            "introduced": true,
-            "reproducible": false,
-            "fixable": false,
-            "interaction": "",
-            "repaired": false,
-            "source": "review",
-            "patch_old": "",
-            "patch_new": ""
-          },
-          {
-            "code": "review-due-format-runtime-drift",
-            "category": "improvement",
-            "severity": "low",
-            "path": "pocket_planner.py",
-            "line": 102,
-            "message": "validate_due relies on date.fromisoformat, which since Python 3.11 also accepts basic dates like 20261102 and week dates, so the accepted set differs between the 3.10 and 3.11+ runtimes the README both supports, and values the error message calls invalid are accepted. Checking the YYYY-MM-DD shape before parsing would make every supported runtime agree; note that tightening validation also rejects",
-            "evidence": "date.fromisoformat(value)",
-            "commit": "3bcfdb74c0cebca02ef1d788fd2ff671c55ce8ab",
-            "hunk": "3bcfdb74c0ce:pocket_planner.py#1",
-            "symbol": "",
-            "introduced": true,
-            "reproducible": false,
-            "fixable": false,
-            "interaction": "",
-            "repaired": false,
-            "source": "review",
-            "patch_old": "",
-            "patch_new": ""
-          }
-        ]
-      },
-      "skipped": [],
-      "tests": {},
-      "gates": {},
-      "delivery": {
-        "commit": "",
-        "short": "",
-        "pushed": false,
-        "push_error": null,
-        "empty": true,
-        "timestamp": "2026-11-14T11:26:51"
-      },
-      "timestamp": "2026-11-14T11:26:51"
+      "timestamp": "2026-11-14T17:45:30",
+      "dirty_targets": []
     }
   ]
 }

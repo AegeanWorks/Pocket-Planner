@@ -254,6 +254,14 @@ class PocketPlannerTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             self.store.load()
 
+    def test_boolean_priority_raises_runtime_error(self):
+        self.store.path.write_text(
+            '{"tasks": [{"id": 1, "title": "t", "priority": true, "done": false, "created_at": "x"}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(RuntimeError):
+            self.store.load()
+
     def test_due_whitespace_is_stripped(self):
         task = add_task(self.store, "dated", 2, "  2026-11-02  ")
 
