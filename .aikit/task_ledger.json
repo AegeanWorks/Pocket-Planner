@@ -3,8 +3,8 @@
   "active_task": {
     "task_id": "due-canonicalization",
     "last_phase": "in_progress",
-    "active_phase": 4,
-    "status": "in_progress",
+    "active_phase": 5,
+    "status": "completed",
     "updated_at": 1794671077.0000687,
     "owner": "vibe:1",
     "started_by": "vibe:1",
@@ -14,25 +14,10 @@
         "name": "pocket-planner",
         "path": "projects/pocket-planner"
       }
-    ]
+    ],
+    "completed_at": 1794671187.3131592
   },
   "checkpoints": [
-    {
-      "task_id": "priority-bool-guard",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'priority-bool-guard' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794667866.8313057,
-      "timestamp_str": "2026-11-14 17:51:06",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
     {
       "task_id": "reforge:run-2",
       "phase": "reforge stage 2",
@@ -358,6 +343,22 @@
           "path": "projects/pocket-planner"
         }
       ]
+    },
+    {
+      "task_id": "due-canonicalization",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'due-canonicalization' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794671187.3131611,
+      "timestamp_str": "2026-11-14 18:46:27",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
     }
   ]
 }
