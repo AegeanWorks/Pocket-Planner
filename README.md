@@ -73,7 +73,8 @@ pocket-planner/
 │   └── social-preview.svg
 ├── pocket_planner.py         <- task store and CLI
 ├── tests/
-    └── test_pocket_planner.py
+│   ├── test_pocket_planner.py
+│   └── test_pocket_planner_pure.py
 └── .aikit/                   <- this project's memory: record, ledger, decisions
 ```
 
