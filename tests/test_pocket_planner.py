@@ -1,7 +1,9 @@
+import io
 import json
 import os
 import tempfile
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest import mock
 
@@ -14,6 +16,7 @@ from pocket_planner import (
     delete_task,
     edit_task,
     list_tasks,
+    main,
     reopen_task,
     task_stats,
 )
@@ -525,6 +528,62 @@ class PocketPlannerTests(unittest.TestCase):
             edit_task(self.store, task.id, title="   ")
         with self.assertRaises(ValueError):
             edit_task(self.store, task.id, priority=9)
+
+
+class MainTests(unittest.TestCase):
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.store_path = str(Path(self.directory.name) / "tasks.json")
+
+    def tearDown(self):
+        self.directory.cleanup()
+
+    def run_main(self, *argv):
+        stdout = io.StringIO()
+        stderr = io.StringIO()
+        with redirect_stdout(stdout), redirect_stderr(stderr):
+            code = main(["--file", self.store_path, *argv])
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_main_search_matches_title_and_tags_case_insensitively(self):
+        self.run_main("add", "alpha", "--tag", "work")
+        self.run_main("add", "beta")
+        code, out, _ = self.run_main("list", "--search", "WORK")
+        self.assertEqual(code, 0)
+        self.assertIn("#1 P2 alpha (#work)", out)
+        self.assertNotIn("beta", out)
+
+    def test_main_sort_priority_orders_and_bad_sort_is_argparse_rejected(self):
+        self.run_main("add", "low", "-p", "3")
+        self.run_main("add", "high", "-p", "1")
+        code, out, _ = self.run_main("list", "--sort", "priority")
+        self.assertEqual(code, 0)
+        high, low = out.index("high"), out.index("low")
+        self.assertLess(high, low)
+        with self.assertRaises(SystemExit) as raised:
+            self.run_main("list", "--sort", "nonsense")
+        self.assertEqual(raised.exception.code, 2)
+
+    def test_main_stats_prints_summary_and_priorities(self):
+        self.run_main("add", "alpha", "-p", "1")
+        self.run_main("add", "low", "-p", "3")
+        self.run_main("done", "2")
+        code, out, _ = self.run_main("stats")
+        self.assertEqual(code, 0)
+        self.assertIn("Tasks: 2 (open 1, done 1, overdue 0)", out)
+        self.assertIn("Priority: P1 1, P2 0, P3 1", out)
+
+    def test_main_bad_priority_is_argparse_rejected_with_usage_error(self):
+        with self.assertRaises(SystemExit) as raised:
+            self.run_main("add", "alpha", "-p", "9")
+        self.assertEqual(raised.exception.code, 2)
+
+    def test_main_added_task_is_persisted(self):
+        code, _, _ = self.run_main("add", "persisted", "-p", "2")
+        self.assertEqual(code, 0)
+        store = TaskStore(Path(self.store_path))
+        self.assertEqual([t.title for t in store.load()], ["persisted"])
+        self.assertEqual(store.load()[0].priority, 2)
 
 
 if __name__ == "__main__":
