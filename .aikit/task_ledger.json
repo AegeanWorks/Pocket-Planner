@@ -1,62 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-lock-map-refresh",
+    "task_id": "pp-lock-open-error",
     "last_phase": "in_progress",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794677415.8645287,
+    "updated_at": 1794677642.1378486,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794677416.3346493
+    "completed_at": 1794677648.4891815
   },
   "checkpoints": [
-    {
-      "task_id": "pp-help-and-cli-tests",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[2/2] Implemented: MainTests class with 5 main()-level tests (search case-insensitive, sort order + argparse rejection, stats summary, bad priority argparse exit 2, persistence). unittest 62/62 passed. checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794673113.4543068,
-      "timestamp_str": "2026-11-14 19:18:33",
-      "agent": "vibe:1"
-    },
-    {
-      "task_id": "pp-help-and-cli-tests",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'pp-help-and-cli-tests' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794673133.9724362,
-      "timestamp_str": "2026-11-14 19:18:53",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "pp-next-and-stats-json",
-      "phase": "in_progress",
-      "phase_num": 2,
-      "description": "[1/3] Plan: feat 1 = next command (next_task() returns top open task in default due order, render_task() helper shared with list, README usage line); feat 2 = stats --json (machine JSON of stats fields, README note); then map sync + push",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794673493.7493742,
-      "timestamp_str": "2026-11-14 19:24:53",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "backlog items chosen from post-push audit: smallest user-visible wins before larger items (locking, backups)",
-        "benefits": "quick top-of-list access for users and agents; machine-readable stats for automation",
-        "risks": "contract: next reuses list default ordering, no new store fields; dependency: json stdlib only; concurrency: read-only; state: none",
-        "mitigation": "slice reads before edits; failing-first function tests; full suite + strict check pre-commit; validate commit subjects"
-      },
-      "plan_digest": "62b6b2a5f76f40f511be558df0caf257eab400bfcb017285598563fe9a3c7041"
-    },
     {
       "task_id": "pp-next-and-stats-json",
       "phase": "in_progress",
@@ -301,6 +256,51 @@
       "status": "completed",
       "timestamp": 1794677416.3346534,
       "timestamp_str": "2026-11-14 20:30:16",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-lock-open-error",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/1] Plan: wrap non-FileExistsError OSError from the lock os.open into RuntimeError('cannot create lock ...') so blocked mutators keep the Error:-and-exit-1 contract; failing-first test puts a directory at the lock path",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677618.2745008,
+      "timestamp_str": "2026-11-14 20:33:38",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "post-push audit found an uncaught OSError path in _acquire_lock that crashes the CLI with a traceback",
+        "benefits": "uniform store-error contract; no raw tracebacks from a corrupt or hostile lock path",
+        "risks": "contract: error type only, no behavioral change; dependency: none; concurrency: none; state: none",
+        "mitigation": "failing-first test; suite + strict check; validate subject"
+      },
+      "plan_digest": "169ae77d0e975f3cd508db704679fca4a3844f4326988f69295a239a0d93ab1c"
+    },
+    {
+      "task_id": "pp-lock-open-error",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[1/1] Wrapped the non-FileExistsError OSError from lock creation in RuntimeError; failing-first test confirmed failing then passing; suite 75/75; live smoke shows Error + exit 1 instead of traceback. checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677642.1378486,
+      "timestamp_str": "2026-11-14 20:34:02",
+      "agent": "vibe:1"
+    },
+    {
+      "task_id": "pp-lock-open-error",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-lock-open-error' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794677648.489183,
+      "timestamp_str": "2026-11-14 20:34:08",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
