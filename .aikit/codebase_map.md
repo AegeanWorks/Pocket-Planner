@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `5`
 - **Total Top-Level Functions**: `17`
-- **Total Class Methods**: `91`
-- **Total Source Lines**: `1352`
+- **Total Class Methods**: `94`
+- **Total Source Lines**: `1401`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -63,7 +63,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `724` lines (`29521` bytes)
+**Size**: `773` lines (`31740` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -146,6 +146,9 @@
   - Method `.test_main_bad_priority_is_argparse_rejected_with_usage_error()`
   - Method `.test_main_next_prints_top_open_task_and_empty_store_fails_cleanly()`
   - Method `.test_main_stats_json_prints_parseable_summary()`
+  - Method `.test_main_all_overdue_and_tag_filters()`
+  - Method `.test_main_done_reopen_round_trip()`
+  - Method `.test_main_rm_removes_and_missing_id_fails()`
   - Method `.test_main_relative_due_round_trips_through_add_and_edit()`
   - Method `.test_main_added_task_is_persisted()`
 
