@@ -1,50 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-next-and-stats-json",
+    "task_id": "pp-backup-rotation",
     "last_phase": "in_progress",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794673592.477189,
+    "updated_at": 1794673970.20413,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794673650.1213925
+    "completed_at": 1794673980.8558953
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 4",
-      "phase_num": 3,
-      "description": "Reforge stage 4: window 12, 3 commit(s), 7 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794671950.0489984,
-      "timestamp_str": "2026-11-14 18:59:10",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 4",
-      "phase_num": 3,
-      "description": "Reforge stage 4: stage 4 host review reviewed; run active; coverage 13/13",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794671976.3938146,
-      "timestamp_str": "2026-11-14 18:59:36",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 5",
-      "phase_num": 3,
-      "description": "Reforge stage 5: window 15, 3 commit(s), 8 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794671979.4994204,
-      "timestamp_str": "2026-11-14 18:59:39",
-      "agent": "unidentified"
-    },
     {
       "task_id": "reforge:run-3",
       "phase": "reforge stage 5",
@@ -272,6 +239,51 @@
       "status": "completed",
       "timestamp": 1794673650.1213944,
       "timestamp_str": "2026-11-14 19:27:30",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-backup-rotation",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/2] Plan: depth-2 backup rotation in TaskStore.save (.bak = previous store, .bak.1 = generation before, rotated with os.replace chains; load fallback still prefers .bak); tests written failing-first; README sentence updated",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794673939.3169477,
+      "timestamp_str": "2026-11-14 19:32:19",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "backlog audit: a single .bak means one bad save erases the last known-good store",
+        "benefits": "crash recovery window of two generations instead of one; atomic renames, no extra writes",
+        "risks": "contract: .bak/.bak.1 naming new but additive; dependency: none (os.replace, POSIX+Windows); concurrency: unchanged single-process; state: no tree on Windows",
+        "mitigation": "failing-first function tests prove generation content; full suite + strict check; validate commit subject"
+      },
+      "plan_digest": "42ee55164782c2df2d1fbd512f769f84b28c6a79c140d8538434236c17154d9b"
+    },
+    {
+      "task_id": "pp-backup-rotation",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[2/2] Implemented depth-2 backup rotation with atomic os.replace chain; failing-first test added first (confirmed failing), suite 67/67 passed after implementation; README recovery sentence updated. checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794673970.20413,
+      "timestamp_str": "2026-11-14 19:32:50",
+      "agent": "vibe:1"
+    },
+    {
+      "task_id": "pp-backup-rotation",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-backup-rotation' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794673980.8558972,
+      "timestamp_str": "2026-11-14 19:33:00",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
