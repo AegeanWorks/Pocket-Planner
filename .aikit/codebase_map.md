@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `5`
 - **Total Top-Level Functions**: `17`
-- **Total Class Methods**: `79`
-- **Total Source Lines**: `1193`
+- **Total Class Methods**: `81`
+- **Total Source Lines**: `1221`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `551` lines (`21242` bytes)
+**Size**: `559` lines (`21629` bytes)
 
 **Classes:**
 - `class Task`
@@ -59,7 +59,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `642` lines (`25235` bytes)
+**Size**: `662` lines (`26345` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -79,6 +79,7 @@
   - Method `.test_invalid_schema_version_fails_load()`
   - Method `.test_legacy_tasks_without_metadata_still_load()`
   - Method `.test_metadata_is_persisted_and_filterable()`
+  - Method `.test_relative_due_dates_freeze_to_absolute_iso_dates()`
   - Method `.test_invalid_due_date_is_rejected()`
   - Method `.test_empty_title_and_bad_priority_are_rejected()`
   - Method `.test_complete_missing_or_already_done_raises()`
@@ -135,6 +136,7 @@
   - Method `.test_main_bad_priority_is_argparse_rejected_with_usage_error()`
   - Method `.test_main_next_prints_top_open_task_and_empty_store_fails_cleanly()`
   - Method `.test_main_stats_json_prints_parseable_summary()`
+  - Method `.test_main_relative_due_round_trips_through_add_and_edit()`
   - Method `.test_main_added_task_is_persisted()`
 
 ---
