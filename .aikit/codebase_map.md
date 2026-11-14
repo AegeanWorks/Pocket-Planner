@@ -6,14 +6,14 @@
 ---
 
 ## 📊 Codebase Metrics
-- **Total Python Modules**: `2`
-- **Total Classes**: `5`
-- **Total Top-Level Functions**: `19`
-- **Total Class Methods**: `100`
-- **Total Source Lines**: `1547`
+- **Total Python Modules**: `3`
+- **Total Classes**: `6`
+- **Total Top-Level Functions**: `21`
+- **Total Class Methods**: `116`
+- **Total Source Lines**: `1868`
 
 ## 🧭 Map Coverage
-- **Indexed**: python (`2` module(s))
+- **Indexed**: python (`3` module(s))
 - **Not indexed by this map**: none (no non-Python source files were found)
 
 ---
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `672` lines (`26479` bytes)
+**Size**: `750` lines (`29498` bytes)
 
 **Classes:**
 - `class Task`
@@ -36,8 +36,11 @@
   - Method `._release_lock()`
   - Method `.transaction()` - *Lock, load, yield the task list, save on a clean exit, release always.*
   - Method `.load()`
+  - Method `._parse_payload(data)`
+  - Method `._copy_state_from(other)` - *Carry forward-compat unknown fields and the retired-id fence (ADR-004/ADR-005).*
   - Method `.next_task_id(tasks)` - *The next id this store issues; never an id a deleted task already used.*
   - Method `.save(tasks)`
+  - Method `._replace_with_payload(payload)`
   - Method `._sync_directory()`
 - `class Stats`
 
@@ -57,15 +60,16 @@
 - `def next_task(store)`
 - `def task_stats(store)`
 - `def render_task(task)`
-- `def export_store(store, destination)`
-- `def import_store(store, source)`
+- `def render_task_markdown(task)`
+- `def export_store(store, destination, fmt)`
+- `def import_store(store, source, merge)`
 - `def build_parser()`
 - `def main(argv)`
 
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `875` lines (`36600` bytes)
+**Size**: `1006` lines (`42258` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -159,5 +163,29 @@
   - Method `.test_main_wait_rejects_non_finite_values()`
   - Method `.test_main_relative_due_round_trips_through_add_and_edit()`
   - Method `.test_main_added_task_is_persisted()`
+  - Method `.test_export_then_import_round_trips_extras_and_next_id()`
+  - Method `.test_import_merge_renumbers_colliding_ids_and_keeps_extras()`
+  - Method `.test_import_accepts_bare_json_task_array()`
+  - Method `.test_export_json_tasks_format_writes_a_bare_array()`
+  - Method `.test_export_markdown_format_writes_a_checklist()`
+
+---
+
+### [`tests/test_pocket_planner_pure.py`](tests/test_pocket_planner_pure.py)
+**Size**: `112` lines (`3767` bytes)
+
+**Classes:**
+- `class PureTests` - *Function-level tests with no disk or lock interaction.*
+  - Method `.test_validate_priority_accepts_and_rejects_levels()`
+  - Method `.test_canonical_due_accepts_compact_and_iso()`
+  - Method `.test_validate_due_hands_none_and_blanks_through()`
+  - Method `.test_validate_due_freezes_relative_forms_case_insensitively()`
+  - Method `.test_normalize_tags_strips_lowercases_and_dedupes_in_order()`
+  - Method `.test_render_task_marks_done_and_details()`
+  - Method `.test_render_task_markdown_uses_checklist_syntax()`
+  - Method `.test_sort_key_by_due_sends_done_and_missing_due_last()`
+
+**Functions:**
+- `def make_task(**overrides)`
 
 ---
