@@ -8,6 +8,7 @@ import json
 import os
 import sys
 import tempfile
+import time
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -26,20 +27,29 @@ class Task:
 
 
 class TaskStore:
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Path, *, replace_tries: int = 5, retry_delay: float = 0.05) -> None:
         self.path = path
+        self.replace_tries = replace_tries
+        self.retry_delay = retry_delay
         self._extras: dict[int, dict[str, object]] = {}
         self._next_id: int | None = None
         self._root_extras: dict[str, object] = {}
+
+    @property
+    def _backup_path(self) -> Path:
+        return self.path.with_name(self.path.name + ".bak")
 
     def load(self) -> list[Task]:
         self._extras = {}
         self._next_id = None
         self._root_extras = {}
-        if not self.path.exists():
-            return []
+        source = self.path
+        if not source.exists():
+            source = self._backup_path
+            if not source.exists():
+                return []
         try:
-            data = json.loads(self.path.read_text(encoding="utf-8"))
+            data = json.loads(source.read_text(encoding="utf-8"))
             if not isinstance(data, dict):
                 raise ValueError("store root must be an object with a 'tasks' list")
             raw_tasks = data["tasks"]
@@ -101,7 +111,7 @@ class TaskStore:
                 tasks.append(Task(**record))
             return tasks
         except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as error:
-            raise RuntimeError(f"cannot read {self.path}: {error}") from error
+            raise RuntimeError(f"cannot read {source}: {error}") from error
 
     def next_task_id(self, tasks: list[Task]) -> int:
         """The next id this store issues; never an id a deleted task already used."""
@@ -119,13 +129,23 @@ class TaskStore:
         payload_data = {"next_id": next_id, "tasks": records}
         payload_data.update(self._root_extras)
         payload = json.dumps(payload_data, indent=2) + "\n"
+        if self.path.exists():
+            os.replace(self.path, self._backup_path)
         handle, temporary = tempfile.mkstemp(prefix=f".{self.path.name}.", dir=self.path.parent)
         try:
             with os.fdopen(handle, "w", encoding="utf-8") as file:
                 file.write(payload)
                 file.flush()
                 os.fsync(file.fileno())
-            os.replace(temporary, self.path)
+            for attempt in range(self.replace_tries):
+                try:
+                    os.replace(temporary, self.path)
+                    break
+                except OSError as error:
+                    if attempt == self.replace_tries - 1:
+                        raise
+                    time.sleep(self.retry_delay)
+            self._sync_directory()
         except OSError as error:
             try:
                 os.unlink(temporary)
@@ -135,6 +155,24 @@ class TaskStore:
                     f"temporary-file cleanup also failed: {cleanup_error}"
                 ) from error
             raise RuntimeError(f"cannot save {self.path}: {error}") from error
+
+    def _sync_directory(self) -> None:
+        # Best effort. POSIX needs the fsync so the rename survives power loss;
+        # Windows refuses a directory flush (and cannot open one reliably), so the
+        # entry there follows the file's own fsync. A silent skip keeps an already
+        # replaced store from turning into an error.
+        if os.name == "nt":
+            return
+        try:
+            descriptor = os.open(self.path.parent, os.O_RDONLY)
+        except OSError:
+            return
+        try:
+            os.fsync(descriptor)
+        except OSError:  # hygiene: allow POSIX dir fsync is best effort; the store file already replaced atomically
+            pass
+        finally:
+            os.close(descriptor)
 
 
 def now() -> str:

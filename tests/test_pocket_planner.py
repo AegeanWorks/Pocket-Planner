@@ -1,7 +1,9 @@
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from pocket_planner import (
     TaskStore,
@@ -210,6 +212,46 @@ class PocketPlannerTests(unittest.TestCase):
         payload = json.loads(self.store.path.read_text(encoding="utf-8"))
         self.assertEqual(payload["schema_version"], 9)
         self.assertEqual(payload["next_id"], 3)
+
+    def test_save_keeps_a_bak_of_the_previous_store(self):
+        add_task(self.store, "one", 2)
+        add_task(self.store, "two", 2)
+
+        backup = self.store.path.with_name(self.store.path.name + ".bak")
+        payload = json.loads(backup.read_text(encoding="utf-8"))
+
+        self.assertEqual([item["title"] for item in payload["tasks"]], ["one"])
+
+    def test_load_falls_back_to_bak_when_store_is_missing(self):
+        add_task(self.store, "one", 2)
+        add_task(self.store, "two", 2)
+
+        self.store.path.unlink()
+
+        reloaded = self.store.load()
+        self.assertEqual([task.title for task in reloaded], ["one"])
+
+    def test_save_retries_transient_replace_failures(self):
+        real_replace = os.replace
+        calls = []
+
+        def flaky_replace(source, destination):
+            calls.append(destination)
+            if len(calls) == 2 or len(calls) == 3:
+                raise OSError("simulated transient failure")
+            return real_replace(source, destination)
+
+        self.store = TaskStore(self.store.path, retry_delay=0)
+        add_task(self.store, "one", 2)
+
+        with mock.patch("os.replace", flaky_replace):
+            add_task(self.store, "two", 2)
+
+        self.assertEqual(
+            [task.title for task in self.store.load()], ["one", "two"]
+        )
+        leftovers = [item.name for item in self.store.path.parent.glob(f".{self.store.path.name}.*")]
+        self.assertEqual(leftovers, [])
 
     def test_empty_due_string_loads_as_none(self):
         self.store.path.write_text(

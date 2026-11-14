@@ -1,11 +1,11 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "store-root-hardening",
+    "task_id": "store-durability-bak",
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794668990.3300698,
+    "updated_at": 1794669818.7621608,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
@@ -16,46 +16,13 @@
       }
     ],
     "impact_assessment": {
-      "why": "Delivery-verification probes found three store-contract gaps; each now fails loud or round-trips per the documented contract",
-      "benefits": "Ambiguous duplicate-id stores are rejected; root metadata survives this client's writes; counter cannot be nonsense",
-      "risks": "contract: two new loud failures and one write-shape change, all recorded in ADR-006; dependency: none; concurrency: unchanged single-writer; state: store files and decisions.md only",
-      "mitigation": "Per-guard regression tests including subTest for 0 and -7; full gate suite; explicit staging of the five changed files"
+      "why": "PRINCIPLE-013 durability pattern was absent from the store; a mid-save crash or blocked rename could lose the store head irrecoverably",
+      "benefits": "Previous store always recoverable as .bak; transient replace failures self-heal; rename reaches the directory entry on POSIX",
+      "risks": "contract: .bak files appear beside the store and missing main files read from .bak; dependency: time module only; concurrency: locking deliberately deferred via ADR-007 single-writer stance; state: save failure paths restructured, temp cleanup preserved",
+      "mitigation": "Three regression tests including mocked transient double-failure; retry delay injectable keeping tests fast; ADR-007 and README document the recovery and Windows skip; full gates plus strict check before delivery"
     }
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge run",
-      "phase_num": 3,
-      "description": "run started (start=3, step=3, stop=None)",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667388.8471332,
-      "timestamp_str": "2026-11-14 17:43:08",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 1",
-      "phase_num": 3,
-      "description": "Reforge stage 1: window 3, 3 commit(s), 9 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667394.232769,
-      "timestamp_str": "2026-11-14 17:43:14",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 1",
-      "phase_num": 3,
-      "description": "Reforge stage 1: stage 1 host review reviewed; run active; coverage 22/22",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667506.6381915,
-      "timestamp_str": "2026-11-14 17:45:06",
-      "agent": "unidentified"
-    },
     {
       "task_id": "reforge:run-2",
       "phase": "reforge stage 2",
@@ -314,6 +281,70 @@
         "benefits": "Ambiguous duplicate-id stores are rejected; root metadata survives this client's writes; counter cannot be nonsense",
         "risks": "contract: two new loud failures and one write-shape change, all recorded in ADR-006; dependency: none; concurrency: unchanged single-writer; state: store files and decisions.md only",
         "mitigation": "Per-guard regression tests including subTest for 0 and -7; full gate suite; explicit staging of the five changed files"
+      },
+      "checklists": "passed",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "store-root-hardening",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'store-root-hardening' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794669007.2986455,
+      "timestamp_str": "2026-11-14 18:10:07",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "store-durability-bak",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/4] Plan store durability: save keeps a .bak of the previous store (pre-replace), retries os.replace up to 5 times with injectable delay, best-effort directory fsync; load falls back to .bak when the main file is missing; M2 implement, M3 tests+README+ADR-007 (advisory locking recorded as deferred with single-writer rationale), M4 gates+commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794669341.984128,
+      "timestamp_str": "2026-11-14 18:15:41",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "PRINCIPLE-013 calls for temp+fsync+replace with retries, dir fsync and a .bak for state files; probing confirmed save has none of the three, so a crash mid-save or a rename lost to a stale Windows handle loses the store head, and today the failure leaves no recovery copy.",
+        "benefits": "Every save leaves the previous store recoverable as .bak; transient replace failures self-heal; the rename reaches the directory entry unless the platform forbids opening it.",
+        "risks": "contract: new .bak files appear next to the store and load() reads .bak when the main file is missing (recovery semantics must be documented); dependency: time and os only, standard library; concurrency: no advisory locking yet, deliberate ADR deferral - a lost-update window between load and save remains; state: save failure paths change, temp-file cleanup preserved; if the backup move crashes before the replace lands the main file is absent until the next save, so the fallback load is part of the contract",
+        "mitigation": "Recovery semantics and the locking deferral both land in ADR-007; injectable retry delay keeps unit tests under the 20ms budget; per-behaviour regression tests including a mocked transient replace failure; full gates and strict check before delivery; explicit staging"
+      },
+      "plan_digest": "692fdd664edfa70ca8fa9e14b2562fb22dfb310647baa219293682111eed30eb",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "store-durability-bak",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/4]-[4/4] Implemented and verified: save keeps .bak of previous store, retries replace (5 tries, injectable flat delay), POSIX dir fsync skipped on Windows with hygiene: allow marker; load falls back to .bak; 47 tests pass (3 new); ADR-007 records the locking deferral; README documents recovery; checklists passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794669818.7621608,
+      "timestamp_str": "2026-11-14 18:23:38",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "PRINCIPLE-013 durability pattern was absent from the store; a mid-save crash or blocked rename could lose the store head irrecoverably",
+        "benefits": "Previous store always recoverable as .bak; transient replace failures self-heal; rename reaches the directory entry on POSIX",
+        "risks": "contract: .bak files appear beside the store and missing main files read from .bak; dependency: time module only; concurrency: locking deliberately deferred via ADR-007 single-writer stance; state: save failure paths restructured, temp cleanup preserved",
+        "mitigation": "Three regression tests including mocked transient double-failure; retry delay injectable keeping tests fast; ADR-007 and README document the recovery and Windows skip; full gates plus strict check before delivery"
       },
       "checklists": "passed",
       "workspaces": [

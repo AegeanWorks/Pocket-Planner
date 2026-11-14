@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `3`
 - **Total Top-Level Functions**: `11`
-- **Total Class Methods**: `50`
-- **Total Source Lines**: `773`
+- **Total Class Methods**: `55`
+- **Total Source Lines**: `853`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,15 +23,17 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `382` lines (`15611` bytes)
+**Size**: `420` lines (`17109` bytes)
 
 **Classes:**
 - `class Task`
 - `class TaskStore`
-  - Method `.__init__(path)`
+  - Method `.__init__(path, *, replace_tries, retry_delay)`
+  - Property `._backup_path`
   - Method `.load()`
   - Method `.next_task_id(tasks)` - *The next id this store issues; never an id a deleted task already used.*
   - Method `.save(tasks)`
+  - Method `._sync_directory()`
 
 **Functions:**
 - `def now()`
@@ -49,7 +51,7 @@
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `391` lines (`14819` bytes)
+**Size**: `433` lines (`16316` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -79,6 +81,9 @@
   - Method `.test_unknown_fields_are_ignored_for_forward_compat()`
   - Method `.test_unknown_task_fields_survive_an_unrelated_write()`
   - Method `.test_unknown_root_keys_survive_an_unrelated_write()`
+  - Method `.test_save_keeps_a_bak_of_the_previous_store()`
+  - Method `.test_load_falls_back_to_bak_when_store_is_missing()`
+  - Method `.test_save_retries_transient_replace_failures()`
   - Method `.test_empty_due_string_loads_as_none()`
   - Method `.test_invalid_due_on_load_raises_runtime_error()`
   - Method `.test_non_list_tags_on_load_raises_runtime_error()`
