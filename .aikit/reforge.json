@@ -24,7 +24,7 @@
       ],
       "status": "completed",
       "created": "2026-11-14T11:06:10",
-      "updated": "2026-11-14T11:35:49",
+      "updated": "2026-11-14T13:15:28",
       "last_audit": {
         "run": "run-1",
         "stage": 3,
@@ -423,12 +423,12 @@
           },
           "gates": {},
           "delivery": {
-            "commit": "",
-            "short": "",
+            "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
+            "short": "8e80ef1",
             "pushed": false,
             "push_error": null,
             "empty": false,
-            "timestamp": "2026-11-14T11:22:48"
+            "timestamp": "2026-11-14T13:15:28"
           },
           "timestamp": "2026-11-14T11:06:15",
           "dirty_targets": []
@@ -1072,12 +1072,12 @@
       },
       "gates": {},
       "delivery": {
-        "commit": "",
-        "short": "",
+        "commit": "8e80ef145738ae1ece2d70649187e5568bd25124",
+        "short": "8e80ef1",
         "pushed": false,
         "push_error": null,
         "empty": false,
-        "timestamp": "2026-11-14T11:22:48"
+        "timestamp": "2026-11-14T13:15:28"
       },
       "timestamp": "2026-11-14T11:06:15",
       "dirty_targets": []
