@@ -77,7 +77,7 @@ class TaskStore:
                     if time.time() - lock_path.stat().st_mtime > self.stale_after:
                         lock_path.unlink()
                         continue
-                except OSError:
+                except OSError:  # hygiene: allow a vanished or unreadable lock is retried, never fatal
                     pass
                 if time.monotonic() >= deadline:
                     raise RuntimeError(f"store is locked by another process: {lock_path}")
