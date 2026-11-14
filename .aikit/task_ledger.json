@@ -1,50 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-relative-due",
+    "task_id": "pp-advisory-locking",
     "last_phase": "in_progress",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794676071.2780824,
+    "updated_at": 1794676878.4379659,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794676083.0180502
+    "completed_at": 1794676945.1981616
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 7",
-      "phase_num": 3,
-      "description": "Reforge stage 7: window 21, 3 commit(s), 8 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794672077.3329232,
-      "timestamp_str": "2026-11-14 19:01:17",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 7",
-      "phase_num": 3,
-      "description": "Reforge stage 7: stage 7 host review reviewed; run active; coverage 14/14",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794672103.5418541,
-      "timestamp_str": "2026-11-14 19:01:43",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "reforge:run-3",
-      "phase": "reforge stage 8",
-      "phase_num": 3,
-      "description": "Reforge stage 8: window 22, 1 commit(s), 9 file(s) reviewed (unreviewed), 0 finding(s), 0 repaired, empty \u2014 nothing to commit",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794672106.6303272,
-      "timestamp_str": "2026-11-14 19:01:46",
-      "agent": "unidentified"
-    },
     {
       "task_id": "reforge:run-3",
       "phase": "reforge stage 8",
@@ -296,6 +263,51 @@
       "status": "completed",
       "timestamp": 1794676083.018052,
       "timestamp_str": "2026-11-14 20:08:03",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-advisory-locking",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/3] Plan: close ADR-007 deferral. Lock file <store>.lock (O_CREAT|O_EXCL, pid+timestamp, one fsync), wait 3s / stale 30s per PRINCIPLE-013; transaction() contextmanager = acquire, load, yield, save on clean exit, release always; all five mutators refactor onto transaction (input validation stays lock-free, not-found raises inside the with so no spurious save); injectable lock_wait/retry_delay/stale_after for fast tests; save stays an unlocked primitive",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794676447.7155178,
+      "timestamp_str": "2026-11-14 20:14:07",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "ADR-007 deferred locking until a second process appears; stats --json and agent/script usage now make concurrent CLI invocations realistic",
+        "benefits": "lost-update window between simultaneous commands is closed; lock is advisory, zero cost on the normal path",
+        "risks": "contract: new .lock file beside store, mutators semantically identical; dependency: stdlib os/contextlib only; concurrency: cross-process via lock file, single-threaded per process (documented); state: stale-lock break by mtime can break a live >30s writer - documented, bounded",
+        "mitigation": "failing-first tests (lock refusal, stale break, recovery after release, error-path release); suite + strict check; ADR-010 before commit; validate commit subject"
+      },
+      "plan_digest": "7587e1c1ec8e88e279cb33fcd946bf14e1a1642f8b830a40dfbb37e4c0cb593d"
+    },
+    {
+      "task_id": "pp-advisory-locking",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[3/3] Implemented: lock file + transaction wrapper, five mutators refactored, ADR-010 recorded, README lock paragraph added. Suite 74/74 passed (74 = 70+4 lock tests); failing-first confirmed; live smoke verified lock refusal (exit 1), release recovery, and stale-lock break. checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794676878.4379659,
+      "timestamp_str": "2026-11-14 20:21:18",
+      "agent": "vibe:1"
+    },
+    {
+      "task_id": "pp-advisory-locking",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-advisory-locking' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794676945.198165,
+      "timestamp_str": "2026-11-14 20:22:25",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
