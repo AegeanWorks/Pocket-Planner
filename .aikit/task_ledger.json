@@ -1,62 +1,17 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "pp-lock-open-error",
+    "task_id": "pp-lock-error-map-cover",
     "last_phase": "in_progress",
     "active_phase": 5,
     "status": "completed",
-    "updated_at": 1794677642.1378486,
+    "updated_at": 1794677705.6873436,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
-    "completed_at": 1794677648.4891815
+    "completed_at": 1794677706.0695386
   },
   "checkpoints": [
-    {
-      "task_id": "pp-next-and-stats-json",
-      "phase": "in_progress",
-      "phase_num": 4,
-      "description": "[2/3] Implemented: next command (next_task + render_task shared with list) and stats --json single-line JSON output; README updated same commit. unittest 66/66 passed; suite caught and fixed a forgotten else in the stats branch. checklists: passed",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794673592.477189,
-      "timestamp_str": "2026-11-14 19:26:32",
-      "agent": "vibe:1"
-    },
-    {
-      "task_id": "pp-next-and-stats-json",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'pp-next-and-stats-json' completed successfully.",
-      "status": "completed",
-      "timestamp": 1794673650.1213944,
-      "timestamp_str": "2026-11-14 19:27:30",
-      "agent": "vibe:1",
-      "delivery": {
-        "roots": [
-          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
-        ],
-        "forced": false
-      }
-    },
-    {
-      "task_id": "pp-backup-rotation",
-      "phase": "in_progress",
-      "phase_num": 2,
-      "description": "[1/2] Plan: depth-2 backup rotation in TaskStore.save (.bak = previous store, .bak.1 = generation before, rotated with os.replace chains; load fallback still prefers .bak); tests written failing-first; README sentence updated",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794673939.3169477,
-      "timestamp_str": "2026-11-14 19:32:19",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "backlog audit: a single .bak means one bad save erases the last known-good store",
-        "benefits": "crash recovery window of two generations instead of one; atomic renames, no extra writes",
-        "risks": "contract: .bak/.bak.1 naming new but additive; dependency: none (os.replace, POSIX+Windows); concurrency: unchanged single-process; state: no tree on Windows",
-        "mitigation": "failing-first function tests prove generation content; full suite + strict check; validate commit subject"
-      },
-      "plan_digest": "42ee55164782c2df2d1fbd512f769f84b28c6a79c140d8538434236c17154d9b"
-    },
     {
       "task_id": "pp-backup-rotation",
       "phase": "in_progress",
@@ -301,6 +256,51 @@
       "status": "completed",
       "timestamp": 1794677648.489183,
       "timestamp_str": "2026-11-14 20:34:08",
+      "agent": "vibe:1",
+      "delivery": {
+        "roots": [
+          "C:\\Users\\Yunus-Emre\\Desktop\\portable_agent_kit\\projects\\pocket-planner"
+        ],
+        "forced": false
+      }
+    },
+    {
+      "task_id": "pp-lock-error-map-cover",
+      "phase": "in_progress",
+      "phase_num": 2,
+      "description": "[1/1] Plan: bookkeeping-only covering task - map refresh 0c47f73 and ledger f0e6f54 postdate completed pp-lock-open-error; ADR-419 remedy: open the next task to re-anchor",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677705.4634244,
+      "timestamp_str": "2026-11-14 20:35:05",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "strict ledger assertion requires the completed task to own all later non-bookkeeping commits",
+        "benefits": "strict gate clean",
+        "risks": "contract: none; dependency: none; concurrency: none; state: none",
+        "mitigation": "no tree changes; rerun strict"
+      },
+      "plan_digest": "ecc32f6a714185595d219ccdfb8380fc3097d3846bbdcef5eacd80707d9681f6"
+    },
+    {
+      "task_id": "pp-lock-error-map-cover",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[1/1] No tree changes; gates re-verified via strict run below. checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794677705.6873436,
+      "timestamp_str": "2026-11-14 20:35:05",
+      "agent": "vibe:1"
+    },
+    {
+      "task_id": "pp-lock-error-map-cover",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'pp-lock-error-map-cover' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794677706.0695405,
+      "timestamp_str": "2026-11-14 20:35:06",
       "agent": "vibe:1",
       "delivery": {
         "roots": [
