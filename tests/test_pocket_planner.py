@@ -6,6 +6,7 @@ from pathlib import Path
 from unittest import mock
 
 from pocket_planner import (
+    Stats,
     TaskStore,
     add_task,
     complete_task,
@@ -13,6 +14,7 @@ from pocket_planner import (
     edit_task,
     list_tasks,
     reopen_task,
+    task_stats,
 )
 
 
@@ -35,6 +37,42 @@ class PocketPlannerTests(unittest.TestCase):
         add_task(self.store, "urgent", 1)
 
         self.assertEqual([task.title for task in list_tasks(self.store)], ["urgent", "later"])
+
+    def test_list_search_matches_title_and_tags_case_insensitively(self):
+        add_task(self.store, "Write docs", 2, tags=["review"])
+        add_task(self.store, "other", 2)
+
+        self.assertEqual(
+            [task.title for task in list_tasks(self.store, query="write")], ["Write docs"]
+        )
+        self.assertEqual(
+            [task.title for task in list_tasks(self.store, query="REVIEW")], ["Write docs"]
+        )
+        self.assertEqual(list_tasks(self.store, query="  missing  "), [])
+
+    def test_list_sort_orders(self):
+        add_task(self.store, "b", 3)
+        add_task(self.store, "a", 1)
+
+        self.assertEqual([task.title for task in list_tasks(self.store, sort="priority")], ["a", "b"])
+        self.assertEqual([task.title for task in list_tasks(self.store, sort="id")], ["b", "a"])
+        self.assertEqual([task.title for task in list_tasks(self.store, sort="created")], ["b", "a"])
+
+    def test_list_rejects_unknown_sort(self):
+        with self.assertRaises(ValueError):
+            list_tasks(self.store, sort="title")
+
+    def test_stats_counts_open_done_overdue_and_priorities(self):
+        past = "2000-01-01"
+        add_task(self.store, "overdue", 1, due=past)
+        add_task(self.store, "high", 1)
+        add_task(self.store, "low", 3)
+        done = add_task(self.store, "finished", 2)
+        complete_task(self.store, done.id)
+
+        summary = task_stats(self.store)
+
+        self.assertEqual(summary, Stats(tasks=4, open=3, done=1, overdue=1, by_priority={1: 2, 2: 1, 3: 1}))
 
     def test_complete_sets_timestamp_and_hides_from_default_list(self):
         task = add_task(self.store, "ship release", 2)

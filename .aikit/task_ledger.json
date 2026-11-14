@@ -1,11 +1,11 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "due-canonicalization",
+    "task_id": "cli-features",
     "last_phase": "in_progress",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1794671077.0000687,
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1794671474.26114,
     "owner": "vibe:1",
     "started_by": "vibe:1",
     "continuations": [],
@@ -14,45 +14,9 @@
         "name": "pocket-planner",
         "path": "projects/pocket-planner"
       }
-    ],
-    "completed_at": 1794671187.3131592
+    ]
   },
   "checkpoints": [
-    {
-      "task_id": "reforge:run-2",
-      "phase": "reforge stage 2",
-      "phase_num": 3,
-      "description": "Reforge stage 2: stage 2 host review reviewed; run active; coverage 35/35",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667959.9155402,
-      "timestamp_str": "2026-11-14 17:52:39",
-      "agent": "unidentified"
-    },
-    {
-      "task_id": "api-priority-bool-guards",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "Reject boolean priority in add_task, edit_task and list_tasks per reforge run-2 stage-2 review finding",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1794667993.9686964,
-      "timestamp_str": "2026-11-14 17:53:13",
-      "agent": "vibe:1",
-      "impact_assessment": {
-        "why": "Reforge run-2 stage-2 review found the programmatic API guards count True as priority 1, so imported callers could write store files the hardened loader now rejects.",
-        "benefits": "Rejected shapes are consistent across store and API layers; regression test pins bool through add_task, edit_task and list_tasks.",
-        "risks": "contract: API rejects one more malformed value with the same documented ValueError; dependency: none; concurrency: single-writer; state: none",
-        "mitigation": "CLI already coerces to int via argparse, so no user-facing change; full gate suite before commit; explicit staging"
-      },
-      "checklists": "passed",
-      "workspaces": [
-        {
-          "name": "pocket-planner",
-          "path": "projects/pocket-planner"
-        }
-      ]
-    },
     {
       "task_id": "api-priority-bool-guards",
       "phase": "completed",
@@ -359,6 +323,47 @@
         ],
         "forced": false
       }
+    },
+    {
+      "task_id": "cli-features",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/4] Plan CLI features: list gains --search (case-insensitive substring over title+tags) and --sort {due,priority,id,created} (default order unchanged); new stats command reporting open/done/overdue counts and priority distribution over<=5 lines; M2 implement, M3 tests+README commands, M4 gates+commit",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671388.7660744,
+      "timestamp_str": "2026-11-14 18:49:48",
+      "agent": "vibe:1",
+      "impact_assessment": {
+        "why": "User asked for stats, search and --sort from the recorded backlog; search reuses the list pipeline instead of a parallel command to avoid duplicate filtering roles",
+        "benefits": "Find tasks without grepping JSON; deterministic alternate orderings for scripting; at-a-glance store summary",
+        "risks": "contract: additive flags and a new command, no existing behavior change (default sort/args untouched); dependency: stdlib only; concurrency: single-writer unchanged; state: none (read-only paths)",
+        "mitigation": "list_tasks gains query/sort params with exact current default preserved; stats as one pure read function; per-feature tests; README updated same commit; full gates before commit"
+      },
+      "plan_digest": "921f6b971220180e07497c3c0f8e4c276798ca002864cff7e4a32d7408237d0a",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
+    },
+    {
+      "task_id": "cli-features",
+      "phase": "in_progress",
+      "phase_num": 4,
+      "description": "[4/4] Verify CLI features shipped: list --search + --sort with default order preserved, stats command; 53/53 tests; CLI smoke of add/list/search/stats clean; README usage + commands updated; checklists: passed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794671474.26114,
+      "timestamp_str": "2026-11-14 18:51:14",
+      "agent": "vibe:1",
+      "workspaces": [
+        {
+          "name": "pocket-planner",
+          "path": "projects/pocket-planner"
+        }
+      ]
     }
   ]
 }

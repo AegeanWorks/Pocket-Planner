@@ -7,10 +7,10 @@
 
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `2`
-- **Total Classes**: `3`
-- **Total Top-Level Functions**: `12`
-- **Total Class Methods**: `57`
-- **Total Source Lines**: `890`
+- **Total Classes**: `4`
+- **Total Top-Level Functions**: `14`
+- **Total Class Methods**: `61`
+- **Total Source Lines**: `1003`
 
 ## 🧭 Map Coverage
 - **Indexed**: python (`2` module(s))
@@ -23,7 +23,7 @@
 ### [`pocket_planner.py`](pocket_planner.py)
 > *Pocket Planner: a small local-first task manager.*
 
-**Size**: `429` lines (`17459` bytes)
+**Size**: `504` lines (`19808` bytes)
 
 **Classes:**
 - `class Task`
@@ -34,6 +34,7 @@
   - Method `.next_task_id(tasks)` - *The next id this store issues; never an id a deleted task already used.*
   - Method `.save(tasks)`
   - Method `._sync_directory()`
+- `class Stats`
 
 **Functions:**
 - `def now()`
@@ -45,14 +46,16 @@
 - `def reopen_task(store, task_id)`
 - `def delete_task(store, task_id)`
 - `def edit_task(store, task_id, title, priority, due, clear_due, tags, clear_tags)`
-- `def list_tasks(store, include_done, tag, overdue, priority)`
+- `def _sort_key(name)`
+- `def list_tasks(store, include_done, tag, overdue, priority, query, sort)`
+- `def task_stats(store)`
 - `def build_parser()`
 - `def main(argv)`
 
 ---
 
 ### [`tests/test_pocket_planner.py`](tests/test_pocket_planner.py)
-**Size**: `461` lines (`17437` bytes)
+**Size**: `499` lines (`19001` bytes)
 
 **Classes:**
 - `class PocketPlannerTests`
@@ -60,6 +63,10 @@
   - Method `.tearDown()`
   - Method `.test_add_persists_and_normalizes_title()`
   - Method `.test_list_orders_open_tasks_by_priority()`
+  - Method `.test_list_search_matches_title_and_tags_case_insensitively()`
+  - Method `.test_list_sort_orders()`
+  - Method `.test_list_rejects_unknown_sort()`
+  - Method `.test_stats_counts_open_done_overdue_and_priorities()`
   - Method `.test_complete_sets_timestamp_and_hides_from_default_list()`
   - Method `.test_save_is_valid_json()`
   - Method `.test_legacy_tasks_without_metadata_still_load()`

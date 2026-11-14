@@ -12,6 +12,7 @@ import time
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
+from typing import NamedTuple
 
 
 @dataclass
@@ -315,12 +316,29 @@ def edit_task(
     raise ValueError(f"task {task_id} was not found")
 
 
+SORT_KEYS = ("due", "priority", "id", "created")
+
+
+def _sort_key(name: str):
+    if name == "priority":
+        return lambda task: (task.priority, task.due or "9999-12-31", task.id)
+    if name == "id":
+        return lambda task: (task.id,)
+    if name == "created":
+        return lambda task: (task.created_at, task.id)
+    if name == "due":
+        return lambda task: (task.done, task.due or "9999-12-31", task.priority, task.id)
+    raise ValueError(f"sort must be one of {', '.join(SORT_KEYS)}")
+
+
 def list_tasks(
     store: TaskStore,
     include_done: bool = False,
     tag: str | None = None,
     overdue: bool = False,
     priority: int | None = None,
+    query: str | None = None,
+    sort: str = "due",
 ) -> list[Task]:
     tasks = store.load()
     visible = [task for task in tasks if include_done or not task.done]
@@ -332,6 +350,15 @@ def list_tasks(
         if isinstance(priority, bool) or not isinstance(priority, int) or priority not in (1, 2, 3):
             raise ValueError("priority must be 1, 2, or 3")
         visible = [task for task in visible if task.priority == priority]
+    if query:
+        needle = query.strip().lower()
+        if needle:
+            visible = [
+                task
+                for task in visible
+                if needle in task.title.lower()
+                or any(needle in entry.lower() for entry in (task.tags or []))
+            ]
     if overdue:
         today = date.today().isoformat()
         visible = [
@@ -339,7 +366,36 @@ def list_tasks(
             for task in visible
             if task.due and task.due < today and not task.done
         ]
-    return sorted(visible, key=lambda task: (task.done, task.due or "9999-12-31", task.priority, task.id))
+    return sorted(visible, key=_sort_key(sort))
+
+
+class Stats(NamedTuple):
+    tasks: int
+    open: int
+    done: int
+    overdue: int
+    by_priority: dict[int, int]
+
+
+def task_stats(store: TaskStore) -> Stats:
+    tasks = store.load()
+    today = date.today().isoformat()
+    by_priority = {1: 0, 2: 0, 3: 0}
+    done_count = 0
+    overdue_count = 0
+    for task in tasks:
+        by_priority[task.priority] = by_priority.get(task.priority, 0) + 1
+        if task.done:
+            done_count += 1
+        elif task.due and task.due < today:
+            overdue_count += 1
+    return Stats(
+        tasks=len(tasks),
+        open=len(tasks) - done_count,
+        done=done_count,
+        overdue=overdue_count,
+        by_priority=by_priority,
+    )
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -358,6 +414,9 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("--tag", help="only show tasks with this tag")
     show.add_argument("--overdue", action="store_true", help="only show overdue tasks")
     show.add_argument("--priority", type=int, choices=(1, 2, 3), help="only show this priority")
+    show.add_argument("--search", help="only show tasks whose title or tags contain this text")
+    show.add_argument("--sort", choices=SORT_KEYS, default="due", help="order by due, priority, id, or created")
+    stats = commands.add_parser("stats", help="summarize the store")
     done = commands.add_parser("done", help="complete a task")
     done.add_argument("id", type=int)
     reopen = commands.add_parser("reopen", help="reopen a completed task")
@@ -405,7 +464,15 @@ def main(argv: list[str] | None = None) -> int:
             )
             print(f"Edited #{task.id}: {task.title}")
         elif args.command == "list":
-            tasks = list_tasks(store, args.include_done, args.tag, args.overdue, args.priority)
+            tasks = list_tasks(
+                store,
+                args.include_done,
+                args.tag,
+                args.overdue,
+                args.priority,
+                args.search,
+                args.sort,
+            )
             if not tasks:
                 print("No tasks.")
             for task in tasks:
@@ -417,6 +484,14 @@ def main(argv: list[str] | None = None) -> int:
                     details.append(" ".join(f"#{tag}" for tag in task.tags))
                 suffix = f" ({', '.join(details)})" if details else ""
                 print(f"[{marker}] #{task.id} P{task.priority} {task.title}{suffix}")
+        elif args.command == "stats":
+            summary = task_stats(store)
+            priorities = ", ".join(f"P{level} {count}" for level, count in summary.by_priority.items())
+            print(
+                f"Tasks: {summary.tasks} (open {summary.open}, done {summary.done}, "
+                f"overdue {summary.overdue})"
+            )
+            print(f"Priority: {priorities}")
         else:
             raise ValueError(f"unknown command {args.command!r}")
         return 0
